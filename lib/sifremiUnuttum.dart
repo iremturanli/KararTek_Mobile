@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/sifremiUnuttum.dart';
 import 'package:flutter_application_1/homePage.dart';
+import 'package:flutter_application_1/login.dart';
 import 'package:flutter_application_1/main.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class sifremiUnuttum extends StatefulWidget {
+  const sifremiUnuttum({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<sifremiUnuttum> createState() => _sifremiUnuttumState();
 }
 
-class _LoginState extends State<Login> {
+class _sifremiUnuttumState extends State<sifremiUnuttum> {
   TextEditingController nameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+
+  var maskFormatter = new MaskTextInputFormatter(
+      mask: '(###) ### ## ##',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
 
   @override
   Widget build(BuildContext context) {
@@ -63,34 +69,22 @@ class _LoginState extends State<Login> {
                   child: SizedBox(
                     width: 350,
                     child: TextField(
-                      controller: passwordController,
-                      obscureText: true,
-                      enableSuggestions: false,
+                      keyboardType: TextInputType.phone,
                       autocorrect: false,
+                      inputFormatters: [maskFormatter],
+                      controller: phoneController,
                       decoration: const InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                   color: Color.fromARGB(255, 0, 0, 0))),
-                          labelText: 'Şifre',
-                          hintText: "Şifreyi giriniz.",
+                          labelText: 'Cep Telefonu',
+                          hintText: '(5__) ___ __ __',
                           labelStyle: TextStyle(color: Colors.black)),
                     ),
                   ),
                 ),
-                TextButton(
-                    style: TextButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 15),
-                      foregroundColor: Colors.black,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => sifremiUnuttum()));
-                    },
-                    child: const Text('Şifremi Unuttum')),
                 // Padding(
                 //   padding: EdgeInsets.only(top: 150),
                 SizedBox(
@@ -115,7 +109,7 @@ class _LoginState extends State<Login> {
                                 builder: (context) => Dashboard()));
                       },
                       child: const Text(
-                        'Giriş',
+                        'Şifre Gönder',
                         style: TextStyle(fontSize: 19),
                       ),
                     ),
@@ -130,7 +124,7 @@ class _LoginState extends State<Login> {
                       ),
                       onPressed: () {
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Home()));
+                            MaterialPageRoute(builder: (context) => Login()));
                       },
                       child: const Text(
                         'Geri',
