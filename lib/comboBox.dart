@@ -1,14 +1,20 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
-class ComboBox extends StatelessWidget {
+class ComboBox extends StatefulWidget {
+  const ComboBox({Key? key, required this.items}) : super(key: key);
+  @override
+  State<ComboBox> createState() => _ComboBoxState();
   final List<String> items;
-  final String? selectedValue;
-  ComboBox({
-    Key? key,
-    this.selectedValue,
-    required this.items,
-  }) : super(key: key);
+}
+
+class _ComboBoxState extends State<ComboBox> {
+  // final List<String> items = [
+  //   'Yüksek Yargı Kararları',
+  //   'Avukatın Eklediği Kararlar',
+  // ];
+  // ignore: non_constant_identifier_names
+  String? selected_Value;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +42,7 @@ class ComboBox extends StatelessWidget {
             ),
           ],
         ),
-        items: items
+        items: widget.items
             .map((item) => DropdownMenuItem<String>(
                   value: item,
                   child: Text(
@@ -50,25 +56,25 @@ class ComboBox extends StatelessWidget {
                   ),
                 ))
             .toList(),
-        value: selectedValue,
+        value: selected_Value,
         onChanged: (value) {
-          // setState(() {
-          //   selectedValue = value as String;
-          // });
+          setState(() {
+            selected_Value = value as String;
+          });
         },
         icon: const Icon(
           Icons.keyboard_arrow_down_outlined,
         ),
         iconSize: 30,
-        iconEnabledColor: Color.fromARGB(255, 0, 0, 0),
-        iconDisabledColor: Color.fromARGB(255, 0, 0, 0),
+        iconEnabledColor: const Color.fromARGB(255, 0, 0, 0),
+        iconDisabledColor: const Color.fromARGB(255, 0, 0, 0),
         buttonHeight: 48,
         buttonWidth: 350,
         buttonPadding: const EdgeInsets.only(left: 14, right: 14),
         buttonDecoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             border: Border.all(color: Colors.grey, width: 1),
-            color: Color.fromARGB(255, 255, 255, 255)),
+            color: const Color.fromARGB(255, 255, 255, 255)),
         // buttonElevation: 1,
         itemHeight: 40,
         itemPadding: const EdgeInsets.only(left: 14, right: 14),
@@ -77,7 +83,7 @@ class ComboBox extends StatelessWidget {
         dropdownPadding: null,
         dropdownDecoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Color.fromARGB(255, 252, 252, 252),
+          color: const Color.fromARGB(255, 252, 252, 252),
         ),
         dropdownElevation: 8,
         scrollbarRadius: const Radius.circular(5),

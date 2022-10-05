@@ -56,7 +56,7 @@ class _LoginState extends State<Login> {
                   child: SizedBox(
                     width: 350,
                     child: TextField(
-                      controller: nameController,
+                      controller: passwordController,
                       decoration: const InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
@@ -76,14 +76,10 @@ class _LoginState extends State<Login> {
                     ),
                     onPressed: () {},
                     child: const Text('Şifremi Unuttum')),
-                // Padding(
-                //   padding: EdgeInsets.only(top: 150),
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 10,
                 ),
                 Column(
-                  // mainAxisAlignment: MainAxisAlignment.center,
-                  // crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -124,7 +120,6 @@ class _LoginState extends State<Login> {
                     ),
                   ],
                 ),
-                // ),
               ],
             )));
   }

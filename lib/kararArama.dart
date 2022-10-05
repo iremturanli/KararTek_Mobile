@@ -12,12 +12,7 @@ class KararArama extends StatefulWidget {
 }
 
 class _KararAramaState extends State<KararArama> {
-  final List<String> items = [
-    'Yüksek Yargı Kararları',
-    'Avukatın Eklediği Kararlar',
-  ];
-  String? selected_Value;
-
+  final textEditingController = TextEditingController();
   // This holds a list of fiction users
   // You can use data fetched from a database or a server as well
   final List<Map<String, dynamic>> _allUsers = [
@@ -32,10 +27,19 @@ class _KararAramaState extends State<KararArama> {
     {"id": 9, "name": "Caversky", "age": 100},
     {"id": 10, "name": "Becky", "age": 32},
   ];
-
   String? selectedValue;
 
-  String yuksek_Yargi = "Yargıtay";
+  final List<String> kararlar = [
+    'Yüksek Yargı Kararları',
+    'Avukatın Eklediği Kararlar',
+  ];
+
+  final List<String> kararTuru = [
+    'Yargıtay Kararı',
+    'Danıştay Kararı',
+    'Avukat Tarafından Yüklenen',
+  ];
+
   // This list holds the data for the list view
   List<Map<String, dynamic>> _foundUsers = [];
   // @override
@@ -69,7 +73,6 @@ class _KararAramaState extends State<KararArama> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController textEditingController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -83,18 +86,15 @@ class _KararAramaState extends State<KararArama> {
             const SizedBox(
               height: 50,
             ),
-            Container(
-              child: Padding(
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.width / 80),
-                // ignore: prefer_const_constructors
-                child: Image(
-                  image: const AssetImage("assets/login-logo.png"),
-                ),
+            Padding(
+              padding:
+                  EdgeInsets.only(top: MediaQuery.of(context).size.width / 80),
+              // ignore: prefer_const_constructors
+              child: Image(
+                image: const AssetImage("assets/login-logo.png"),
               ),
             ),
             const SizedBox(height: 50),
-
             SizedBox(
               height: 55,
               width: 400,
@@ -115,13 +115,11 @@ class _KararAramaState extends State<KararArama> {
                 controller: textEditingController,
               ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 30),
             ComboBox(
-              items: items,
-              selectedValue: selected_Value, //?
+              items: kararlar,
             ),
             const RadioButton(),
-
             const SizedBox(height: 70),
             Column(
               children: [
@@ -131,7 +129,7 @@ class _KararAramaState extends State<KararArama> {
                         borderRadius: BorderRadius.circular(40),
                       ),
                       minimumSize: const Size(350, 55),
-                      backgroundColor: Color.fromARGB(255, 1, 28, 63)),
+                      backgroundColor: const Color.fromARGB(255, 1, 28, 63)),
                   onPressed: () {
                     _runFilter(textEditingController.text);
                   },
@@ -149,9 +147,49 @@ class _KararAramaState extends State<KararArama> {
                       minimumSize: const Size(350, 55),
                       backgroundColor:
                           const Color.fromARGB(255, 126, 126, 126)),
-                  onPressed: () {
-                    _runFilter(textEditingController.text);
-                  },
+                  onPressed: () => showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      scrollable: true,
+                      title: const Center(child: Text('Detaylı Arama')),
+                      content: Padding(
+                          padding: const EdgeInsets.only(top: 1.0),
+                          child: Form(
+                            child: Column(
+                              children: <Widget>[
+                                TextFormField(
+                                  // ignore: prefer_const_constructors
+                                  decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: const Color.fromARGB(
+                                          255, 255, 255, 255),
+                                      focusedBorder: const OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 189, 189, 189))),
+                                      labelText: 'Kelime ile Arama',
+                                      labelStyle:
+                                          const TextStyle(color: Colors.black)),
+                                ),
+
+                                // ignore: prefer_const_constructors
+                                const SizedBox(
+                                  height: 10,
+                                ),
+
+                                const Padding(
+                                  padding: EdgeInsets.only(right: 200),
+                                  child: Text('Karar Türü'),
+                                ),
+
+                                ComboBox(
+                                  items: kararTuru,
+                                ),
+                              ],
+                            ),
+                          )),
+                    ),
+                  ),
                   child: const Text(
                     'Detaylı Arama',
                     style: TextStyle(fontSize: 17),
@@ -159,36 +197,6 @@ class _KararAramaState extends State<KararArama> {
                 ),
               ],
             ),
-            // Expanded(
-            //   child: _foundUsers.isNotEmpty
-            //       ? Padding(
-            //           padding: const EdgeInsets.only(top: 300.0),
-            //           child: ListView.builder(
-            //             itemCount: _foundUsers.length,
-            //             itemBuilder: (context, index) => Card(
-            //               key: ValueKey(_foundUsers[index]["id"]),
-            //               color: Color.fromARGB(255, 223, 228, 236),
-            //               elevation: 5,
-            //               margin: const EdgeInsets.symmetric(vertical: 10),
-            //               child: ListTile(
-            //                 leading: Text(
-            //                   _foundUsers[index]["id"].toString(),
-            //                   style: const TextStyle(
-            //                       color: Color.fromARGB(255, 1, 28, 63),
-            //                       fontSize: 24),
-            //                 ),
-            //                 title: Text(_foundUsers[index]['name']),
-            //                 subtitle: Text(
-            //                     '${_foundUsers[index]["age"].toString()} years old'),
-            //               ),
-            //             ),
-            //           ),
-            //         )
-            //       : const Text(
-            //           '',
-            //           //  style: TextStyle(fontSize: 24),
-            //         ),
-            // ),
           ],
         ),
       ),

@@ -19,7 +19,8 @@ class _RadioButtonState extends State<RadioButton> {
             activeColor: const Color.fromARGB(255, 1, 28, 63),
             title: Transform.translate(
                 offset: const Offset(-16, 0),
-                child: const Text(style: TextStyle(fontSize: 10), 'Yargıtay')),
+                child:
+                    const Text(style: TextStyle(fontSize: 11.5), 'Yargıtay')),
             value: 'yargitay',
             groupValue: yuksek_Yargi,
             onChanged: ((value) {
@@ -35,7 +36,8 @@ class _RadioButtonState extends State<RadioButton> {
             activeColor: const Color.fromARGB(255, 1, 28, 63),
             title: Transform.translate(
                 offset: const Offset(-16, 0),
-                child: const Text(style: TextStyle(fontSize: 10), 'Danıştay')),
+                child:
+                    const Text(style: TextStyle(fontSize: 11.5), 'Danıştay')),
             value: 'danistay',
             groupValue: yuksek_Yargi,
             onChanged: ((value) {
@@ -52,7 +54,10 @@ class _RadioButtonState extends State<RadioButton> {
             title: Transform.translate(
                 offset: const Offset(-16, 0),
                 child: const Text(
-                    style: TextStyle(fontSize: 10), 'Anayasa Mahkemesi')),
+                  style: TextStyle(fontSize: 11.5),
+                  'Anayasa Mahkeme',
+                  overflow: TextOverflow.fade,
+                )),
             value: 'anayasaMahkemesi',
             groupValue: yuksek_Yargi,
             onChanged: ((value) {
