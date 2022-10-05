@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_application_1/homePage.dart';
 import 'package:flutter_application_1/main.dart';
 
@@ -38,6 +39,11 @@ class _LoginState extends State<Login> {
                     width: 350,
                     child: TextField(
                       controller: nameController,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(11)
+                      ],
                       decoration: const InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
@@ -57,6 +63,9 @@ class _LoginState extends State<Login> {
                     width: 350,
                     child: TextField(
                       controller: passwordController,
+                      obscureText: true,
+                      enableSuggestions: false,
+                      autocorrect: false,
                       decoration: const InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
@@ -76,10 +85,14 @@ class _LoginState extends State<Login> {
                     ),
                     onPressed: () {},
                     child: const Text('Şifremi Unuttum')),
+                // Padding(
+                //   padding: EdgeInsets.only(top: 150),
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 10,
                 ),
                 Column(
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  // crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -120,6 +133,7 @@ class _LoginState extends State<Login> {
                     ),
                   ],
                 ),
+                // ),
               ],
             )));
   }
