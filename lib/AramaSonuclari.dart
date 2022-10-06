@@ -1,6 +1,8 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/kararArama.dart';
 
+// ignore: must_be_immutable
 class AramaSonuclari extends StatefulWidget {
   List<Map<String, dynamic>> _foundUsers;
   AramaSonuclari(this._foundUsers, {Key? key}) : super(key: key);

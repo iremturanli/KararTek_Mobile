@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/AramaSonuclari.dart';
+import 'package:flutter_application_1/iletisim.dart';
 import 'package:flutter_application_1/kararArama.dart';
 import 'package:flutter_application_1/kararAramaTest.dart';
+import 'package:flutter_application_1/kararIslemleri.dart';
 import 'package:flutter_application_1/popUp.dart';
 
 import 'Card.dart';
@@ -41,15 +43,17 @@ class _DashboardState extends State<Dashboard> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 makeDashboardItem("Karar Arama", Icons.search, (() {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => GFG()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => KararArama()));
                 })),
                 SizedBox(
                   width: 30,
                 ),
                 makeDashboardItem("Karar İşlemleri", Icons.alarm, (() {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => KararArama()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => kararIslemleri()));
                 })),
               ],
             ),
@@ -61,7 +65,7 @@ class _DashboardState extends State<Dashboard> {
               children: [
                 makeDashboardItem("İletişim Bilgileri", Icons.phone, (() {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => KararArama()));
+                      MaterialPageRoute(builder: (context) => iletisim()));
                 })),
                 SizedBox(
                   width: 30,
