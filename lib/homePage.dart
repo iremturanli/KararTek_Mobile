@@ -41,8 +41,8 @@ class _DashboardState extends State<Dashboard> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 makeDashboardItem("Karar Arama", Icons.search, (() {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => GFG()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => KararArama()));
                 })),
                 SizedBox(
                   width: 30,

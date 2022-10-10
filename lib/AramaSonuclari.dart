@@ -34,20 +34,21 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
       body: Container(
         child: widget._foundUsers.isNotEmpty
             ? Padding(
-                padding: const EdgeInsets.only(top: 100.0),
+                padding: const EdgeInsets.only(top: 70.0),
                 child: ListView.builder(
                   itemCount: widget._foundUsers.length,
                   itemBuilder: (context, index) => Card(
                     key: ValueKey(widget._foundUsers[index]["id"]),
                     color: Color.fromARGB(255, 223, 228, 236),
-                    elevation: 5,
-                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    elevation: 4,
+                    margin: const EdgeInsets.symmetric(vertical: 7),
                     child: ListTile(
                       leading: Text(
                         widget._foundUsers[index]["id"].toString(),
                         style: const TextStyle(
                             color: Color.fromARGB(255, 1, 28, 63),
-                            fontSize: 24),
+                            fontSize: 25,
+                            fontWeight: FontWeight.w500),
                       ),
                       title: Text(widget._foundUsers[index]['name']),
                       subtitle: Text(
