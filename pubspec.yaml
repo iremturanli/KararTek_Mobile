@@ -40,7 +40,7 @@ dependencies:
   lottie: ^1.4.3
   unicons: any
   dropdown_button2: ^1.8.2
- 
+  modal_bottom_sheet: ^2.1.2
 
 
 dev_dependencies:

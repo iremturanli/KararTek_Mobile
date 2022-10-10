@@ -21,10 +21,16 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          bottomOpacity: 0.0,
-          elevation: 0.0,
-          iconTheme: IconThemeData(color: Colors.black)),
+        backgroundColor: Colors.transparent,
+        bottomOpacity: 0.0,
+        elevation: 0.0,
+        iconTheme: IconThemeData(color: Colors.black),
+        title: const Text('Arama Sonuçları',
+            style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.black)),
+      ),
       body: Container(
         child: widget._foundUsers.isNotEmpty
             ? Padding(

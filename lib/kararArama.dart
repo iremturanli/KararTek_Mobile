@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/AramaSonuclari.dart';
+import 'package:flutter_application_1/ModalBottom.dart';
 import 'package:flutter_application_1/RadioButton.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import 'comboBoxLarge.dart';
 import 'comboBox.dart';
 
 class KararArama extends StatefulWidget {
@@ -9,6 +12,8 @@ class KararArama extends StatefulWidget {
 
   @override
   _KararAramaState createState() => _KararAramaState();
+
+  _runFilter(TextEditingController textEditingController) {}
 }
 
 class _KararAramaState extends State<KararArama> {
@@ -34,11 +39,14 @@ class _KararAramaState extends State<KararArama> {
     'Avukatın Eklediği Kararlar',
   ];
 
-  final List<String> kararTuru = [
-    'Yargıtay Kararı',
-    'Danıştay Kararı',
-    'Avukat Tarafından Yüklenen',
-  ];
+  // final List<String> kararTuru = [
+  //   'Yargıtay Kararı',
+  //   'Danıştay Kararı',
+  //   'Avukat Tarafından Yüklenen',
+  // ];
+  // final List<String> mahkeme = [
+  //   'Anayasa Mahkemesi',
+  // ];
 
   // This list holds the data for the list view
   List<Map<String, dynamic>> _foundUsers = [];
@@ -52,10 +60,9 @@ class _KararAramaState extends State<KararArama> {
   // This function is called whenever the text field changes
   void _runFilter(String enteredKeyword) {
     List<Map<String, dynamic>> results = [];
-    if (enteredKeyword.isEmpty) {
+    if (enteredKeyword.isNotEmpty) {
       // if the search field is empty or only contains white-space, we'll display all users
       // results = _allUsers;
-    } else {
       results = _allUsers
           .where((user) =>
               user["name"].toLowerCase().contains(enteredKeyword.toLowerCase()))
@@ -66,8 +73,14 @@ class _KararAramaState extends State<KararArama> {
     //Refresh the UI
     setState(() {
       _foundUsers = results;
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => AramaSonuclari(_foundUsers)));
+
+      if (_foundUsers.isEmpty) {
+      } else {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => AramaSonuclari(_foundUsers)));
+      }
     });
   }
 
@@ -106,6 +119,11 @@ class _KararAramaState extends State<KararArama> {
                   ),
                   filled: true,
                   fillColor: const Color.fromARGB(255, 252, 252, 252),
+                  focusedBorder: OutlineInputBorder(
+                    // ignore: prefer_const_constructors
+                    borderSide: BorderSide(width: 1, color: Colors.grey),
+                    borderRadius: BorderRadius.circular(40),
+                  ),
                   enabledBorder: OutlineInputBorder(
                     // ignore: prefer_const_constructors
                     borderSide: BorderSide(width: 1, color: Colors.grey),
@@ -147,47 +165,15 @@ class _KararAramaState extends State<KararArama> {
                       minimumSize: const Size(350, 55),
                       backgroundColor:
                           const Color.fromARGB(255, 126, 126, 126)),
-                  onPressed: () => showDialog<String>(
+                  onPressed: () => showMaterialModalBottomSheet<void>(
+                    expand: true,
+                    // backgroundColor: Colors.transparent,
                     context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                      scrollable: true,
-                      title: const Center(child: Text('Detaylı Arama')),
-                      content: Padding(
-                          padding: const EdgeInsets.only(top: 1.0),
-                          child: Form(
-                            child: Column(
-                              children: <Widget>[
-                                TextFormField(
-                                  // ignore: prefer_const_constructors
-                                  decoration: InputDecoration(
-                                      filled: true,
-                                      fillColor: const Color.fromARGB(
-                                          255, 255, 255, 255),
-                                      focusedBorder: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Color.fromARGB(
-                                                  255, 189, 189, 189))),
-                                      labelText: 'Kelime ile Arama',
-                                      labelStyle:
-                                          const TextStyle(color: Colors.black)),
-                                ),
-
-                                // ignore: prefer_const_constructors
-                                const SizedBox(
-                                  height: 10,
-                                ),
-
-                                const Padding(
-                                  padding: EdgeInsets.only(right: 200),
-                                  child: Text('Karar Türü'),
-                                ),
-
-                                ComboBox(
-                                  items: kararTuru,
-                                ),
-                              ],
-                            ),
-                          )),
+                    builder: (BuildContext context) => ModalBottom(
+                      press: () {
+                        _runFilter(textEditingController.text);
+                      },
+                      searchWord: textEditingController,
                     ),
                   ),
                   child: const Text(
@@ -195,6 +181,9 @@ class _KararAramaState extends State<KararArama> {
                     style: TextStyle(fontSize: 17),
                   ),
                 ),
+                // Visibility(
+                //   visible: true,
+                //   child: child)
               ],
             ),
           ],
