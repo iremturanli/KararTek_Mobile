@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/yeniKullanici.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter_application_1/login.dart';
 
@@ -142,10 +143,10 @@ class Home extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const Home()));
+                                builder: (context) => const yeniKullanici()));
                       },
                       child: const Text(
-                        'Başvuru Yap',
+                        'Yeni Kullanıcı',
                         style: TextStyle(fontSize: 19),
                       ),
                     ),

@@ -12,13 +12,11 @@ class _sSorularState extends State<sSorular> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(left: 1.0),
-          child: const Text(
-            'Sıkça Sorulan Sorular',
-            style: TextStyle(
-                color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
-          ),
+        centerTitle: true,
+        title: const Text(
+          'Sıkça Sorulan Sorular',
+          style: TextStyle(
+              color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,

@@ -74,6 +74,7 @@ class _LoginState extends State<Login> {
                               fillColor: Colors.white,
                               labelText: 'Password',
                               hintText: 'Enter your password',
+                              labelStyle: TextStyle(color: Colors.black),
                               // Here is key idea
                               suffixIcon: IconButton(
                                 icon: Icon(

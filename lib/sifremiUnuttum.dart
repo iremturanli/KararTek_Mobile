@@ -81,6 +81,8 @@ class _sifremiUnuttumState extends State<sifremiUnuttum> {
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Color.fromARGB(255, 0, 0, 0))),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.black)),
                               labelText: 'Cep Telefonu',
                               hintText: '(5__) ___ __ __',
                               labelStyle: TextStyle(color: Colors.black)),

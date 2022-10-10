@@ -9,13 +9,11 @@ class iletisim extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(left: 40),
-          child: const Text(
-            'İletişim Bilgileri',
-            style: TextStyle(
-                color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
-          ),
+        centerTitle: true,
+        title: const Text(
+          'İletişim Bilgileri',
+          style: TextStyle(
+              color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,

@@ -28,9 +28,7 @@ class _ComboBoxState extends State<ComboBox> {
             //   size: 20,
             //   color: Color.fromARGB(255, 0, 0, 0),
             // ),
-            SizedBox(
-              width: 10,
-            ),
+            SizedBox(width: 10),
             Text(
               "Seçiniz",
               style: TextStyle(
