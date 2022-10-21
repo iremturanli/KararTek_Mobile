@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/kararKayit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class kararIslemleri extends StatelessWidget {
@@ -7,12 +8,11 @@ class kararIslemleri extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: const Text(
-            'Karar İşlemleri',
-            style: TextStyle(
-                color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
-          ),
+        centerTitle: true,
+        title: Text(
+          'Karar İşlemleri',
+          style: TextStyle(
+              color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
@@ -32,7 +32,10 @@ class kararIslemleri extends StatelessWidget {
                           borderRadius: BorderRadius.circular(35)),
                       minimumSize: Size(350, 50),
                       backgroundColor: Color.fromRGBO(225, 225, 225, 100)),
-                  onPressed: _showToast,
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => kararKayit()));
+                  },
                   child: Padding(
                     padding: const EdgeInsets.only(right: 150.0),
                     child: Text(

@@ -5,6 +5,7 @@ import 'package:flutter_application_1/kararArama.dart';
 import 'package:flutter_application_1/kararAramaTest.dart';
 import 'package:flutter_application_1/kararIslemleri.dart';
 import 'package:flutter_application_1/popUp.dart';
+import 'package:flutter_application_1/profilim.dart';
 
 import 'Card.dart';
 
@@ -72,7 +73,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
                 makeDashboardItem("Profilim", Icons.person, (() {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => KararArama()));
+                      MaterialPageRoute(builder: (context) => profilim()));
                 })),
               ],
             ),
