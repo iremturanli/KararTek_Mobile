@@ -72,7 +72,7 @@ class _ComboBoxState extends State<ComboBox> {
         buttonDecoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             border: Border.all(color: Colors.grey, width: 1),
-            color: const Color.fromARGB(255, 255, 255, 255)),
+            color: const Color.fromARGB(246, 246, 246, 246)),
         // buttonElevation: 1,
         itemHeight: 40,
         itemPadding: const EdgeInsets.only(left: 14, right: 14),
