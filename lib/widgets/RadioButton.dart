@@ -12,15 +12,15 @@ class _RadioButtonState extends State<RadioButton> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Expanded(
           flex: 1,
           child: RadioListTile(
             activeColor: const Color.fromARGB(255, 1, 28, 63),
             title: Transform.translate(
-                offset: const Offset(-16, 0),
-                child:
-                    const Text(style: TextStyle(fontSize: 11.5), 'Yargıtay')),
+                offset: const Offset(-20, 0),
+                child: const Text(style: TextStyle(fontSize: 11), 'Yargıtay')),
             value: 'yargitay',
             groupValue: yuksek_Yargi,
             onChanged: ((value) {
@@ -35,9 +35,8 @@ class _RadioButtonState extends State<RadioButton> {
           child: RadioListTile(
             activeColor: const Color.fromARGB(255, 1, 28, 63),
             title: Transform.translate(
-                offset: const Offset(-16, 0),
-                child:
-                    const Text(style: TextStyle(fontSize: 11.5), 'Danıştay')),
+                offset: const Offset(-20, 0),
+                child: const Text(style: TextStyle(fontSize: 11), 'Danıştay')),
             value: 'danistay',
             groupValue: yuksek_Yargi,
             onChanged: ((value) {
@@ -50,13 +49,15 @@ class _RadioButtonState extends State<RadioButton> {
         Expanded(
           flex: 1,
           child: RadioListTile(
+            enableFeedback: true, //
             activeColor: const Color.fromARGB(255, 1, 28, 63),
             title: Transform.translate(
-                offset: const Offset(-16, 0),
+                offset: const Offset(-20, 0),
                 child: const Text(
-                  style: TextStyle(fontSize: 11.5),
+                  maxLines: 2,
+                  style: TextStyle(fontSize: 10.2),
                   'Anayasa Mahkeme',
-                  overflow: TextOverflow.fade,
+                  // overflow: TextOverflow.fade,
                 )),
             value: 'anayasaMahkemesi',
             groupValue: yuksek_Yargi,

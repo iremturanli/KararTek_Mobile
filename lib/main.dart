@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/yeniKullanici.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter_application_1/login.dart';
 
@@ -28,18 +27,18 @@ class MyApp extends StatelessWidget {
         // is not restarted.
 
         // ignore: prefer_const_constructors
-        inputDecorationTheme: InputDecorationTheme(
-          //To always use the color (even when not in focus), set enabledBorder and border as well:
-          focusedBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0))),
-          // ignore: prefer_const_constructors
-          enabledBorder: UnderlineInputBorder(
-            borderSide: const BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
-          ),
-          border: const UnderlineInputBorder(
-            borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
-          ),
-        ),
+        // inputDecorationTheme: InputDecorationTheme(
+        //   //To always use the color (even when not in focus), set enabledBorder and border as well:
+        //   focusedBorder: const UnderlineInputBorder(
+        //       borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0))),
+        //   // ignore: prefer_const_constructors
+        //   enabledBorder: UnderlineInputBorder(
+        //     borderSide: const BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
+        //   ),
+        //   border: const UnderlineInputBorder(
+        //     borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
+        //   ),
+        // ),
         primarySwatch: Colors.blue,
       ),
       home: const SplashScreen(),
@@ -143,7 +142,7 @@ class Home extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const yeniKullanici()));
+                                builder: (context) => const Home()));
                       },
                       child: const Text(
                         'Yeni Kullanıcı',
