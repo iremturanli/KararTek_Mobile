@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/AramaSonuclari.dart';
-import 'package:flutter_application_1/ModalBottom.dart';
-import 'package:flutter_application_1/RadioButton.dart';
+import 'package:flutter_application_1/widgets/ModalBottom.dart';
+import 'package:flutter_application_1/widgets/RadioButton.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-import 'comboBoxLarge.dart';
-import 'comboBox.dart';
+import 'widgets/comboBoxLarge.dart';
+import 'widgets/comboBox.dart';
 
 class KararArama extends StatefulWidget {
   const KararArama({Key? key}) : super(key: key);
@@ -38,15 +38,6 @@ class _KararAramaState extends State<KararArama> {
     'Yüksek Yargı Kararları',
     'Avukatın Eklediği Kararlar',
   ];
-
-  // final List<String> kararTuru = [
-  //   'Yargıtay Kararı',
-  //   'Danıştay Kararı',
-  //   'Avukat Tarafından Yüklenen',
-  // ];
-  // final List<String> mahkeme = [
-  //   'Anayasa Mahkemesi',
-  // ];
 
   // This list holds the data for the list view
   List<Map<String, dynamic>> _foundUsers = [];

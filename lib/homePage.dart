@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/AramaSonuclari.dart';
-import 'package:flutter_application_1/iletisim.dart';
+import 'package:flutter_application_1/widgets/menu.dart';
+import 'package:flutter_application_1/iletisimList.dart';
 import 'package:flutter_application_1/kararArama.dart';
-import 'package:flutter_application_1/kararAramaTest.dart';
-import 'package:flutter_application_1/kararIslemleri.dart';
-import 'package:flutter_application_1/popUp.dart';
+import 'package:flutter_application_1/kararList.dart';
 import 'package:flutter_application_1/profilim.dart';
 
-import 'Card.dart';
+import 'widgets/Card.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -53,10 +51,8 @@ class _DashboardState extends State<Dashboard> {
                   width: MediaQuery.of(context).size.width / 12,
                 ),
                 makeDashboardItem("Karar İşlemleri", Icons.settings, (() {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => kararIslemleri()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => kararList()));
                 })),
               ],
             ),
@@ -68,7 +64,7 @@ class _DashboardState extends State<Dashboard> {
               children: [
                 makeDashboardItem("İletişim Bilgileri", Icons.phone, (() {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => iletisim()));
+                      MaterialPageRoute(builder: (context) => iletisimList()));
                 })),
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 12,
