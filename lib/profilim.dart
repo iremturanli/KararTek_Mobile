@@ -64,9 +64,8 @@ class _profilimState extends State<Profilim> {
               Row(
                 children: [
                   CircleAvatar(
-                    backgroundColor: Colors.white,
-                    backgroundImage: NetworkImage(
-                        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'),
+                    backgroundColor: Colors.transparent,
+                    backgroundImage: Image.asset("assets/pngwing.png").image,
                     radius: 50,
                   ),
                   Column(
