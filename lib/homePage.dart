@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/AramaSonuclari.dart';
-import 'package:flutter_application_1/iletisim.dart';
+import 'package:flutter_application_1/widgets/AramaSonuclari.dart';
+import 'package:flutter_application_1/iletisimList.dart';
 import 'package:flutter_application_1/kararArama.dart';
-import 'package:flutter_application_1/kararAramaTest.dart';
-import 'package:flutter_application_1/kararIslemleri.dart';
-import 'package:flutter_application_1/popUp.dart';
+import 'package:flutter_application_1/kararList.dart';
+import 'package:flutter_application_1/widgets/popUp.dart';
 import 'package:flutter_application_1/profilim.dart';
 
-import 'Card.dart';
+import 'widgets/Card.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -30,9 +29,11 @@ class _DashboardState extends State<Dashboard> {
               ),
               child: Column(children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 50),
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height / 15),
+                  // ignore: prefer_const_constructors
                   child: Image(
-                    image: AssetImage("assets/login-logo.png"),
+                    image: const AssetImage("assets/login-logo.png"),
                   ),
                 ),
               ]),
@@ -48,28 +49,26 @@ class _DashboardState extends State<Dashboard> {
                       MaterialPageRoute(builder: (context) => KararArama()));
                 })),
                 SizedBox(
-                  width: 30,
+                  width: MediaQuery.of(context).size.width / 12,
                 ),
                 makeDashboardItem("Karar İşlemleri", Icons.alarm, (() {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => kararIslemleri()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => kararList()));
                 })),
               ],
             ),
             SizedBox(
-              height: 20,
+              height: MediaQuery.of(context).size.height / 25,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 makeDashboardItem("İletişim Bilgileri", Icons.phone, (() {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => iletisim()));
+                      MaterialPageRoute(builder: (context) => iletisimList()));
                 })),
                 SizedBox(
-                  width: 30,
+                  width: MediaQuery.of(context).size.width / 12,
                 ),
                 makeDashboardItem("Profilim", Icons.person, (() {
                   Navigator.push(context,

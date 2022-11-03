@@ -28,7 +28,9 @@ class _ComboBoxState extends State<ComboBox> {
             //   size: 20,
             //   color: Color.fromARGB(255, 0, 0, 0),
             // ),
-            SizedBox(width: 10),
+            SizedBox(
+              width: 10,
+            ),
             Text(
               "Seçiniz",
               style: TextStyle(
@@ -72,7 +74,7 @@ class _ComboBoxState extends State<ComboBox> {
         buttonDecoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             border: Border.all(color: Colors.grey, width: 1),
-            color: const Color.fromARGB(246, 246, 246, 246)),
+            color: const Color.fromARGB(255, 255, 255, 255)),
         // buttonElevation: 1,
         itemHeight: 40,
         itemPadding: const EdgeInsets.only(left: 14, right: 14),

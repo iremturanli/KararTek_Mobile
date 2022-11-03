@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/comboBox.dart';
+import 'package:flutter_application_1/widgets/comboBox.dart';
 import 'package:flutter_application_1/homePage.dart';
 import 'package:flutter_application_1/login.dart';
 import 'package:flutter_application_1/main.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:open_filex/open_filex.dart';
+import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 
 enum GenderCharacter { erkek, kadin }
 
@@ -33,7 +36,7 @@ class _profilimState extends State<Profilim> {
     '....',
   ];
 
-  var maskFormatter = new MaskTextInputFormatter(
+  var maskPhoneFormatter = new MaskTextInputFormatter(
       mask: '(###) ### ## ##',
       filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
@@ -52,22 +55,37 @@ class _profilimState extends State<Profilim> {
           bottomOpacity: 0.0,
           elevation: 0.0,
           iconTheme: IconThemeData(color: Colors.black),
-          actions: <Widget>[
-            ElevatedButton.icon(
-              icon: Icon(Icons.add_a_photo_outlined),
-              label: CircleAvatar(),
-              onPressed: () {},
-            )
-          ],
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: ListView(
             children: <Widget>[
-              SizedBox(height: MediaQuery.of(context).size.height / 35),
+              SizedBox(height: MediaQuery.of(context).size.height / 150),
+              Row(
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.white,
+                    backgroundImage: NetworkImage(
+                        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'),
+                    radius: 50,
+                  ),
+                  Column(
+                    children: [
+                      SizedBox(height: MediaQuery.of(context).size.height / 10),
+                      IconButton(
+                          iconSize: 30,
+                          onPressed: () {
+                            pickFiles();
+                          },
+                          icon: Icon(Icons.add_photo_alternate))
+                    ],
+                  )
+                ],
+              ),
               Text('Ad'),
               SizedBox(height: MediaQuery.of(context).size.height / 120),
               TextFormField(
+                readOnly: true,
                 decoration: InputDecoration(
                     filled: true,
                     fillColor: Color.fromARGB(246, 246, 246, 246),
@@ -81,13 +99,14 @@ class _profilimState extends State<Profilim> {
                         color: const Color.fromARGB(255, 189, 189, 189),
                       ),
                     ),
-                    labelText: 'Ad',
-                    labelStyle: const TextStyle(color: Colors.black)),
+                    hintText: 'Ad',
+                    hintStyle: const TextStyle(color: Colors.grey)),
               ),
               SizedBox(height: MediaQuery.of(context).size.height / 35),
               Text('Soyad'),
               SizedBox(height: MediaQuery.of(context).size.height / 120),
               TextFormField(
+                readOnly: true,
                 decoration: InputDecoration(
                     filled: true,
                     fillColor: Color.fromARGB(246, 246, 246, 246),
@@ -101,13 +120,14 @@ class _profilimState extends State<Profilim> {
                         color: const Color.fromARGB(255, 189, 189, 189),
                       ),
                     ),
-                    labelText: 'Soyad',
-                    labelStyle: const TextStyle(color: Colors.black)),
+                    hintText: 'Soyad',
+                    hintStyle: const TextStyle(color: Colors.grey)),
               ),
               SizedBox(height: MediaQuery.of(context).size.height / 35),
               Text('TC Kimlik No'),
               SizedBox(height: MediaQuery.of(context).size.height / 120),
               TextFormField(
+                readOnly: true,
                 decoration: InputDecoration(
                     filled: true,
                     fillColor: Color.fromARGB(246, 246, 246, 246),
@@ -121,13 +141,14 @@ class _profilimState extends State<Profilim> {
                         color: const Color.fromARGB(255, 189, 189, 189),
                       ),
                     ),
-                    labelText: 'TC Kimlik No',
-                    labelStyle: const TextStyle(color: Colors.black)),
+                    hintText: 'TC Kimlik No',
+                    hintStyle: const TextStyle(color: Colors.grey)),
               ),
               SizedBox(height: MediaQuery.of(context).size.height / 35),
               Text('Kullanıcı Adı'),
               SizedBox(height: MediaQuery.of(context).size.height / 120),
               TextFormField(
+                readOnly: true,
                 decoration: InputDecoration(
                     filled: true,
                     fillColor: Color.fromARGB(246, 246, 246, 246),
@@ -141,13 +162,15 @@ class _profilimState extends State<Profilim> {
                         color: const Color.fromARGB(255, 189, 189, 189),
                       ),
                     ),
-                    labelText: 'Kullanıcı Adı',
-                    labelStyle: const TextStyle(color: Colors.black)),
+                    hintText: 'Kullanıcı Adı',
+                    hintStyle: const TextStyle(color: Colors.grey)),
               ),
               SizedBox(height: MediaQuery.of(context).size.height / 35),
               Text('Şifre'),
               SizedBox(height: MediaQuery.of(context).size.height / 120),
               TextFormField(
+                readOnly: true,
+                obscureText: true,
                 decoration: InputDecoration(
                     filled: true,
                     fillColor: Color.fromARGB(246, 246, 246, 246),
@@ -161,8 +184,8 @@ class _profilimState extends State<Profilim> {
                         color: const Color.fromARGB(255, 189, 189, 189),
                       ),
                     ),
-                    labelText: 'Şifre',
-                    labelStyle: const TextStyle(color: Colors.black)),
+                    hintText: 'Şifre',
+                    hintStyle: const TextStyle(color: Colors.grey)),
               ),
               SizedBox(height: MediaQuery.of(context).size.height / 32),
               Text('Cep Telefonu'),
@@ -181,8 +204,8 @@ class _profilimState extends State<Profilim> {
                         color: const Color.fromARGB(255, 189, 189, 189),
                       ),
                     ),
-                    labelText: 'Cep Telefonu',
-                    labelStyle: const TextStyle(color: Colors.black)),
+                    hintText: 'Cep Telefonu',
+                    hintStyle: const TextStyle(color: Colors.grey)),
               ),
               SizedBox(height: MediaQuery.of(context).size.height / 35),
               Text('E-Posta'),
@@ -201,8 +224,8 @@ class _profilimState extends State<Profilim> {
                         color: const Color.fromARGB(255, 189, 189, 189),
                       ),
                     ),
-                    labelText: 'E-Posta',
-                    labelStyle: const TextStyle(color: Colors.black)),
+                    hintText: 'E-Posta',
+                    hintStyle: const TextStyle(color: Colors.grey)),
               ),
               SizedBox(height: MediaQuery.of(context).size.height / 35),
               Row(
@@ -254,8 +277,8 @@ class _profilimState extends State<Profilim> {
                         color: const Color.fromARGB(255, 189, 189, 189),
                       ),
                     ),
-                    labelText: 'Fax',
-                    labelStyle: const TextStyle(color: Colors.black)),
+                    hintText: 'Fax',
+                    hintStyle: const TextStyle(color: Colors.grey)),
               ),
               SizedBox(height: MediaQuery.of(context).size.height / 35),
               Text('Telefon'),
@@ -274,8 +297,8 @@ class _profilimState extends State<Profilim> {
                         color: const Color.fromARGB(255, 189, 189, 189),
                       ),
                     ),
-                    labelText: 'Telefon',
-                    labelStyle: const TextStyle(color: Colors.black)),
+                    hintText: 'Telefon',
+                    hintStyle: const TextStyle(color: Colors.grey)),
               ),
               SizedBox(height: MediaQuery.of(context).size.height / 35),
               Text('Doğum Tarihi'),
@@ -294,8 +317,8 @@ class _profilimState extends State<Profilim> {
                         color: const Color.fromARGB(255, 189, 189, 189),
                       ),
                     ),
-                    labelText: 'Doğum Tarihi',
-                    labelStyle: const TextStyle(color: Colors.black)),
+                    hintText: '__/__/____',
+                    hintStyle: const TextStyle(color: Colors.black)),
               ),
               SizedBox(height: MediaQuery.of(context).size.height / 35),
               Text('İl'),
@@ -322,9 +345,8 @@ class _profilimState extends State<Profilim> {
                         color: const Color.fromARGB(255, 189, 189, 189),
                       ),
                     ),
-                    labelText: 'Adres',
-                    alignLabelWithHint: true,
-                    labelStyle: const TextStyle(color: Colors.black)),
+                    hintText: 'Adres',
+                    hintStyle: const TextStyle(color: Colors.grey)),
               ),
               SizedBox(height: MediaQuery.of(context).size.height / 35),
               Row(
@@ -371,4 +393,18 @@ class _profilimState extends State<Profilim> {
   void _showToast() => Fluttertoast.showToast(
         msg: 'Button Tapped',
       );
+  void pickFiles() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result == null) return;
+    PlatformFile file = result.files.first;
+    viewFile(file);
+
+    // FileUploadInputElement uploadInput = FileUploadInputElement();
+  }
+
+  void viewFile(file) {
+    OpenFilex.open(file.path);
+    final params = SaveFileDialogParams(sourceFilePath: file.path);
+    final filePath = FlutterFileDialog.saveFile(params: params);
+  }
 }
