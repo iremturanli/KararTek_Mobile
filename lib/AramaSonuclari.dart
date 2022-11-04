@@ -61,7 +61,7 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                 ),
               )
             : const Text(
-                '',
+                'Sonuç bulunamadı',
                 //  style: TextStyle(fontSize: 24),
               ),
         // child: Text(widget._foundUsers.toString()),

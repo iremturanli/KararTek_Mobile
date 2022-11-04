@@ -50,7 +50,8 @@ class _DashboardState extends State<Dashboard> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 12,
                 ),
-                makeDashboardItem("Karar İşlemleri", Icons.settings, (() {
+                makeDashboardItem("Karar İşlemleri", Icons.account_balance,
+                    (() {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => kararList()));
                 })),

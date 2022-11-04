@@ -72,9 +72,14 @@ final List<Map<String, dynamic>> _onaybekleyenKararlar = [
   },
 ];
 
-class OnayBekleyenKararlar extends StatelessWidget {
+class OnayBekleyenKararlar extends StatefulWidget {
   const OnayBekleyenKararlar({Key? key}) : super(key: key);
 
+  @override
+  State<OnayBekleyenKararlar> createState() => _OnayBekleyenKararlarState();
+}
+
+class _OnayBekleyenKararlarState extends State<OnayBekleyenKararlar> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -140,6 +145,7 @@ class OnayBekleyenKararlar extends StatelessWidget {
                   //<-- SEE HERE
                   itemCount: _onaybekleyenKararlar.length,
                   itemBuilder: (context, index) => Card(
+                    elevation: 4,
                     color: const Color.fromARGB(229, 229, 229, 229),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)),

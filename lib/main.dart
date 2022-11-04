@@ -146,7 +146,7 @@ class Home extends StatelessWidget {
                                 builder: (context) => yeniKullanici()));
                       },
                       child: const Text(
-                        'Başvuru Yap',
+                        'Yeni Kullanıcı',
                         style: TextStyle(fontSize: 19),
                       ),
                     ),

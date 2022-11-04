@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/widgets/Divider.dart';
+import 'package:flutter_application_1/widgets/CustomDivider.dart';
 import 'package:flutter_application_1/widgets/KararRedPopUp.dart';
 import 'package:flutter_application_1/widgets/onayBekleyenKararlarlarList.dart';
 
