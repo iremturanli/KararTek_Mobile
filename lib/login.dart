@@ -157,7 +157,7 @@ class _LoginState extends State<Login> {
                             backgroundColor: Color.fromARGB(255, 1, 28, 63),
                           ),
                           onPressed: () {
-                            Navigator.push(
+                            Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => Dashboard()));
@@ -179,9 +179,10 @@ class _LoginState extends State<Login> {
                           ),
                           onPressed: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const Home()));
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Home()),
+                            );
                           },
                           child: const Text(
                             'Geri',

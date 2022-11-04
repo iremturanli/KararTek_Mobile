@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/login.dart';
 import 'package:flutter_application_1/widgets/comboBox.dart';
 import 'package:flutter_application_1/sifremiUnuttum.dart';
 import 'package:flutter_application_1/homePage.dart';
@@ -241,7 +242,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                 Navigator.push(
                                     context, //Color.fromARGB(255, 1, 28, 63),
                                     MaterialPageRoute(
-                                        builder: (context) => Dashboard()));
+                                        builder: (context) => Home()));
                               },
                               child: const Text(
                                 'Vazgeç',
@@ -266,7 +267,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const Home()));
+                                        builder: (context) => const Login()));
                               },
                               child: const Text(
                                 'Kayıt Ol',
