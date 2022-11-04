@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_application_1/widgets/Divider.dart';
+import 'package:flutter_application_1/widgets/CustomDivider.dart';
 
 class Menu extends StatelessWidget {
   final VoidCallback press;

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_application_1/widgets/Divider.dart';
+import 'package:flutter_application_1/widgets/CustomDivider.dart';
 
 class iletisimBilgileri extends StatelessWidget {
   const iletisimBilgileri({Key? key}) : super(key: key);
