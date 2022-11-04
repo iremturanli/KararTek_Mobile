@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
 
-class KararHavuzumDetay extends StatelessWidget {
-  final int ListIndex;
+class KaydettigimKararDetay extends StatelessWidget {
   List<Map<String, dynamic>> List_;
-
-  KararHavuzumDetay({Key? key, required this.ListIndex, required this.List_})
-      : super(key: key);
-
+  final int ListIndex;
+  KaydettigimKararDetay({
+    Key? key,
+    required this.ListIndex,
+    required this.List_,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,6 +53,18 @@ class KararHavuzumDetay extends StatelessWidget {
                 '${List_[ListIndex]["Hüküm"]}',
               ),
               CustomDivider(),
+              Text('Avukat Açıklaması',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
+              SizedBox(height: MediaQuery.of(context).size.height / 100),
+              Text('${List_[ListIndex]["Avukat Açıklaması"]}'),
+              CustomDivider(),
+              Text('TBB Açıklaması', //????
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
+              SizedBox(height: MediaQuery.of(context).size.height / 100),
+              Text('${List_[ListIndex]["TBB Açıklaması"]}'),
+              CustomDivider(),
               Text('Karar',
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
@@ -59,7 +72,25 @@ class KararHavuzumDetay extends StatelessWidget {
               Text(
                 '${List_[ListIndex]["Karar"]}',
               ),
-              CustomDivider()
+              CustomDivider(),
+              Text('Karar Tarihi',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
+              SizedBox(height: MediaQuery.of(context).size.height / 100),
+              Text('${List_[ListIndex]["Karar Tarihi"]}'),
+              CustomDivider(),
+              Text('Kayıt Tarihi',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
+              SizedBox(height: MediaQuery.of(context).size.height / 100),
+              Text('${List_[ListIndex]["Kayıt Tarihi"]}'),
+              CustomDivider(),
+              Text("TBB'ye Gönderilme Tarihi",
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
+              SizedBox(height: MediaQuery.of(context).size.height / 100),
+              Text('${List_[ListIndex]["TBB'ye Gönderilme Tarihi"]}'),
+              CustomDivider(),
             ])),
       ),
     );

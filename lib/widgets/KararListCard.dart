@@ -3,13 +3,15 @@ import 'package:flutter_application_1/KararOnayDetay.dart';
 
 class CardData extends StatelessWidget {
   final int ListIndex;
-  final String parameters;
+  final String param1;
+  final String? param2;
   final List<Map<String, dynamic>> List_;
   const CardData(
       {Key? key,
       required this.ListIndex,
-      required this.parameters,
-      required this.List_})
+      required this.param1,
+      required this.List_,
+      required this.param2})
       : super(key: key);
 
   @override
@@ -27,12 +29,16 @@ class CardData extends StatelessWidget {
                     )));
       }),
       child: Container(
-        padding: EdgeInsets.all(height / 50),
-        child: Text(
-          '${List_[ListIndex][parameters]}',
-          style: TextStyle(fontSize: 15),
-        ),
-      ),
+          padding: EdgeInsets.all(height / 60),
+          child: param2 == null
+              ? Text(
+                  '${List_[ListIndex][param1]}',
+                  style: TextStyle(fontSize: 15),
+                )
+              : Text(
+                  "${List_[ListIndex][param1]}/${List_[ListIndex][param2]}",
+                  style: TextStyle(fontSize: 15),
+                )),
     );
   }
 }

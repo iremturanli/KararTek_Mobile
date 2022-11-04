@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
 import 'package:flutter_application_1/widgets/KararRedPopUp.dart';
-import 'package:flutter_application_1/widgets/onayBekleyenKararlarlarList.dart';
+import 'package:flutter_application_1/widgets/KararListCard.dart';
 
 class KararDetay extends StatelessWidget {
   List<Map<String, dynamic>> List_;
@@ -18,6 +18,7 @@ class KararDetay extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -39,7 +40,7 @@ class KararDetay extends StatelessWidget {
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
             Text(
-              '${List_[ListIndex]["esasNo"]}',
+              '${List_[ListIndex]["esasSıraNo"]}/${List_[ListIndex]["esasYılı"]}',
             ),
             CustomDivider(),
             Text('Kurul Adı',
@@ -67,12 +68,6 @@ class KararDetay extends StatelessWidget {
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
             Text('${List_[ListIndex]["Avukat Açıklaması"]}'),
-            CustomDivider(),
-            Text('TBB Açıklaması', //????
-                style: TextStyle(
-                    color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
-            SizedBox(height: MediaQuery.of(context).size.height / 100),
-            Text('${List_[ListIndex]["TBB Açıklaması"]}'),
             CustomDivider(),
             Text('Karar',
                 style: TextStyle(
