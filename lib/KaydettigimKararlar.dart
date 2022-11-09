@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/widgets/CustomDivider.dart';
 import 'package:flutter_application_1/widgets/ModalBottomOnay.dart';
 import 'package:flutter_application_1/widgets/KararListCard.dart';
-import 'package:flutter_application_1/widgets/kararKay%C4%B1tCard.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+
+import 'kaydettigimKararlarDetay.dart';
 
 final List<Map<String, dynamic>> _kaydettigimKararlar = [
   {
@@ -12,7 +14,7 @@ final List<Map<String, dynamic>> _kaydettigimKararlar = [
     "esasYılı": "2022",
     "karaSıraNo": "221",
     "kararYılı": "2022",
-    "durum": "  Onaya Gönderildi",
+    "durum": "Onaya Gönderildi",
     "Kurul Adı": "1.Ceza Dairesi",
     "Mahkeme": "Bölge Adliye Mahkemesi 18. Hukuk Dairesi",
     "Hüküm":
@@ -30,7 +32,7 @@ final List<Map<String, dynamic>> _kaydettigimKararlar = [
     "esasYılı": "2022",
     "karaSıraNo": "222",
     "kararYılı": "2022",
-    "durum": "  Onaya Gönderildi",
+    "durum": "Onaya Gönderildi",
     "Kurul Adı": "1.Ceza Dairesi",
     "Mahkeme": "Ankara Bölge Adliye Mahkemesi",
     "Hüküm":
@@ -48,7 +50,7 @@ final List<Map<String, dynamic>> _kaydettigimKararlar = [
     "esasYılı": "2022",
     "karaSıraNo": "223",
     "kararYılı": "2022",
-    "durum": "  Onaylandı",
+    "durum": "Onaylandı",
     "Kurul Adı": "1.Ceza Dairesi",
     "Mahkeme": "Ankara Bölge Adliye Mahkemesi",
     "Hüküm":
@@ -140,13 +142,7 @@ class _KaydettigimKararlarState extends State<KaydettigimKararlar> {
                   Text("Karar Durumu"),
                 ],
               ),
-              const Divider(
-                  height: 6,
-                  thickness: 0.5,
-                  indent: 10,
-                  endIndent: 10,
-                  color: Color.fromARGB(255, 172, 172, 172)),
-              SizedBox(height: height / 50),
+              CustomDivider(),
               Container(
                 height: height / 2,
                 width: width,
@@ -158,27 +154,42 @@ class _KaydettigimKararlarState extends State<KaydettigimKararlar> {
                     color: const Color.fromARGB(229, 229, 229, 229),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CardDataKayitliKarar(
-                          ListIndex: index,
-                          param1: "esasSıraNo",
-                          param2: "esasYılı",
-                          List_: _kaydettigimKararlar,
-                        ),
-                        SizedBox(width: height / 40), //?????
-                        CardDataKayitliKarar(
-                            ListIndex: index,
-                            param1: "karaSıraNo",
-                            param2: "kararYılı",
-                            List_: _kaydettigimKararlar),
-                        CardDataKayitliKarar(
-                            ListIndex: index,
-                            param1: "durum",
-                            param2: null,
-                            List_: _kaydettigimKararlar)
-                      ],
+                    child: InkWell(
+                      onTap: (() {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => KaydettigimKararDetay(
+                                      List_: _kaydettigimKararlar,
+                                      ListIndex: index,
+                                    )));
+                      }),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          CardData(
+                            param1: _kaydettigimKararlar[index]["esasSıraNo"],
+                            param2: _kaydettigimKararlar[index]["esasYılı"],
+                          ),
+                          SizedBox(width: height / 40), //?????
+                          CardData(
+                            param1: _kaydettigimKararlar[index]["karaSıraNo"],
+                            param2: _kaydettigimKararlar[index]["kararYılı"],
+                          ),
+                          Chip(
+                            labelPadding: EdgeInsets.all(2.0),
+                            label: Text(
+                              _kaydettigimKararlar[index]["durum"],
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            backgroundColor: statusColor(index),
+                            elevation: 6.0,
+                            shadowColor: Colors.grey[60],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -187,4 +198,15 @@ class _KaydettigimKararlarState extends State<KaydettigimKararlar> {
           ),
         ));
   }
+
+  statusColor(int index) {
+    if (_kaydettigimKararlar[index]["durum"] == "Onaylandı") {
+      return Color.fromARGB(255, 130, 184, 113);
+    } else if (_kaydettigimKararlar[index]["durum"] == "Reddedildi") {
+      return Color.fromARGB(255, 194, 27, 5);
+    } else
+      return const Color.fromARGB(255, 1, 28, 63);
+  }
 }
+//Color.fromARGB(255, 194, 27, 5)
+// Color.fromARGB(255, 130, 184, 113)

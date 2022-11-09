@@ -1,20 +1,13 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
-class ComboBox extends StatefulWidget {
-  const ComboBox({Key? key, required this.items}) : super(key: key);
+class DropDownCustom extends StatelessWidget {
+  DropDownCustom({Key? key, required this.items, this.value, this.onChanged})
+      : super(key: key);
   @override
-  State<ComboBox> createState() => _ComboBoxState();
+  final String? value;
   final List<String> items;
-}
-
-class _ComboBoxState extends State<ComboBox> {
-  // final List<String> items = [
-  //   'Yüksek Yargı Kararları',
-  //   'Avukatın Eklediği Kararlar',
-  // ];
-  // ignore: non_constant_identifier_names
-  String? selected_Value;
+  final Function(String?)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +16,6 @@ class _ComboBoxState extends State<ComboBox> {
         isExpanded: true,
         hint: Row(
           children: const [
-            // Icon(
-            //   Icons.menu,
-            //   size: 20,
-            //   color: Color.fromARGB(255, 0, 0, 0),
-            // ),
             SizedBox(
               width: 10,
             ),
@@ -42,7 +30,7 @@ class _ComboBoxState extends State<ComboBox> {
             ),
           ],
         ),
-        items: widget.items
+        items: items
             .map((item) => DropdownMenuItem<String>(
                   value: item,
                   child: Text(
@@ -56,13 +44,8 @@ class _ComboBoxState extends State<ComboBox> {
                   ),
                 ))
             .toList(),
-        value: selected_Value,
-        onChanged: (value) {
-          setState(() {
-            selected_Value = value as String;
-            print(selected_Value);
-          });
-        },
+        value: value,
+        onChanged: onChanged,
         icon: const Icon(
           Icons.keyboard_arrow_down_outlined,
         ),

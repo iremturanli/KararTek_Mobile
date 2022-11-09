@@ -7,8 +7,11 @@ class RadioButton extends StatefulWidget {
   State<RadioButton> createState() => _RadioButtonState();
 }
 
+enum YuksekYargi { yargitay, danistay, anayasaMahkemesi }
+
+YuksekYargi? _yuksekYargi = YuksekYargi.yargitay;
+
 class _RadioButtonState extends State<RadioButton> {
-  String yuksek_Yargi = "Yargıtay";
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -17,18 +20,18 @@ class _RadioButtonState extends State<RadioButton> {
         Expanded(
           flex: 1,
           child: RadioListTile(
-            activeColor: const Color.fromARGB(255, 1, 28, 63),
-            title: Transform.translate(
-                offset: const Offset(-20, 0),
-                child: const Text(style: TextStyle(fontSize: 11), 'Yargıtay')),
-            value: 'yargitay',
-            groupValue: yuksek_Yargi,
-            onChanged: ((value) {
-              setState(() {
-                yuksek_Yargi = value.toString();
-              });
-            }),
-          ),
+              activeColor: const Color.fromARGB(255, 1, 28, 63),
+              title: Transform.translate(
+                  offset: const Offset(-20, 0),
+                  child:
+                      const Text(style: TextStyle(fontSize: 11), 'Yargıtay')),
+              value: YuksekYargi.yargitay,
+              groupValue: _yuksekYargi,
+              onChanged: (YuksekYargi? value) {
+                setState(() {
+                  _yuksekYargi = value;
+                });
+              }),
         ),
         Expanded(
           flex: 1,
@@ -37,11 +40,11 @@ class _RadioButtonState extends State<RadioButton> {
             title: Transform.translate(
                 offset: const Offset(-20, 0),
                 child: const Text(style: TextStyle(fontSize: 11), 'Danıştay')),
-            value: 'danistay',
-            groupValue: yuksek_Yargi,
-            onChanged: ((value) {
+            value: YuksekYargi.danistay,
+            groupValue: _yuksekYargi,
+            onChanged: ((YuksekYargi? value) {
               setState(() {
-                yuksek_Yargi = value.toString();
+                _yuksekYargi = value;
               });
             }),
           ),
@@ -56,14 +59,14 @@ class _RadioButtonState extends State<RadioButton> {
                 child: const Text(
                   maxLines: 2,
                   style: TextStyle(fontSize: 10.2),
-                  'Anayasa Mahkeme',
+                  'Anayasa Mahkemesi',
                   // overflow: TextOverflow.fade,
                 )),
-            value: 'anayasaMahkemesi',
-            groupValue: yuksek_Yargi,
-            onChanged: ((value) {
+            value: YuksekYargi.anayasaMahkemesi,
+            groupValue: _yuksekYargi,
+            onChanged: ((YuksekYargi? value) {
               setState(() {
-                yuksek_Yargi = value.toString();
+                _yuksekYargi = value;
               });
             }),
           ),

@@ -72,7 +72,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
                 makeDashboardItem("Profilim", Icons.person, (() {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => profilim()));
+                      MaterialPageRoute(builder: (context) => Profilim()));
                 })),
               ],
             ),

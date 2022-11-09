@@ -2,43 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/KararOnayDetay.dart';
 
 class CardData extends StatelessWidget {
-  final int ListIndex;
   final String param1;
   final String? param2;
-  final List<Map<String, dynamic>> List_;
-  const CardData(
-      {Key? key,
-      required this.ListIndex,
-      required this.param1,
-      required this.List_,
-      required this.param2})
-      : super(key: key);
+  const CardData({
+    Key? key,
+    required this.param1,
+    required this.param2,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return InkWell(
-      onTap: (() {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => KararDetay(
-                      List_: List_,
-                      ListIndex: ListIndex,
-                    )));
-      }),
-      child: Container(
-          padding: EdgeInsets.all(height / 60),
-          child: param2 == null
-              ? Text(
-                  '${List_[ListIndex][param1]}',
-                  style: TextStyle(fontSize: 15),
-                )
-              : Text(
-                  "${List_[ListIndex][param1]}/${List_[ListIndex][param2]}",
-                  style: TextStyle(fontSize: 15),
-                )),
-    );
+    return Container(
+        padding: EdgeInsets.all(height / 55),
+        child: Text(
+          "${param1}/${param2}",
+          style: TextStyle(fontSize: 15, color: Colors.black),
+        ));
   }
 }

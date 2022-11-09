@@ -30,11 +30,11 @@ class CardDataKayitliKarar extends StatelessWidget {
                     )));
       }),
       child: Container(
-          padding: EdgeInsets.all(height / 60),
+          padding: EdgeInsets.all(height / 50),
           child: param2 == null
               ? Text(
                   '${List_[ListIndex][param1]}',
-                  style: TextStyle(fontSize: 15),
+                  style: TextStyle(fontSize: 15, color: Colors.white),
                 )
               : Text(
                   "${List_[ListIndex][param1]}/${List_[ListIndex][param2]}",

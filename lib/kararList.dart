@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/AvukatKararToplam.dart';
 import 'package:flutter_application_1/KararHavuzum.dart';
 import 'package:flutter_application_1/KaydettigimKararlar.dart';
 import 'package:flutter_application_1/OnayBekleyenKararlar.dart';
@@ -90,6 +91,14 @@ class kararList extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => OnayBekleyenKararlar(),
+                          ),
+                        );
+                        break;
+                      case 4:
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AvukatKararToplam(),
                           ),
                         );
                         break;
