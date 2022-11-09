@@ -9,7 +9,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:open_filex/open_filex.dart';
-import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 
 enum GenderCharacter { erkek, kadin }
 
@@ -405,7 +404,5 @@ class _ProfilimState extends State<Profilim> {
 
   void viewFile(file) {
     OpenFilex.open(file.path);
-    final params = SaveFileDialogParams(sourceFilePath: file.path);
-    final filePath = FlutterFileDialog.saveFile(params: params);
   }
 }

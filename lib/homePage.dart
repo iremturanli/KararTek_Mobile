@@ -16,6 +16,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -63,7 +64,7 @@ class _DashboardState extends State<Dashboard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                makeDashboardItem("İletişim Bilgileri", Icons.phone, (() {
+                makeDashboardItem("İletişim", Icons.phone, (() {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => iletisimList()));
                 })),

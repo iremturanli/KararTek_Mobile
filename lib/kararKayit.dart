@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:open_filex/open_filex.dart';
-import 'package:flutter_file_dialog/flutter_file_dialog.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class kararKayit extends StatefulWidget {
   kararKayit({
@@ -54,7 +54,7 @@ class _kararKayitState extends State<kararKayit> {
                   labelText: 'Daire / Kurul Adı',
                   labelStyle: const TextStyle(color: Colors.black)),
             ),
-            const SizedBox(height: 30),
+            SizedBox(height: MediaQuery.of(context).size.height / 35),
             TextFormField(
               decoration: InputDecoration(
                   filled: true,
@@ -72,7 +72,7 @@ class _kararKayitState extends State<kararKayit> {
                   labelText: 'Mahkeme*',
                   labelStyle: const TextStyle(color: Colors.black)),
             ),
-            const SizedBox(height: 31),
+            SizedBox(height: MediaQuery.of(context).size.height / 35),
             TextFormField(
               textAlignVertical: TextAlignVertical.top,
               minLines: 3,
@@ -94,7 +94,7 @@ class _kararKayitState extends State<kararKayit> {
                   alignLabelWithHint: true,
                   labelStyle: const TextStyle(color: Colors.black)),
             ),
-            const SizedBox(height: 31),
+            SizedBox(height: MediaQuery.of(context).size.height / 35),
             TextFormField(
               decoration: InputDecoration(
                   filled: true,
@@ -112,13 +112,13 @@ class _kararKayitState extends State<kararKayit> {
                   labelText: 'Dava Türü',
                   labelStyle: const TextStyle(color: Colors.black)),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: MediaQuery.of(context).size.height / 50),
             Text('Esas No*'),
-            const SizedBox(height: 15),
+            SizedBox(height: MediaQuery.of(context).size.height / 65),
             Row(children: <Widget>[
               Expanded(
                 child: SizedBox(
-                  height: 50,
+                  height: MediaQuery.of(context).size.height / 17,
                   child: TextFormField(
                     decoration: InputDecoration(
                         filled: true,
@@ -138,10 +138,10 @@ class _kararKayitState extends State<kararKayit> {
                   ),
                 ),
               ),
-              const SizedBox(width: 15),
+              SizedBox(width: MediaQuery.of(context).size.width / 50),
               Expanded(
                 child: SizedBox(
-                  height: 50,
+                  height: MediaQuery.of(context).size.height / 17,
                   child: TextFormField(
                     decoration: InputDecoration(
                         filled: true,
@@ -162,13 +162,13 @@ class _kararKayitState extends State<kararKayit> {
                 ),
               )
             ]),
-            const SizedBox(height: 20),
-            Text('Karar No*'),
-            const SizedBox(height: 15),
+            SizedBox(height: MediaQuery.of(context).size.height / 50),
+            Text('Karar No'),
+            SizedBox(height: MediaQuery.of(context).size.height / 65),
             Row(children: <Widget>[
               Expanded(
                 child: SizedBox(
-                  height: 50,
+                  height: MediaQuery.of(context).size.height / 17,
                   child: TextFormField(
                     decoration: InputDecoration(
                         filled: true,
@@ -188,10 +188,10 @@ class _kararKayitState extends State<kararKayit> {
                   ),
                 ),
               ),
-              const SizedBox(width: 15),
+              SizedBox(width: MediaQuery.of(context).size.width / 50),
               Expanded(
                 child: SizedBox(
-                  height: 50,
+                  height: MediaQuery.of(context).size.height / 17,
                   child: TextFormField(
                     decoration: InputDecoration(
                         filled: true,
@@ -212,7 +212,7 @@ class _kararKayitState extends State<kararKayit> {
                 ),
               )
             ]),
-            const SizedBox(height: 31),
+            SizedBox(height: MediaQuery.of(context).size.height / 35),
             TextFormField(
               decoration: InputDecoration(
                   filled: true,
@@ -230,7 +230,7 @@ class _kararKayitState extends State<kararKayit> {
                   labelText: 'Karar Tarihi',
                   labelStyle: const TextStyle(color: Colors.black)),
             ),
-            const SizedBox(height: 31),
+            SizedBox(height: MediaQuery.of(context).size.height / 35),
             TextFormField(
               textAlignVertical: TextAlignVertical.top,
               minLines: 3,
@@ -252,7 +252,7 @@ class _kararKayitState extends State<kararKayit> {
                   alignLabelWithHint: true,
                   labelStyle: const TextStyle(color: Colors.black)),
             ),
-            const SizedBox(height: 31),
+            SizedBox(height: MediaQuery.of(context).size.height / 35),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -267,7 +267,22 @@ class _kararKayitState extends State<kararKayit> {
                 'Yeni Dosya Yükle',
                 style: TextStyle(fontSize: 17),
               ),
-            )
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height / 35),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  minimumSize: const Size(150, 45),
+                  backgroundColor: HexColor('#5DB075')),
+              onPressed: () {},
+              child: const Text(
+                'Yeni Dosya Yükle',
+                style: TextStyle(fontSize: 17),
+              ),
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height / 35),
           ],
         ),
       ),
@@ -288,7 +303,5 @@ class _kararKayitState extends State<kararKayit> {
 
   void viewFile(file) {
     OpenFilex.open(file.path);
-    final params = SaveFileDialogParams(sourceFilePath: file.path);
-    final filePath = FlutterFileDialog.saveFile(params: params);
   }
 }

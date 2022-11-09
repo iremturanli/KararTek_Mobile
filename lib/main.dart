@@ -122,7 +122,7 @@ class Home extends StatelessWidget {
                         backgroundColor: const Color.fromARGB(255, 1, 28, 63),
                       ),
                       onPressed: () {
-                        Navigator.push(context,
+                        Navigator.pushReplacement(context,
                             MaterialPageRoute(builder: (context) => Login()));
                       },
                       child: const Text(
