@@ -279,7 +279,7 @@ class _kararKayitState extends State<kararKayit> {
                   backgroundColor: HexColor('#5DB075')),
               onPressed: () {},
               child: const Text(
-                'Yeni Dosya Yükle',
+                'Kaydet',
                 style: TextStyle(fontSize: 17),
               ),
             ),
