@@ -1,8 +1,46 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+_makingPhoneCall() async {
+  var url = Uri.parse("tel:+908502518427");
+  if (await canLaunchUrl(url)) {
+    await launchUrl(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
+
+_launchEmail() async {
+  var email = Uri.parse("mailto:bilgi@karartek.com.tr");
+  if (await canLaunchUrl(email)) {
+    await canLaunchUrl(email);
+  } else {
+    throw 'Could not launch';
+  }
+}
+
+void navigateTo(double lat, double lng) async {
+  var uri = Uri.parse("google.navigation:q=$lat,$lng&mode=d");
+  print(uri);
+  if (await canLaunchUrl(uri)) {
+    await canLaunchUrl(uri);
+  } else {
+    throw 'Could not launch ${uri.toString()}';
+  }
+}
+
+Future<void> _launchInBrowser(Uri url) async {
+  if (!await launchUrl(
+    url,
+    mode: LaunchMode.externalApplication,
+  )) {
+    throw 'Could not launch $url';
+  }
+}
 
 class iletisimBilgileri extends StatelessWidget {
   const iletisimBilgileri({Key? key}) : super(key: key);
@@ -37,8 +75,13 @@ class iletisimBilgileri extends StatelessWidget {
           SizedBox(height: MediaQuery.of(context).size.height / 55),
           Row(
             // ignore: prefer_const_literals_to_create_immutables
-
             children: [
+              IconButton(
+                  onPressed: _makingPhoneCall,
+                  icon: Icon(
+                    Icons.phone,
+                    size: 20,
+                  )),
               Text('Telefon: +90 (850) 251 8 427',
                   style: TextStyle(fontSize: 16))
             ],
@@ -98,7 +141,10 @@ class iletisimBilgileri extends StatelessWidget {
             children: [
               IconButton(
                   onPressed: () async {
-                    navigateTo(39.89897, 32.82050);
+                    var url = Uri.parse(
+                        "google.navigation:q=39.89897,32.82050&mode=d");
+                    _launchInBrowser(url);
+                    //   navigateTo(39.89897, 32.82050);
                   },
                   icon: Icon(
                     Icons.map,
