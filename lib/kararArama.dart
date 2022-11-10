@@ -5,9 +5,6 @@ import 'package:flutter_application_1/widgets/RadioButton.dart';
 import 'package:flutter_application_1/widgets/dropDownCustom.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-import 'widgets/comboBoxLarge.dart';
-import 'widgets/comboBox.dart';
-
 class KararArama extends StatefulWidget {
   const KararArama({Key? key}) : super(key: key);
 
