@@ -135,114 +135,116 @@ class _KararAramaState extends State<KararArama> {
         elevation: 0.0,
         iconTheme: const IconThemeData(color: Colors.black),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 50,
-            ),
-            Padding(
-              padding:
-                  EdgeInsets.only(top: MediaQuery.of(context).size.width / 80),
-              // ignore: prefer_const_constructors
-              child: Image(
-                image: const AssetImage("assets/login-logo.png"),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 50,
               ),
-            ),
-            const SizedBox(height: 50),
-            SizedBox(
-              height: 55,
-              width: 400,
-              child: TextField(
-                decoration: InputDecoration(
-                  labelText: 'Ara',
-                  labelStyle: const TextStyle(
-                    color: Colors.black,
-                  ),
-                  filled: true,
-                  fillColor: const Color.fromARGB(255, 252, 252, 252),
-                  focusedBorder: OutlineInputBorder(
-                    // ignore: prefer_const_constructors
-                    borderSide: BorderSide(width: 1, color: Colors.grey),
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    // ignore: prefer_const_constructors
-                    borderSide: BorderSide(width: 1, color: Colors.grey),
-                    borderRadius: BorderRadius.circular(40),
-                  ),
+              Padding(
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.width / 80),
+                // ignore: prefer_const_constructors
+                child: Image(
+                  image: const AssetImage("assets/login-logo.png"),
                 ),
-                controller: textEditingController,
               ),
-            ),
-            const SizedBox(height: 30),
-            //ComboBox(items: kararlar,),
-            DropDownCustom(
-              items: kararlar,
-              value: selectedValue,
-              onChanged: (value) {
-                setState(() {
-                  //print(value);
-                  if (value == "Yüksek Yargı Kararları") {
-                    isVisible = true;
-                    selectedValue = value;
-                  } else {
-                    isVisible = false;
-                    selectedValue = value;
-                  }
-                });
-              },
-            ),
-            Visibility(
-              visible: isVisible,
-              child: RadioButton(),
-            ),
-            const SizedBox(height: 70),
-            Column(
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      minimumSize: const Size(350, 55),
-                      backgroundColor: const Color.fromARGB(255, 1, 28, 63)),
-                  onPressed: () {
-                    _runFilter(textEditingController.text);
-                  },
-                  child: const Text(
-                    'Arama Yap',
-                    style: TextStyle(fontSize: 17),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      minimumSize: const Size(350, 55),
-                      backgroundColor:
-                          const Color.fromARGB(255, 126, 126, 126)),
-                  onPressed: () => showMaterialModalBottomSheet<void>(
-                    expand: true,
-                    // backgroundColor: Colors.transparent,
-                    context: context,
-                    builder: (BuildContext context) => ModalBottom(
-                      press: () {
-                        _runFilter(textEditingController.text);
-                      },
-                      searchWord: textEditingController,
+              const SizedBox(height: 50),
+              SizedBox(
+                height: 55,
+                width: 400,
+                child: TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Ara',
+                    labelStyle: const TextStyle(
+                      color: Colors.black,
+                    ),
+                    filled: true,
+                    fillColor: const Color.fromARGB(255, 252, 252, 252),
+                    focusedBorder: OutlineInputBorder(
+                      // ignore: prefer_const_constructors
+                      borderSide: BorderSide(width: 1, color: Colors.grey),
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      // ignore: prefer_const_constructors
+                      borderSide: BorderSide(width: 1, color: Colors.grey),
+                      borderRadius: BorderRadius.circular(40),
                     ),
                   ),
-                  child: const Text(
-                    'Detaylı Arama',
-                    style: TextStyle(fontSize: 17),
-                  ),
+                  controller: textEditingController,
                 ),
-              ],
-            ),
-          ],
+              ),
+              const SizedBox(height: 30),
+              //ComboBox(items: kararlar,),
+              DropDownCustom(
+                items: kararlar,
+                value: selectedValue,
+                onChanged: (value) {
+                  setState(() {
+                    //print(value);
+                    if (value == "Yüksek Yargı Kararları") {
+                      isVisible = true;
+                      selectedValue = value;
+                    } else {
+                      isVisible = false;
+                      selectedValue = value;
+                    }
+                  });
+                },
+              ),
+              Visibility(
+                visible: isVisible,
+                child: RadioButton(),
+              ),
+              const SizedBox(height: 70),
+              Column(
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        minimumSize: const Size(350, 55),
+                        backgroundColor: const Color.fromARGB(255, 1, 28, 63)),
+                    onPressed: () {
+                      _runFilter(textEditingController.text);
+                    },
+                    child: const Text(
+                      'Arama Yap',
+                      style: TextStyle(fontSize: 17),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        minimumSize: const Size(350, 55),
+                        backgroundColor:
+                            const Color.fromARGB(255, 126, 126, 126)),
+                    onPressed: () => showMaterialModalBottomSheet<void>(
+                      expand: true,
+                      // backgroundColor: Colors.transparent,
+                      context: context,
+                      builder: (BuildContext context) => ModalBottom(
+                        press: () {
+                          _runFilter(textEditingController.text);
+                        },
+                        searchWord: textEditingController,
+                      ),
+                    ),
+                    child: const Text(
+                      'Detaylı Arama',
+                      style: TextStyle(fontSize: 17),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
