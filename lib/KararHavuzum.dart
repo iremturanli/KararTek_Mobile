@@ -5,6 +5,7 @@ import 'package:flutter_application_1/widgets/KararListCard.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'kararHavuzumDetay.dart';
+import 'kararHavuzumDetayDeneme.dart';
 
 final List<Map<String, dynamic>> _kararhavuzum = [
   {
@@ -156,7 +157,7 @@ class _KararHavuzumState extends State<KararHavuzum> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => KararHavuzumDetay(
+                                  builder: (context) => KararHavuzumDetayDeneme(
                                         List_: _kararhavuzum,
                                         ListIndex: index,
                                       )));

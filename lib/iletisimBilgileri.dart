@@ -23,16 +23,6 @@ _launchEmail() async {
   }
 }
 
-void navigateTo(double lat, double lng) async {
-  var uri = Uri.parse("google.navigation:q=$lat,$lng&mode=d");
-  print(uri);
-  if (await canLaunchUrl(uri)) {
-    await canLaunchUrl(uri);
-  } else {
-    throw 'Could not launch ${uri.toString()}';
-  }
-}
-
 Future<void> _launchInBrowser(Uri url) async {
   if (!await launchUrl(
     url,
@@ -150,7 +140,27 @@ class iletisimBilgileri extends StatelessWidget {
                     Icons.map,
                     size: 20,
                   )),
-              Text('Barolar Birliği Başkanlığı', style: TextStyle(fontSize: 16))
+              Text('Barolar Birliği Başkanlığı',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
+            ],
+          ),
+          Row(
+            children: const [
+              Text('Oğuzlar Mahallesi Barış Manço Caddesi',
+                  style: TextStyle(fontSize: 16))
+            ],
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height / 55),
+          Row(
+            children: const [
+              Text('Av. Özdemir Özok Sokak No:8',
+                  style: TextStyle(fontSize: 16))
+            ],
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height / 55),
+          Row(
+            children: const [
+              Text('06650 Çankaya/Ankara', style: TextStyle(fontSize: 16))
             ],
           ),
           CustomDivider(),

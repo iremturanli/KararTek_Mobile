@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/AramaSonuclariDetay.dart';
+import 'package:flutter_application_1/AramaSonuclariDetayDeneme.dart';
 import 'package:flutter_application_1/kararArama.dart';
 import 'package:flutter_application_1/widgets/comboBox.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -197,7 +198,7 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            AramaSonuclariDetay(
+                                            AramaSonuclariDetayDeneme(
                                                 List_: widget._bulunanKararlar,
                                                 ListIndex: index)));
                               }),
