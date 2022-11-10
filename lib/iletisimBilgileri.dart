@@ -3,17 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-_makingPhoneCall() async {
-  var url = Uri.parse("tel:+908502518427");
-
-  if (await canLaunchUrl(url)) {
-    await launchUrl(url);
-  } else {
-    throw 'Could not launch $url';
-  }
-}
 
 class iletisimBilgileri extends StatelessWidget {
   const iletisimBilgileri({Key? key}) : super(key: key);
@@ -50,19 +39,20 @@ class iletisimBilgileri extends StatelessWidget {
             // ignore: prefer_const_literals_to_create_immutables
 
             children: [
-              IconButton(
-                  onPressed: _makingPhoneCall,
-                  icon: Icon(
-                    Icons.aod,
-                    size: 20,
-                  )),
               Text('Telefon: +90 (850) 251 8 427',
                   style: TextStyle(fontSize: 16))
             ],
           ),
-          SizedBox(height: MediaQuery.of(context).size.height / 55),
+          SizedBox(height: MediaQuery.of(context).size.height / 60),
           Row(
-            children: const [
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.height / 50),
+                child: Icon(Icons.fax_outlined),
+              ),
+              SizedBox(width: MediaQuery.of(context).size.height / 65),
               Text('Faks: +90 (850) 251 8 427', style: TextStyle(fontSize: 16))
             ],
           ),
@@ -78,24 +68,23 @@ class iletisimBilgileri extends StatelessWidget {
           SizedBox(height: MediaQuery.of(context).size.height / 55),
           Row(
             children: const [
-              Text('Bilgi Almak İçin: bilgi@karartek.com.tr',
-                  style: TextStyle(fontSize: 16))
+              Text('Bilgi Almak İçin:', style: TextStyle(fontSize: 16)),
+              TextButton(
+                  onPressed: _launchEmail,
+                  child: Text('bilgi@karartek.com.tr',
+                      style: TextStyle(fontSize: 16))),
             ],
           ),
-          SizedBox(height: MediaQuery.of(context).size.height / 55),
           Row(
             children: const [
-              Text('Sorularınız ve Sorunlarınız:',
-                  style: TextStyle(fontSize: 16))
+              Text('Sorularınız ve Sorunlarınız: ',
+                  style: TextStyle(fontSize: 16)),
+              TextButton(
+                  onPressed: _launchEmail, //??
+                  child: Text('destek@karartek.com.tr',
+                      style: TextStyle(fontSize: 16))),
             ],
           ),
-          SizedBox(height: MediaQuery.of(context).size.height / 55),
-          Row(
-            children: const [
-              Text('destek@karartek.com.tr', style: TextStyle(fontSize: 16))
-            ],
-          ),
-          SizedBox(height: MediaQuery.of(context).size.height / 55),
           CustomDivider(),
           SizedBox(height: MediaQuery.of(context).size.height / 55),
           Row(
@@ -106,31 +95,18 @@ class iletisimBilgileri extends StatelessWidget {
           ),
           SizedBox(height: MediaQuery.of(context).size.height / 55),
           Row(
-            children: const [
+            children: [
+              IconButton(
+                  onPressed: () async {
+                    navigateTo(39.89897, 32.82050);
+                  },
+                  icon: Icon(
+                    Icons.map,
+                    size: 20,
+                  )),
               Text('Barolar Birliği Başkanlığı', style: TextStyle(fontSize: 16))
             ],
           ),
-          SizedBox(height: MediaQuery.of(context).size.height / 55),
-          Row(
-            children: const [
-              Text('Oğuzlar Mahallesi Barış Manço Caddesi',
-                  style: TextStyle(fontSize: 16))
-            ],
-          ),
-          SizedBox(height: MediaQuery.of(context).size.height / 55),
-          Row(
-            children: const [
-              Text('Av. Özdemir Özok Sokak No:8',
-                  style: TextStyle(fontSize: 16))
-            ],
-          ),
-          SizedBox(height: MediaQuery.of(context).size.height / 55),
-          Row(
-            children: const [
-              Text('Balgat, 06650, ANKARA', style: TextStyle(fontSize: 16))
-            ],
-          ),
-          SizedBox(height: MediaQuery.of(context).size.height / 55),
           CustomDivider(),
         ]),
       ),

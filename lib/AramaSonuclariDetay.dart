@@ -1,11 +1,13 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
 
-class KararHavuzumDetay extends StatelessWidget {
-  final int ListIndex;
+class AramaSonuclariDetay extends StatelessWidget {
   List<Map<String, dynamic>> List_;
+  final int ListIndex;
 
-  KararHavuzumDetay({Key? key, required this.ListIndex, required this.List_})
+  AramaSonuclariDetay({Key? key, required this.List_, required this.ListIndex})
       : super(key: key);
 
   @override
@@ -16,17 +18,30 @@ class KararHavuzumDetay extends StatelessWidget {
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
-        iconTheme: IconThemeData(color: Colors.black),
-        title: const Text('Karar Havuzum ',
+        iconTheme: const IconThemeData(color: Colors.black),
+        title: const Text('Karar Ayrıntıları',
             style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
                 color: Colors.black)),
         actions: [
+          //generic
           PopupMenuButton(itemBuilder: (context) {
             return [
               PopupMenuItem<int>(
                   value: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.favorite,
+                        color: Colors.red,
+                      ),
+                      Text(' Beğen'),
+                    ],
+                  )),
+              PopupMenuItem<int>(
+                  value: 1,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -38,15 +53,15 @@ class KararHavuzumDetay extends StatelessWidget {
                     ],
                   )),
               PopupMenuItem<int>(
-                  value: 1,
+                  value: 2,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Icon(
-                        Icons.clear_sharp,
-                        color: Colors.red,
+                        Icons.add,
+                        color: Colors.black,
                       ),
-                      Text(' Kaldır'),
+                      Text(' Hızlı Erişim'),
                     ],
                   )),
             ];
@@ -58,38 +73,58 @@ class KararHavuzumDetay extends StatelessWidget {
             padding: EdgeInsets.all(MediaQuery.of(context).size.height / 50),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text('Esas No',
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
-              SizedBox(height: MediaQuery.of(context).size.height / 100),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                // ignore: prefer_const_literals_to_create_immutables
+                children: [
+                  const Text('Esas No',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 117, 117, 117),
+                          fontSize: 17)),
+                  // IconButton(
+                  //     onPressed: () {},
+                  //     icon: Icon(Icons.favorite, color: Colors.red)),
+                ],
+              ),
               Text(
                 '${List_[ListIndex]["esasSıraNo"]}/${List_[ListIndex]["esasYılı"]}',
               ),
-              CustomDivider(),
-              Text('Mahkeme',
+              const CustomDivider(),
+              const Text('Mahkeme',
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
               Text(
                 '${List_[ListIndex]["Mahkeme"]}',
               ),
-              CustomDivider(),
-              Text('Hüküm',
+              const CustomDivider(),
+              const Text('Hüküm',
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
               Text(
                 '${List_[ListIndex]["Hüküm"]}',
               ),
-              CustomDivider(),
-              Text('Karar',
+              const CustomDivider(),
+              const Text('Karar',
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
-              Text(
-                '${List_[ListIndex]["Karar"]}',
-              ),
-              CustomDivider()
+              Text('${List_[ListIndex]["Karar"]}'),
+              const CustomDivider(),
+              const Text('Karar Tarihi',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
+              SizedBox(height: MediaQuery.of(context).size.height / 100),
+              Text('${List_[ListIndex]["Karar Tarihi"]}'),
+              const CustomDivider(),
+              const Text('Kayıt Tarihi',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
+              SizedBox(height: MediaQuery.of(context).size.height / 100),
+              Text('${List_[ListIndex]["Karar Tarihi"]}'),
+              const CustomDivider()
             ])),
       ),
     );

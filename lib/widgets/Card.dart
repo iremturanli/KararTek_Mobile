@@ -25,7 +25,7 @@ Card makeDashboardItem(String title, IconData icon, VoidCallback onTap) {
             children: <Widget>[
               Icon(
                 icon,
-                size: 47.5,
+                size: 50.0,
                 color: Colors.black,
               ),
               SizedBox(
@@ -33,7 +33,7 @@ Card makeDashboardItem(String title, IconData icon, VoidCallback onTap) {
               ),
               Text(title,
                   style: TextStyle(
-                      fontSize: 16.5,
+                      fontSize: 17.5,
                       color: Colors.black,
                       fontWeight: FontWeight.bold))
             ],
