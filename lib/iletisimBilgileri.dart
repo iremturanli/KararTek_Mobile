@@ -3,6 +3,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+_makingPhoneCall() async {
+  var url = Uri.parse("tel:+908502518427");
+
+  if (await canLaunchUrl(url)) {
+    await launchUrl(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
 
 class iletisimBilgileri extends StatelessWidget {
   const iletisimBilgileri({Key? key}) : super(key: key);
@@ -37,7 +48,14 @@ class iletisimBilgileri extends StatelessWidget {
           SizedBox(height: MediaQuery.of(context).size.height / 55),
           Row(
             // ignore: prefer_const_literals_to_create_immutables
+
             children: [
+              IconButton(
+                  onPressed: _makingPhoneCall,
+                  icon: Icon(
+                    Icons.aod,
+                    size: 20,
+                  )),
               Text('Telefon: +90 (850) 251 8 427',
                   style: TextStyle(fontSize: 16))
             ],

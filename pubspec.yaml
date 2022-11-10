@@ -46,6 +46,7 @@ dependencies:
   file_picker: ^5.2.2
   open_filex: ^4.1.1
   hexcolor: ^3.0.1
+  url_launcher: ^6.1.6
 
  
 
