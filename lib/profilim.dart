@@ -30,6 +30,8 @@ class _ProfilimState extends State<Profilim> {
     super.initState();
   }
 
+  bool _isTap = false;
+
   GenderCharacter? _character = GenderCharacter.erkek;
   final List<String> il = [
     'Adana',
@@ -321,8 +323,9 @@ class _ProfilimState extends State<Profilim> {
 
                 //editing controller of this TextField
                 decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.calendar_today),
-                    prefixIconColor: Colors.black,
+                    prefixIcon: Icon(Icons.calendar_today,
+                        color: _isTap ? Colors.grey : Colors.black),
+                    prefixIconColor: Colors.grey,
                     filled: true,
                     fillColor: Color.fromARGB(246, 246, 246, 246),
                     focusedBorder: const OutlineInputBorder(
@@ -368,7 +371,7 @@ class _ProfilimState extends State<Profilim> {
                       },
                       context: context,
                       initialDate: DateTime.now(),
-                      firstDate: DateTime(1950),
+                      firstDate: DateTime(1881),
                       //DateTime.now() - not to allow to choose before today.
                       lastDate: DateTime(2100));
 
@@ -439,7 +442,7 @@ class _ProfilimState extends State<Profilim> {
                             MediaQuery.of(context).size.height / 5,
                             MediaQuery.of(context).size.width / 9),
                         backgroundColor: HexColor('#5DB075')),
-                    onPressed: _showToast,
+                    onPressed: () => Login(),
                     child: const Text(
                       'Kaydet',
                       style: TextStyle(fontSize: 17),
