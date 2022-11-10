@@ -427,7 +427,7 @@ class _ProfilimState extends State<Profilim> {
                             MediaQuery.of(context).size.height / 5,
                             MediaQuery.of(context).size.width / 9),
                         backgroundColor: Color.fromARGB(255, 175, 0, 0)),
-                    onPressed: _showToast,
+                    onPressed: () => Login(),
                     child: const Text(
                       'Çıkış Yap',
                       style: TextStyle(fontSize: 17),
@@ -442,7 +442,7 @@ class _ProfilimState extends State<Profilim> {
                             MediaQuery.of(context).size.height / 5,
                             MediaQuery.of(context).size.width / 9),
                         backgroundColor: HexColor('#5DB075')),
-                    onPressed: () => Login(),
+                    onPressed: _showToast,
                     child: const Text(
                       'Kaydet',
                       style: TextStyle(fontSize: 17),
