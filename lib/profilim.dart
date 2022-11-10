@@ -427,7 +427,10 @@ class _ProfilimState extends State<Profilim> {
                             MediaQuery.of(context).size.height / 5,
                             MediaQuery.of(context).size.width / 9),
                         backgroundColor: Color.fromARGB(255, 175, 0, 0)),
-                    onPressed: () => Login(),
+                    onPressed: () {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => Login()));
+                    },
                     child: const Text(
                       'Çıkış Yap',
                       style: TextStyle(fontSize: 17),
