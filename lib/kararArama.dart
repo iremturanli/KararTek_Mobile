@@ -240,9 +240,6 @@ class _KararAramaState extends State<KararArama> {
                     style: TextStyle(fontSize: 17),
                   ),
                 ),
-                // Visibility(
-                //   visible: true,
-                //   child: child)
               ],
             ),
           ],

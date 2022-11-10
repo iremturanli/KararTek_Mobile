@@ -24,12 +24,12 @@ class _ProfilimState extends State<Profilim> {
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   GenderCharacter? _character = GenderCharacter.erkek;
-  final List<String> Il = [
+  final List<String> il = [
     'Adana',
     '...',
     'Düzce',
   ];
-  final List<String> Ilce = [
+  final List<String> ilce = [
     '.',
     '..',
     '...',
@@ -76,7 +76,7 @@ class _ProfilimState extends State<Profilim> {
                           onPressed: () {
                             pickFiles();
                           },
-                          icon: Icon(Icons.add_photo_alternate))
+                          icon: Icon(Icons.camera_alt_outlined))
                     ],
                   )
                 ],
@@ -323,10 +323,10 @@ class _ProfilimState extends State<Profilim> {
               ),
               SizedBox(height: MediaQuery.of(context).size.height / 35),
               Text('İl'),
-              ComboBox(items: Il),
+              ComboBox(items: il),
               SizedBox(height: MediaQuery.of(context).size.height / 35),
               Text('İlçe'),
-              ComboBox(items: Ilce),
+              ComboBox(items: ilce),
               SizedBox(height: MediaQuery.of(context).size.height / 35),
               Text('Adres'),
               TextFormField(

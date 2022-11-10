@@ -47,6 +47,7 @@ dependencies:
   open_filex: ^4.1.1
   flutter_file_dialog: ^2.3.2
   hexcolor: ^3.0.1
+  url_launcher: ^6.1.6
 
  
 
