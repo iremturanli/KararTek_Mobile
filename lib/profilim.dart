@@ -9,6 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:open_filex/open_filex.dart';
+import 'package:intl/intl.dart';
 
 enum GenderCharacter { erkek, kadin }
 
@@ -22,6 +23,13 @@ class Profilim extends StatefulWidget {
 class _ProfilimState extends State<Profilim> {
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+  TextEditingController dateInput = TextEditingController();
+  @override
+  void initState() {
+    dateInput.text = "";
+    super.initState();
+  }
+
   GenderCharacter? _character = GenderCharacter.erkek;
   final List<String> il = [
     'Adana',
@@ -83,6 +91,7 @@ class _ProfilimState extends State<Profilim> {
               Text('Ad'),
               SizedBox(height: MediaQuery.of(context).size.height / 120),
               TextFormField(
+                enabled: false,
                 readOnly: true,
                 decoration: InputDecoration(
                     filled: true,
@@ -104,6 +113,7 @@ class _ProfilimState extends State<Profilim> {
               Text('Soyad'),
               SizedBox(height: MediaQuery.of(context).size.height / 120),
               TextFormField(
+                enabled: false,
                 readOnly: true,
                 decoration: InputDecoration(
                     filled: true,
@@ -125,6 +135,7 @@ class _ProfilimState extends State<Profilim> {
               Text('TC Kimlik No'),
               SizedBox(height: MediaQuery.of(context).size.height / 120),
               TextFormField(
+                enabled: false,
                 readOnly: true,
                 decoration: InputDecoration(
                     filled: true,
@@ -146,6 +157,7 @@ class _ProfilimState extends State<Profilim> {
               Text('Kullanıcı Adı'),
               SizedBox(height: MediaQuery.of(context).size.height / 120),
               TextFormField(
+                enabled: false,
                 readOnly: true,
                 decoration: InputDecoration(
                     filled: true,
@@ -167,6 +179,7 @@ class _ProfilimState extends State<Profilim> {
               Text('Şifre'),
               SizedBox(height: MediaQuery.of(context).size.height / 120),
               TextFormField(
+                enabled: false,
                 readOnly: true,
                 obscureText: true,
                 decoration: InputDecoration(
@@ -303,8 +316,13 @@ class _ProfilimState extends State<Profilim> {
               SizedBox(height: MediaQuery.of(context).size.height / 35),
               Text('Doğum Tarihi'),
               SizedBox(height: MediaQuery.of(context).size.height / 120),
-              TextFormField(
+              TextField(
+                controller: dateInput,
+
+                //editing controller of this TextField
                 decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.calendar_today),
+                    prefixIconColor: Colors.black,
                     filled: true,
                     fillColor: Color.fromARGB(246, 246, 246, 246),
                     focusedBorder: const OutlineInputBorder(
@@ -318,7 +336,52 @@ class _ProfilimState extends State<Profilim> {
                       ),
                     ),
                     hintText: '__/__/____',
-                    hintStyle: const TextStyle(color: Colors.black)),
+                    hintStyle:
+                        const TextStyle(color: Colors.grey) //icon of text field
+                    //labelText: "" //label text of field
+                    ),
+                readOnly: true,
+                //set it true, so that user will not able to edit text
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      locale: const Locale("tr", "TR"),
+                      builder: (BuildContext context, child) {
+                        return Theme(
+                          data: Theme.of(context).copyWith(
+                            colorScheme: ColorScheme.light(
+                              primary: Color.fromARGB(
+                                  255, 47, 47, 46), // header background color
+                              onPrimary: Color.fromARGB(
+                                  255, 195, 194, 194), // header text color
+                              onSurface: Color.fromARGB(
+                                  255, 20, 20, 20), // body text color
+                            ),
+                            textButtonTheme: TextButtonThemeData(
+                              style: TextButton.styleFrom(
+                                foregroundColor: Color.fromARGB(
+                                    255, 23, 48, 112), // button text color
+                              ),
+                            ),
+                          ),
+                          child: child!,
+                        );
+                      },
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1950),
+                      //DateTime.now() - not to allow to choose before today.
+                      lastDate: DateTime(2100));
+
+                  if (pickedDate != null) {
+                    print(pickedDate);
+                    String formattedDate =
+                        DateFormat('dd/MM/yyyy').format(pickedDate);
+                    print(formattedDate);
+                    setState(() {
+                      dateInput.text = formattedDate;
+                    });
+                  } else {}
+                },
               ),
               SizedBox(height: MediaQuery.of(context).size.height / 35),
               Text('İl'),
