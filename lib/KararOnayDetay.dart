@@ -107,6 +107,7 @@ class KararDetay extends StatelessWidget {
                 ),
                 onPressed: () {
                   showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (ctx) => AlertDialog(
                             backgroundColor: Color.fromARGB(255, 221, 226, 241),
@@ -131,6 +132,7 @@ class KararDetay extends StatelessWidget {
                                       onPressed: () {
                                         Navigator.of(ctx).pop();
                                         showDialog(
+                                            barrierDismissible: false,
                                             context: context,
                                             builder: (ctx) => AlertDialog(
                                                   backgroundColor:
@@ -142,7 +144,7 @@ class KararDetay extends StatelessWidget {
                                                               Radius.circular(
                                                                   30))),
                                                   title: const Text(
-                                                      "Kararı onaylamak istediğinizden emin misiniz?"),
+                                                      "Kararı reddetme sebebiniz nedir?"),
                                                   content: OnayPopUp(),
                                                   actions: <Widget>[
                                                     Row(

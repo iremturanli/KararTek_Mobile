@@ -48,6 +48,8 @@ dependencies:
   hexcolor: ^3.0.1
   url_launcher: ^6.1.6
   intl: ^0.17.0
+  image_picker: ^0.8.6
+
   flutter_localizations:
     sdk: flutter
 
@@ -61,7 +63,7 @@ flutter_icons:
   android: true
   ios: true
   image_path: "assets/kararTek_logo-circle.png"
-  
+
   flutter_test:
     sdk: flutter
 

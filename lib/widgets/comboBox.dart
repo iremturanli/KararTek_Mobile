@@ -2,10 +2,23 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
 class ComboBox extends StatefulWidget {
-  const ComboBox({Key? key, required this.items}) : super(key: key);
+  ComboBox({
+    Key? key,
+    required this.items,
+    // required this.height_of_box,
+    //required this.width_of_box,
+    //required this.color_of_box,
+    //required this.color_of_text,
+    //required this.size_of_font,
+  }) : super(key: key);
   @override
   State<ComboBox> createState() => _ComboBoxState();
   final List<String> items;
+  //final double height_of_box;
+  //final double width_of_box;
+  //final Color? color_of_box;
+  //final Color? color_of_text;
+  //final double size_of_font;
 }
 
 class _ComboBoxState extends State<ComboBox> {
@@ -22,7 +35,7 @@ class _ComboBoxState extends State<ComboBox> {
       child: DropdownButton2(
         isExpanded: true,
         hint: Row(
-          children: const [
+          children: [
             // Icon(
             //   Icons.menu,
             //   size: 20,
@@ -45,7 +58,7 @@ class _ComboBoxState extends State<ComboBox> {
                   value: item,
                   child: Text(
                     item,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 73, 73, 73),
