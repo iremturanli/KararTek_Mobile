@@ -20,7 +20,11 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return MaterialApp(
-      localizationsDelegates: [GlobalMaterialLocalizations.delegate],
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
       supportedLocales: [
         const Locale('tr', 'TR'),
       ],

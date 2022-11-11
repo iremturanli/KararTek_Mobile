@@ -96,11 +96,7 @@ class _ProfilimState extends State<Profilim> {
                 enabled: false,
                 readOnly: true,
                 decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Color.fromARGB(246, 246, 246, 246),
-                    focusedBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8))),
-                    enabledBorder: OutlineInputBorder(
+                    disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       // ignore: prefer_const_constructors
                       borderSide: BorderSide(
@@ -108,6 +104,8 @@ class _ProfilimState extends State<Profilim> {
                         color: const Color.fromARGB(255, 189, 189, 189),
                       ),
                     ),
+                    filled: true,
+                    fillColor: Color.fromARGB(246, 246, 246, 246),
                     hintText: 'Ad',
                     hintStyle: const TextStyle(color: Colors.grey)),
               ),
@@ -118,11 +116,7 @@ class _ProfilimState extends State<Profilim> {
                 enabled: false,
                 readOnly: true,
                 decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Color.fromARGB(246, 246, 246, 246),
-                    focusedBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8))),
-                    enabledBorder: OutlineInputBorder(
+                    disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       // ignore: prefer_const_constructors
                       borderSide: BorderSide(
@@ -130,6 +124,11 @@ class _ProfilimState extends State<Profilim> {
                         color: const Color.fromARGB(255, 189, 189, 189),
                       ),
                     ),
+                    filled: true,
+                    fillColor: Color.fromARGB(246, 246, 246, 246),
+
+                    // ignore: prefer_const_constructors
+
                     hintText: 'Soyad',
                     hintStyle: const TextStyle(color: Colors.grey)),
               ),
@@ -142,9 +141,7 @@ class _ProfilimState extends State<Profilim> {
                 decoration: InputDecoration(
                     filled: true,
                     fillColor: Color.fromARGB(246, 246, 246, 246),
-                    focusedBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8))),
-                    enabledBorder: OutlineInputBorder(
+                    disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       // ignore: prefer_const_constructors
                       borderSide: BorderSide(
@@ -164,9 +161,7 @@ class _ProfilimState extends State<Profilim> {
                 decoration: InputDecoration(
                     filled: true,
                     fillColor: Color.fromARGB(246, 246, 246, 246),
-                    focusedBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8))),
-                    enabledBorder: OutlineInputBorder(
+                    disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       // ignore: prefer_const_constructors
                       borderSide: BorderSide(
@@ -180,26 +175,31 @@ class _ProfilimState extends State<Profilim> {
               SizedBox(height: MediaQuery.of(context).size.height / 35),
               Text('Şifre'),
               SizedBox(height: MediaQuery.of(context).size.height / 120),
-              TextFormField(
-                enabled: false,
-                readOnly: true,
-                obscureText: true,
-                decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Color.fromARGB(246, 246, 246, 246),
-                    focusedBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8))),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      // ignore: prefer_const_constructors
-                      borderSide: BorderSide(
-                        width: 1,
-                        color: const Color.fromARGB(255, 189, 189, 189),
+              Stack(alignment: Alignment.centerRight, children: <Widget>[
+                TextFormField(
+                  enabled: false,
+                  readOnly: true,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Color.fromARGB(246, 246, 246, 246),
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        // ignore: prefer_const_constructors
+                        borderSide: BorderSide(
+                          width: 1,
+                          color: const Color.fromARGB(255, 189, 189, 189),
+                        ),
                       ),
-                    ),
-                    hintText: 'Şifre',
-                    hintStyle: const TextStyle(color: Colors.grey)),
-              ),
+                      hintText: 'Şifre',
+                      hintStyle: const TextStyle(color: Colors.grey)),
+                ),
+                IconButton(
+                  splashColor: Colors.transparent,
+                  onPressed: () {},
+                  icon: Icon(Icons.refresh),
+                ),
+              ]),
               SizedBox(height: MediaQuery.of(context).size.height / 32),
               Text('Cep Telefonu'),
               SizedBox(height: MediaQuery.of(context).size.height / 120),

@@ -147,10 +147,10 @@ class _KararAramaState extends State<KararArama> {
                   image: const AssetImage("assets/login-logo.png"),
                 ),
               ),
-              const SizedBox(height: 50),
+              SizedBox(height: MediaQuery.of(context).size.height / 20),
               SizedBox(
-                height: 55,
-                width: 400,
+                height: MediaQuery.of(context).size.height / 17,
+                width: MediaQuery.of(context).size.height / 2.3,
                 child: TextField(
                   decoration: InputDecoration(
                     labelText: 'Ara',
