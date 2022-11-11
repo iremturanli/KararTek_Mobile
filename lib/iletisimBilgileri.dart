@@ -66,25 +66,23 @@ class iletisimBilgileri extends StatelessWidget {
           Row(
             // ignore: prefer_const_literals_to_create_immutables
             children: [
-              IconButton(
+              Icon(
+                Icons.phone,
+                size: 20,
+              ),
+              TextButton(
                   onPressed: _makingPhoneCall,
-                  icon: Icon(
-                    Icons.phone,
-                    size: 20,
+                  child: Text(
+                    'Telefon: +90 (850) 251 8 427',
+                    style: TextStyle(fontSize: 16, color: Colors.black),
                   )),
-              Text('Telefon: +90 (850) 251 8 427',
-                  style: TextStyle(fontSize: 16))
             ],
           ),
           SizedBox(height: MediaQuery.of(context).size.height / 60),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Padding(
-                padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.height / 50),
-                child: Icon(Icons.fax_outlined),
-              ),
+              Icon(Icons.fax_outlined),
               SizedBox(width: MediaQuery.of(context).size.height / 65),
               Text('Faks: +90 (850) 251 8 427', style: TextStyle(fontSize: 16))
             ],
@@ -105,7 +103,10 @@ class iletisimBilgileri extends StatelessWidget {
               TextButton(
                   onPressed: _launchEmail,
                   child: Text('bilgi@karartek.com.tr',
-                      style: TextStyle(fontSize: 16))),
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black))),
             ],
           ),
           Row(
@@ -115,7 +116,10 @@ class iletisimBilgileri extends StatelessWidget {
               TextButton(
                   onPressed: _launchEmail, //??
                   child: Text('destek@karartek.com.tr',
-                      style: TextStyle(fontSize: 16))),
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold))),
             ],
           ),
           CustomDivider(),
@@ -129,19 +133,22 @@ class iletisimBilgileri extends StatelessWidget {
           SizedBox(height: MediaQuery.of(context).size.height / 55),
           Row(
             children: [
-              IconButton(
+              Icon(
+                Icons.map,
+                size: 20,
+              ),
+              TextButton(
                   onPressed: () async {
                     var url = Uri.parse(
                         "google.navigation:q=39.89897,32.82050&mode=d");
                     _launchInBrowser(url);
                     //   navigateTo(39.89897, 32.82050);
                   },
-                  icon: Icon(
-                    Icons.map,
-                    size: 20,
-                  )),
-              Text('Barolar Birliği Başkanlığı',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
+                  child: Text('Barolar Birliği Başkanlığı',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold))),
             ],
           ),
           Row(

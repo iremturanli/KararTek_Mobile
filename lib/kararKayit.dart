@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 
 class kararKayit extends StatefulWidget {
   kararKayit({
@@ -16,7 +16,16 @@ class kararKayit extends StatefulWidget {
 
 class _kararKayitState extends State<kararKayit> {
   late List<String> docPaths;
-  final textEditingController = TextEditingController();
+
+  TextEditingController dateInput = TextEditingController();
+  @override
+  void initState() {
+    dateInput.text = "";
+    super.initState();
+  }
+
+  bool _isTap = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,83 +47,86 @@ class _kararKayitState extends State<kararKayit> {
         child: ListView(
           children: <Widget>[
             const SizedBox(height: 30),
+            Text('Daire/Kurul Adı*'),
+            SizedBox(height: MediaQuery.of(context).size.height / 65),
             TextFormField(
               decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Color.fromARGB(246, 246, 246, 246),
-                  focusedBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8))),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    // ignore: prefer_const_constructors
-                    borderSide: BorderSide(
-                      width: 1,
-                      color: const Color.fromARGB(255, 189, 189, 189),
-                    ),
+                filled: true,
+                fillColor: Color.fromARGB(246, 246, 246, 246),
+                focusedBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8))),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  // ignore: prefer_const_constructors
+                  borderSide: BorderSide(
+                    width: 1,
+                    color: const Color.fromARGB(255, 189, 189, 189),
                   ),
-                  labelText: 'Daire / Kurul Adı',
-                  labelStyle: const TextStyle(color: Colors.black)),
+                ),
+              ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height / 35),
+            Text('Mahkeme'),
+            SizedBox(height: MediaQuery.of(context).size.height / 65),
             TextFormField(
               decoration: InputDecoration(
-                  filled: true,
-                  fillColor: const Color.fromARGB(246, 246, 246, 246),
-                  focusedBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8))),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    // ignore: prefer_const_constructors
-                    borderSide: BorderSide(
-                      width: 1,
-                      color: const Color.fromARGB(255, 189, 189, 189),
-                    ),
+                filled: true,
+                fillColor: const Color.fromARGB(246, 246, 246, 246),
+                focusedBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8))),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  // ignore: prefer_const_constructors
+                  borderSide: BorderSide(
+                    width: 1,
+                    color: const Color.fromARGB(255, 189, 189, 189),
                   ),
-                  labelText: 'Mahkeme*',
-                  labelStyle: const TextStyle(color: Colors.black)),
+                ),
+              ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height / 35),
+            Text('Avukat Değerlendirmesi*'),
+            SizedBox(height: MediaQuery.of(context).size.height / 65),
             TextFormField(
               textAlignVertical: TextAlignVertical.top,
               minLines: 3,
               maxLines: null,
               decoration: InputDecoration(
-                  filled: true,
-                  fillColor: const Color.fromARGB(246, 246, 246, 246),
-                  focusedBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8))),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    // ignore: prefer_const_constructors
-                    borderSide: BorderSide(
-                      width: 1,
-                      color: const Color.fromARGB(255, 189, 189, 189),
-                    ),
+                filled: true,
+                fillColor: const Color.fromARGB(246, 246, 246, 246),
+                focusedBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8))),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  // ignore: prefer_const_constructors
+                  borderSide: BorderSide(
+                    width: 1,
+                    color: const Color.fromARGB(255, 189, 189, 189),
                   ),
-                  labelText: 'Avukat Değerlendirmesi',
-                  alignLabelWithHint: true,
-                  labelStyle: const TextStyle(color: Colors.black)),
+                ),
+              ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height / 35),
+            Text('Dava Türü'),
+            SizedBox(height: MediaQuery.of(context).size.height / 65),
             TextFormField(
               decoration: InputDecoration(
-                  filled: true,
-                  fillColor: const Color.fromARGB(246, 246, 246, 246),
-                  focusedBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8))),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    // ignore: prefer_const_constructors
-                    borderSide: BorderSide(
-                      width: 1,
-                      color: const Color.fromARGB(255, 189, 189, 189),
-                    ),
+                filled: true,
+                fillColor: const Color.fromARGB(246, 246, 246, 246),
+                focusedBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8))),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  // ignore: prefer_const_constructors
+                  borderSide: BorderSide(
+                    width: 1,
+                    color: const Color.fromARGB(255, 189, 189, 189),
                   ),
-                  labelText: 'Dava Türü',
-                  labelStyle: const TextStyle(color: Colors.black)),
+                ),
+              ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height / 50),
-            Text('Esas No*'),
+            Text('Esas No'),
             SizedBox(height: MediaQuery.of(context).size.height / 65),
             Row(children: <Widget>[
               Expanded(
@@ -157,7 +169,7 @@ class _kararKayitState extends State<kararKayit> {
                             color: const Color.fromARGB(255, 189, 189, 189),
                           ),
                         ),
-                        hintText: 'Esas No',
+                        hintText: 'Esas No*',
                         hintStyle: const TextStyle(color: Colors.black)),
                   ),
                 ),
@@ -214,10 +226,18 @@ class _kararKayitState extends State<kararKayit> {
               )
             ]),
             SizedBox(height: MediaQuery.of(context).size.height / 35),
-            TextFormField(
+            Text('Karar Tarihi'),
+            SizedBox(height: MediaQuery.of(context).size.height / 65),
+            TextField(
+              controller: dateInput,
+
+              //editing controller of this TextField
               decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.calendar_today,
+                      color: _isTap ? Colors.grey : Colors.black),
+                  prefixIconColor: Colors.grey,
                   filled: true,
-                  fillColor: const Color.fromARGB(246, 246, 246, 246),
+                  fillColor: Color.fromARGB(246, 246, 246, 246),
                   focusedBorder: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(8))),
                   enabledBorder: OutlineInputBorder(
@@ -228,33 +248,77 @@ class _kararKayitState extends State<kararKayit> {
                       color: const Color.fromARGB(255, 189, 189, 189),
                     ),
                   ),
-                  labelText: 'Karar Tarihi',
-                  labelStyle: const TextStyle(color: Colors.black)),
+                  hintText: '__/__/____',
+                  hintStyle:
+                      const TextStyle(color: Colors.grey) //icon of text field
+                  //labelText: "" //label text of field
+                  ),
+
+              //set it true, so that user will not able to edit text
+              onTap: () async {
+                DateTime? pickedDate = await showDatePicker(
+                    locale: const Locale("tr", "TR"),
+                    builder: (BuildContext context, child) {
+                      return Theme(
+                        data: Theme.of(context).copyWith(
+                          colorScheme: ColorScheme.light(
+                            primary:
+                                HexColor('#5DB075'), // header background color
+                            onPrimary: Colors.white, // header text color
+                            onSurface: Color.fromARGB(
+                                255, 20, 20, 20), // body text color
+                          ),
+                          textButtonTheme: TextButtonThemeData(
+                            style: TextButton.styleFrom(
+                              foregroundColor: Color.fromARGB(
+                                  255, 23, 48, 112), // button text color
+                            ),
+                          ),
+                        ),
+                        child: child!,
+                      );
+                    },
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(1881),
+                    //DateTime.now() - not to allow to choose before today.
+                    lastDate: DateTime(2100));
+
+                if (pickedDate != null) {
+                  print(pickedDate);
+                  String formattedDate =
+                      DateFormat('dd/MM/yyyy').format(pickedDate);
+                  print(formattedDate);
+                  setState(() {
+                    dateInput.text = formattedDate;
+                  });
+                } else {}
+              },
             ),
             SizedBox(height: MediaQuery.of(context).size.height / 35),
+            Text('Karar'),
+            SizedBox(height: MediaQuery.of(context).size.height / 65),
             TextFormField(
               textAlignVertical: TextAlignVertical.top,
               minLines: 3,
               maxLines: null,
               decoration: InputDecoration(
-                  filled: true,
-                  fillColor: const Color.fromARGB(246, 246, 246, 246),
-                  focusedBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8))),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    // ignore: prefer_const_constructors
-                    borderSide: BorderSide(
-                      width: 1,
-                      color: const Color.fromARGB(255, 189, 189, 189),
-                    ),
+                filled: true,
+                fillColor: const Color.fromARGB(246, 246, 246, 246),
+                focusedBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8))),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  // ignore: prefer_const_constructors
+                  borderSide: BorderSide(
+                    width: 1,
+                    color: const Color.fromARGB(255, 189, 189, 189),
                   ),
-                  labelText: 'Karar',
-                  alignLabelWithHint: true,
-                  labelStyle: const TextStyle(color: Colors.black)),
+                ),
+              ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height / 35),
-            ElevatedButton(
+            ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -264,13 +328,14 @@ class _kararKayitState extends State<kararKayit> {
               onPressed: () {
                 pickFiles();
               },
-              child: const Text(
+              icon: Icon(Icons.file_copy),
+              label: const Text(
                 'Yeni Dosya Yükle',
                 style: TextStyle(fontSize: 17),
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height / 35),
-            ElevatedButton(
+            ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -278,7 +343,8 @@ class _kararKayitState extends State<kararKayit> {
                   minimumSize: const Size(150, 45),
                   backgroundColor: HexColor('#5DB075')),
               onPressed: () {},
-              child: const Text(
+              icon: Icon(Icons.save),
+              label: const Text(
                 'Kaydet',
                 style: TextStyle(fontSize: 17),
               ),
