@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/AvukatKararToplam.dart';
-import 'package:flutter_application_1/KararHavuzum.dart';
-import 'package:flutter_application_1/KaydettigimKararlar.dart';
-import 'package:flutter_application_1/OnayBekleyenKararlar.dart';
-import 'package:flutter_application_1/iletisimBilgileri.dart';
-import 'package:flutter_application_1/kararKayit.dart';
-import 'package:flutter_application_1/s_Sorular.dart';
+import 'package:flutter_application_1/Screens/AvukatKararToplam.dart';
+import 'package:flutter_application_1/Screens/KararHavuzum.dart';
+import 'package:flutter_application_1/Screens/KaydettigimKararlar.dart';
+import 'package:flutter_application_1/Screens/OnayBekleyenKararlar.dart';
+import 'package:flutter_application_1/Screens/iletisimBilgileri.dart';
+import 'package:flutter_application_1/Screens/kararKayit.dart';
+import 'package:flutter_application_1/Screens/s_Sorular.dart';
 
-import 'widgets/menu.dart';
+import '../widgets/menu.dart';
 
 final List<Map<String, dynamic>> _kararIslemleri = [
   {

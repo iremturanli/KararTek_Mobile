@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/widgets/comboBox.dart';
-import 'package:flutter_application_1/homePage.dart';
-import 'package:flutter_application_1/login.dart';
+import 'package:flutter_application_1/Screens/homePage.dart';
+import 'package:flutter_application_1/Screens/login.dart';
 import 'package:flutter_application_1/main.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:fluttertoast/fluttertoast.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/KararOnayDetay.dart';
+import 'package:flutter_application_1/Screens/KararOnayDetay.dart';
 
 class CardData extends StatelessWidget {
   final String param1;

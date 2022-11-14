@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/AramaSonuclariDetayDeneme.dart';
+import 'package:flutter_application_1/Screens/AramaSonuclariDetayDeneme.dart';
 import 'package:flutter_application_1/widgets/ModalBottomAramaSonuclari.dart';
 import 'package:flutter_application_1/widgets/comboBox.dart';
 

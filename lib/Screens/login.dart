@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/sifremiUnuttum.dart';
-import 'package:flutter_application_1/homePage.dart';
+import 'package:flutter_application_1/Screens/sifremiUnuttum.dart';
+import 'package:flutter_application_1/Screens/homePage.dart';
 import 'package:flutter_application_1/main.dart';
+
+import '../AppConfigurations/appConfigurations.dart';
+import '../models/UserInformation/UserInformation.dart';
+import '../models/UserLoginInformation/userLoginInformation.dart';
+import '../services/Registration/RegistrationService.dart';
+import '../../apiResponse/userLoginInformationResponse.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -12,6 +18,10 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final RegistrationService registrationService =
+      getIt.get<RegistrationService>();
+  UserInformation userInformation = UserInformation();
+
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool _passwordVisible = false;
@@ -27,7 +37,8 @@ class _LoginState extends State<Login> {
               width: double.infinity,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("assets/karar5.png"), fit: BoxFit.cover),
+                    image: AssetImage("assets/images/karar5.png"),
+                    fit: BoxFit.cover),
               ),
               child: Column(
                 children: [
@@ -37,7 +48,7 @@ class _LoginState extends State<Login> {
                     child: Container(
                       alignment: Alignment.topCenter,
                       child: const Image(
-                        image: AssetImage("assets/login-logo.png"),
+                        image: AssetImage("assets/images/login-logo.png"),
                       ),
                     ),
                   ),
@@ -180,10 +191,8 @@ class _LoginState extends State<Login> {
                         ),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Dashboard()));
+                            loginUser(
+                                nameController.text, passwordController.text);
                           }
                         },
                         child: const Text(
@@ -217,5 +226,24 @@ class _LoginState extends State<Login> {
                 ],
               ))),
     ));
+  }
+
+  /* Methods */
+
+  loginUser(String UserName, String Password) async {
+    try {
+      UserLoginInformationResponse response =
+          await registrationService.userLogin(
+              UserLoginInformation(userName: UserName, password: Password));
+      if (response.hasError == true) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Dashboard()));
+        // Get result from server
+      } else {
+        print(response.errorMessage);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

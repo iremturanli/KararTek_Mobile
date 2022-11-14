@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/homePage.dart';
-import 'package:flutter_application_1/login.dart';
+import 'package:flutter_application_1/Screens/homePage.dart';
+import 'package:flutter_application_1/Screens/login.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class sifremiUnuttum extends StatefulWidget {
@@ -29,7 +29,7 @@ class _sifremiUnuttumState extends State<sifremiUnuttum> {
                 width: double.infinity,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("assets/karar5.png"),
+                      image: AssetImage("assets/images/karar5.png"),
                       fit: BoxFit.cover),
                 ),
                 child: Column(
@@ -39,7 +39,7 @@ class _sifremiUnuttumState extends State<sifremiUnuttum> {
                           top: MediaQuery.of(context).size.height / 10),
                       child: Container(
                         child: Image(
-                          image: AssetImage("assets/login-logo.png"),
+                          image: AssetImage("assets/images/login-logo.png"),
                         ),
                       ),
                     ),
