@@ -56,7 +56,7 @@ class DropDownCustom extends StatelessWidget {
         buttonWidth: 350,
         buttonPadding: const EdgeInsets.only(left: 14, right: 14),
         buttonDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(40),
             border: Border.all(color: Colors.grey, width: 1),
             color: const Color.fromARGB(255, 255, 255, 255)),
         // buttonElevation: 1,

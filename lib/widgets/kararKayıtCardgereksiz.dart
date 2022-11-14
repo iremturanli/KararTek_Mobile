@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/KararOnayDetay.dart';
-import 'package:flutter_application_1/kaydettigimKararlarDetay.dart';
+import 'package:flutter_application_1/Screens/KararOnayDetay.dart';
+import 'package:flutter_application_1/Screens/kaydettigimKararlarDetay.dart';
+
+import '../Screens/kaydettigimKararlarDetay.dart';
 
 class CardDataKayitliKarar extends StatelessWidget {
   final int ListIndex;

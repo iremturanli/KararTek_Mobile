@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/widgets/comboBox.dart';
-import 'package:flutter_application_1/homePage.dart';
-import 'package:flutter_application_1/login.dart';
+import 'package:flutter_application_1/Screens/homePage.dart';
+import 'package:flutter_application_1/Screens/login.dart';
 import 'package:flutter_application_1/main.dart';
 import 'package:flutter_application_1/widgets/comboBoxdeneme.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -389,10 +389,22 @@ class _ProfilimState extends State<Profilim> {
               ),
               SizedBox(height: MediaQuery.of(context).size.height / 35),
               Text('İl'),
-              ComboBox(items: il),
+              ComboBox(
+                  items: il,
+                  color_of_box: Color.fromARGB(246, 246, 246, 246),
+                  color_of_text: Colors.black,
+                  height_of_box: 55,
+                  size_of_font: 12,
+                  width_of_box: 360),
               SizedBox(height: MediaQuery.of(context).size.height / 35),
               Text('İlçe'),
-              ComboBox(items: ilce),
+              ComboBox(
+                  items: ilce,
+                  color_of_box: Color.fromARGB(246, 246, 246, 246),
+                  color_of_text: Colors.black,
+                  height_of_box: 55,
+                  size_of_font: 12,
+                  width_of_box: 360),
               SizedBox(height: MediaQuery.of(context).size.height / 35),
               Text('Adres'),
               TextFormField(

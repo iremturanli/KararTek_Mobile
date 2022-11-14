@@ -5,20 +5,20 @@ class ComboBox extends StatefulWidget {
   ComboBox({
     Key? key,
     required this.items,
-    // required this.height_of_box,
-    //required this.width_of_box,
-    //required this.color_of_box,
-    //required this.color_of_text,
-    //required this.size_of_font,
+    required this.height_of_box,
+    required this.width_of_box,
+    required this.color_of_box,
+    required this.color_of_text,
+    required this.size_of_font,
   }) : super(key: key);
   @override
   State<ComboBox> createState() => _ComboBoxState();
   final List<String> items;
-  //final double height_of_box;
-  //final double width_of_box;
-  //final Color? color_of_box;
-  //final Color? color_of_text;
-  //final double size_of_font;
+  final double height_of_box;
+  final double width_of_box;
+  final Color? color_of_box;
+  final Color? color_of_text;
+  final double size_of_font;
 }
 
 class _ComboBoxState extends State<ComboBox> {
@@ -46,7 +46,7 @@ class _ComboBoxState extends State<ComboBox> {
               "Seçiniz",
               style: TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 color: Color.fromARGB(255, 73, 73, 73),
               ),
               overflow: TextOverflow.ellipsis,
@@ -60,7 +60,7 @@ class _ComboBoxState extends State<ComboBox> {
                     item,
                     style: TextStyle(
                       fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w500,
                       color: Color.fromARGB(255, 73, 73, 73),
                     ),
                     overflow: TextOverflow.ellipsis,
@@ -80,18 +80,19 @@ class _ComboBoxState extends State<ComboBox> {
         iconSize: 30,
         iconEnabledColor: const Color.fromARGB(255, 0, 0, 0),
         iconDisabledColor: const Color.fromARGB(255, 0, 0, 0),
-        buttonHeight: 48,
-        buttonWidth: 350,
+        buttonHeight: widget.height_of_box,
+        buttonWidth: widget.width_of_box,
         buttonPadding: const EdgeInsets.only(left: 14, right: 14),
         buttonDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(color: Colors.grey, width: 1),
-            color: const Color.fromARGB(255, 255, 255, 255)),
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+                color: const Color.fromARGB(255, 189, 189, 189), width: 1),
+            color: widget.color_of_box),
         // buttonElevation: 1,
         itemHeight: 40,
         itemPadding: const EdgeInsets.only(left: 14, right: 14),
         dropdownMaxHeight: 300,
-        dropdownWidth: 350,
+        dropdownWidth: widget.width_of_box,
         dropdownPadding: null,
         dropdownDecoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),

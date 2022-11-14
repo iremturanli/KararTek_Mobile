@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/AramaSonuclari.dart';
+import 'package:flutter_application_1/Screens/AramaSonuclari.dart';
 import 'package:flutter_application_1/widgets/ModalBottomDetayl%C4%B1Arama.dart';
 import 'package:flutter_application_1/widgets/RadioButton.dart';
 import 'package:flutter_application_1/widgets/dropDownCustom.dart';
@@ -144,7 +144,7 @@ class _KararAramaState extends State<KararArama> {
                     top: MediaQuery.of(context).size.width / 80),
                 // ignore: prefer_const_constructors
                 child: Image(
-                  image: const AssetImage("assets/login-logo.png"),
+                  image: const AssetImage("assets/images/login-logo.png"),
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height / 20),

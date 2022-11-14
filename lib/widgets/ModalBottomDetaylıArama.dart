@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'comboBoxLarge.dart';
+import 'comboBox.dart';
 
 class ModalBottom extends StatefulWidget {
   final VoidCallback press;
@@ -52,7 +52,7 @@ class _ModalBottomState extends State<ModalBottom> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   const Text('Kelime ile Arama'),
-                  const SizedBox(height: 5),
+                  SizedBox(height: MediaQuery.of(context).size.height / 80),
                   TextFormField(
                     controller: widget.searchWord,
                     // ignore: prefer_const_constructors
@@ -69,54 +69,68 @@ class _ModalBottomState extends State<ModalBottom> {
                           color: const Color.fromARGB(255, 189, 189, 189),
                         ),
                       ),
-                      //labelStyle: const TextStyle(color: Colors.black)
                     ),
                   ),
                   // ignore: prefer_const_constructors
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 100,
+                    height: MediaQuery.of(context).size.height / 80,
                   ),
                   const Text('Karar Türü'),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 100,
+                    height: MediaQuery.of(context).size.height / 80,
                   ),
-                  ComboBoxLarge(
+                  ComboBox(
                     items: kararTuru,
+                    color_of_box: Color.fromARGB(255, 255, 255, 255),
+                    color_of_text: Colors.black,
+                    height_of_box: 55,
+                    size_of_font: 12,
+                    width_of_box: 360,
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 50,
+                    height: MediaQuery.of(context).size.height / 80,
                   ),
                   const Text('Daire'),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 100,
+                    height: MediaQuery.of(context).size.height / 80,
                   ),
-                  ComboBoxLarge(
+                  ComboBox(
                     items: mahkeme,
+                    color_of_box: Color.fromARGB(255, 255, 255, 255),
+                    color_of_text: Colors.black,
+                    height_of_box: 55,
+                    size_of_font: 12,
+                    width_of_box: 360,
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 50,
+                    height: MediaQuery.of(context).size.height / 80,
                   ),
                   const Text('Mahkeme'),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 100,
+                    height: MediaQuery.of(context).size.height / 80,
                   ),
-                  ComboBoxLarge(
+                  ComboBox(
                     items: mahkeme,
+                    color_of_box: Color.fromARGB(255, 255, 255, 255),
+                    color_of_text: Colors.black,
+                    height_of_box: 55,
+                    size_of_font: 12,
+                    width_of_box: 360,
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 30,
+                    height: MediaQuery.of(context).size.height / 80,
                   ),
 
                   const Text('Esas Numarası'),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 100,
+                    height: MediaQuery.of(context).size.height / 80,
                   ),
 
                   Row(
                     children: <Widget>[
                       Expanded(
                         child: SizedBox(
-                          height: MediaQuery.of(context).size.height / 19,
+                          height: MediaQuery.of(context).size.height / 17,
                           child: TextFormField(
                               decoration: const InputDecoration(
                             hintText: 'Esas Yılı',
@@ -137,7 +151,7 @@ class _ModalBottomState extends State<ModalBottom> {
                       SizedBox(width: MediaQuery.of(context).size.width / 20),
                       Expanded(
                         child: SizedBox(
-                          height: MediaQuery.of(context).size.height / 19,
+                          height: MediaQuery.of(context).size.height / 17,
                           child: TextFormField(
                               decoration: const InputDecoration(
                             hintText: 'İlk Sıra No',
@@ -158,7 +172,7 @@ class _ModalBottomState extends State<ModalBottom> {
                       SizedBox(width: MediaQuery.of(context).size.width / 20),
                       Expanded(
                         child: SizedBox(
-                          height: MediaQuery.of(context).size.height / 19,
+                          height: MediaQuery.of(context).size.height / 17,
                           child: TextFormField(
                               decoration: const InputDecoration(
                             hintText: 'Son Sıra No',
@@ -178,16 +192,15 @@ class _ModalBottomState extends State<ModalBottom> {
                       ),
                     ],
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(right: 280, bottom: 10, top: 20),
-                    child: Text('Karar Numarası'),
-                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height / 80),
+                  Text('Karar Numarası'),
+                  SizedBox(height: MediaQuery.of(context).size.height / 80),
 
                   Row(
                     children: <Widget>[
                       Expanded(
                         child: SizedBox(
-                          height: 50,
+                          height: MediaQuery.of(context).size.height / 17,
                           child: TextFormField(
                               decoration: const InputDecoration(
                             hintText: 'Karar Yılı',
@@ -208,7 +221,7 @@ class _ModalBottomState extends State<ModalBottom> {
                       const SizedBox(width: 15),
                       Expanded(
                         child: SizedBox(
-                          height: 50,
+                          height: MediaQuery.of(context).size.height / 17,
                           child: TextFormField(
                               decoration: const InputDecoration(
                             hintText: 'İlk Sıra No',
@@ -229,7 +242,7 @@ class _ModalBottomState extends State<ModalBottom> {
                       const SizedBox(width: 15),
                       Expanded(
                         child: SizedBox(
-                          height: 50,
+                          height: MediaQuery.of(context).size.height / 17,
                           child: TextFormField(
                               decoration: const InputDecoration(
                             hintText: 'Son Sıra No',
@@ -250,18 +263,18 @@ class _ModalBottomState extends State<ModalBottom> {
                     ],
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 100,
+                    height: MediaQuery.of(context).size.height / 80,
                   ),
                   const Text('Karar Aralığı'),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 100,
+                    height: MediaQuery.of(context).size.height / 80,
                   ),
 
                   Row(
                     children: <Widget>[
                       Expanded(
                         child: SizedBox(
-                          height: MediaQuery.of(context).size.height / 18,
+                          height: MediaQuery.of(context).size.height / 17,
                           child: TextFormField(
                               decoration: const InputDecoration(
                             hintText: 'Başlangıç Tarihi',
@@ -282,7 +295,7 @@ class _ModalBottomState extends State<ModalBottom> {
                       SizedBox(width: MediaQuery.of(context).size.height / 50),
                       Expanded(
                         child: SizedBox(
-                          height: MediaQuery.of(context).size.height / 18,
+                          height: MediaQuery.of(context).size.height / 17,
                           child: TextFormField(
                               decoration: const InputDecoration(
                             hintText: 'Bitiş Tarihi',

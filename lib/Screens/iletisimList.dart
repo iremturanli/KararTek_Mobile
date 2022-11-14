@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_application_1/iletisimBilgileri.dart';
-import 'package:flutter_application_1/s_Sorular.dart';
+import 'package:flutter_application_1/Screens/iletisimBilgileri.dart';
+import 'package:flutter_application_1/Screens/s_Sorular.dart';
 import 'package:flutter_application_1/widgets/menu.dart';
 
 final List<Map<String, dynamic>> _iletisim = [

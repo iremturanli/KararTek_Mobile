@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/widgets/menu.dart';
-import 'package:flutter_application_1/iletisimList.dart';
-import 'package:flutter_application_1/kararArama.dart';
-import 'package:flutter_application_1/kararList.dart';
-import 'package:flutter_application_1/profilim.dart';
+import 'package:flutter_application_1/Screens/iletisimList.dart';
+import 'package:flutter_application_1/Screens/kararArama.dart';
+import 'package:flutter_application_1/Screens/kararList.dart';
+import 'package:flutter_application_1/Screens/profilim.dart';
 
-import 'widgets/Card.dart';
+import '../widgets/Card.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -32,7 +32,7 @@ class _DashboardState extends State<Dashboard> {
                       top: MediaQuery.of(context).size.height / 15),
                   // ignore: prefer_const_constructors
                   child: Image(
-                    image: const AssetImage("assets/login-logo.png"),
+                    image: const AssetImage("assets/images/login-logo.png"),
                   ),
                 ),
               ]),

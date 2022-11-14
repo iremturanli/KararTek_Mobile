@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/yeniKullanici.dart';
+import 'package:flutter_application_1/Screens/yeniKullanici.dart';
 import 'package:lottie/lottie.dart';
-import 'package:flutter_application_1/login.dart';
+import 'package:flutter_application_1/Screens/login.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'AppConfigurations/appConfigurations.dart';
+
 void main() {
+  configureInjection();
   runApp(const MyApp());
 }
 
@@ -88,9 +91,9 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/login-logo.png'),
+              Image.asset('assets/images/login-logo.png'),
               const SizedBox(height: 30),
-              Lottie.asset('assets/loading.json', height: 20)
+              Lottie.asset('assets/images/loading.json', height: 20)
             ],
           ),
         ));
@@ -108,14 +111,15 @@ class Home extends StatelessWidget {
             width: double.infinity,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("assets/karar5.png"), fit: BoxFit.cover),
+                  image: AssetImage("assets/images/karar5.png"),
+                  fit: BoxFit.cover),
             ),
             child: Column(
               children: [
                 const Padding(
                   padding: EdgeInsets.only(top: 100),
                   child: Image(
-                    image: AssetImage("assets/login-logo.png"),
+                    image: AssetImage("assets/images/login-logo.png"),
                   ),
                 ),
                 // Padding(
