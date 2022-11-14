@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'comboBox.dart';
-import 'comboBoxLarge.dart';
 
 class ModalBottomAramaSonuclari extends StatefulWidget {
   ModalBottomAramaSonuclari({
@@ -84,15 +83,23 @@ class _ModalBottomAramaSonuclari extends State<ModalBottomAramaSonuclari> {
                       ),
                     ),
                   ),
+                  SizedBox(height: MediaQuery.of(context).size.height / 80),
                   const Text(
                     'Daire',
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 80,
                   ),
-                  ComboBox(items: _daire),
+                  ComboBox(
+                    items: _daire,
+                    color_of_box: Color.fromARGB(255, 255, 255, 255),
+                    color_of_text: Colors.black,
+                    height_of_box: 55,
+                    size_of_font: 12,
+                    width_of_box: 360,
+                  ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 50,
+                    height: MediaQuery.of(context).size.height / 80,
                   ),
                   const Text(
                     'Mahkeme',
@@ -100,9 +107,15 @@ class _ModalBottomAramaSonuclari extends State<ModalBottomAramaSonuclari> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 80,
                   ),
-                  ComboBox(items: _mahkeme),
+                  ComboBox(
+                      items: _mahkeme,
+                      color_of_box: Color.fromARGB(255, 255, 255, 255),
+                      color_of_text: Colors.black,
+                      height_of_box: 55,
+                      size_of_font: 12,
+                      width_of_box: 360),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 50,
+                    height: MediaQuery.of(context).size.height / 80,
                   ),
                   const Text(
                     'Sıralama',
@@ -110,14 +123,14 @@ class _ModalBottomAramaSonuclari extends State<ModalBottomAramaSonuclari> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 80,
                   ),
-                  ComboBox(items: _siralama),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 50,
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 80,
-                  ),
-                  // SizedBox(height: MediaQuery.of(context).size.height / 80),
+                  ComboBox(
+                      items: _siralama,
+                      color_of_box: Color.fromARGB(255, 255, 255, 255),
+                      color_of_text: Colors.black,
+                      height_of_box: 55,
+                      size_of_font: 12,
+                      width_of_box: 360),
+                  SizedBox(height: MediaQuery.of(context).size.height / 85),
                   Center(
                     child: ElevatedButton.icon(
                         onPressed: () {
@@ -130,7 +143,7 @@ class _ModalBottomAramaSonuclari extends State<ModalBottomAramaSonuclari> {
                         ),
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
+                              borderRadius: BorderRadius.circular(10),
                             ),
                             minimumSize: const Size(100, 40),
                             backgroundColor:

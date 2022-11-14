@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'comboBoxLarge.dart';
+
+import 'comboBox.dart';
 
 class ModalBottomOnay extends StatefulWidget {
   //final VoidCallback press;
@@ -190,7 +191,14 @@ class _ModalBottomOnayState extends State<ModalBottomOnay> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 80,
                   ),
-                  ComboBoxLarge(items: kararDurumu),
+                  ComboBox(
+                    items: kararDurumu,
+                    color_of_box: Color.fromARGB(255, 255, 255, 255),
+                    color_of_text: Colors.black,
+                    height_of_box: 45,
+                    size_of_font: 12,
+                    width_of_box: 360,
+                  ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 50,
                   ),

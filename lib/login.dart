@@ -41,100 +41,111 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height / 10),
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width / 1.2,
-                      child: TextFormField(
-                        controller: nameController,
-                        validator: (value) {
-                          if (value == null || value.length < 11) {
-                            return 'TC Kimlik No Giriniz';
-                          }
-                          return null;
-                        },
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(11)
-                        ],
-                        decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color.fromARGB(255, 255, 255, 255))),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              // ignore: prefer_const_constructors
-                              borderSide: BorderSide(
-                                width: 1,
-                                color: const Color.fromARGB(255, 255, 255, 255),
-                              ),
-                            ),
-                            labelText: 'TC Kimlik No',
-                            hintText: "Kimlik Numaranızı Giriniz.",
-                            labelStyle: const TextStyle(color: Colors.black)),
+                  SizedBox(height: MediaQuery.of(context).size.height / 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'TC Kimlik No',
+                        style: TextStyle(fontWeight: FontWeight.w500),
                       ),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height / 30),
-                    // padding: const EdgeInsets.all(9),
-                    child: SizedBox(
+                      SizedBox(height: MediaQuery.of(context).size.height / 80),
+                      SizedBox(
                         width: MediaQuery.of(context).size.width / 1.2,
                         child: TextFormField(
+                          controller: nameController,
                           validator: (value) {
-                            if (value == null ||
-                                value.isEmpty ||
-                                value.length < 6) {
-                              return 'Şifre Giriniz';
+                            if (value == null || value.length < 11) {
+                              return 'TC Kimlik No Giriniz';
                             }
                             return null;
                           },
-                          keyboardType: TextInputType.text,
-                          controller: passwordController,
-                          obscureText:
-                              !_passwordVisible, //Dinamik olarak gizlemeyi değiştirir
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(11)
+                          ],
                           decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            labelText: 'Şifre',
-                            hintText: 'Şifrenizi giriniz.',
-                            labelStyle: const TextStyle(
-                              color: Colors.black,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              // ignore: prefer_const_constructors
-                              borderSide: BorderSide(
-                                width: 1,
-                                color: const Color.fromARGB(255, 255, 255, 255),
-                              ),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
+                              filled: true,
+                              fillColor: Colors.white,
+                              focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color:
+                                          Color.fromARGB(255, 255, 255, 255))),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                // ignore: prefer_const_constructors
                                 borderSide: BorderSide(
-                                    color: Color.fromARGB(255, 255, 255, 255))),
-                            // Here is key idea
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                // seçilen Icon'a göre değişir
-                                _passwordVisible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
+                                  width: 1,
+                                  color:
+                                      const Color.fromARGB(255, 255, 255, 255),
+                                ),
+                              ),
+                              hintText: "Kimlik Numaranızı Giriniz.",
+                              labelStyle: const TextStyle(color: Colors.black)),
+                        ),
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height / 80),
+                      const Text(
+                        'Şifre',
+                        style: TextStyle(fontWeight: FontWeight.w500),
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height / 80),
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width / 1.2,
+                          child: TextFormField(
+                            validator: (value) {
+                              if (value == null ||
+                                  value.isEmpty ||
+                                  value.length < 6) {
+                                return 'Şifre Giriniz';
+                              }
+                              return null;
+                            },
+                            keyboardType: TextInputType.text,
+                            controller: passwordController,
+                            obscureText:
+                                !_passwordVisible, //Dinamik olarak gizlemeyi değiştirir
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+
+                              hintText: 'Şifrenizi giriniz.',
+                              labelStyle: const TextStyle(
                                 color: Colors.black,
                               ),
-                              onPressed: () {
-                                // Icon'a tıklandığında değişir
-                                setState(() {
-                                  _passwordVisible = !_passwordVisible;
-                                });
-                              },
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                // ignore: prefer_const_constructors
+                                borderSide: BorderSide(
+                                  width: 1,
+                                  color:
+                                      const Color.fromARGB(255, 255, 255, 255),
+                                ),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color:
+                                          Color.fromARGB(255, 255, 255, 255))),
+                              // Here is key idea
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  // seçilen Icon'a göre değişir
+                                  _passwordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: Colors.black,
+                                ),
+                                onPressed: () {
+                                  // Icon'a tıklandığında değişir
+                                  setState(() {
+                                    _passwordVisible = !_passwordVisible;
+                                  });
+                                },
+                              ),
                             ),
-                          ),
-                        )),
+                          )),
+                    ],
                   ),
                   SizedBox(height: MediaQuery.of(context).size.width / 45),
                   TextButton(
