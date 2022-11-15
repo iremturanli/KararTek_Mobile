@@ -213,7 +213,7 @@ class _LoginState extends State<Login> {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const Home()));
+                                  builder: (context) => Dashboard()));
                         },
                         child: const Text(
                           'Geri',
@@ -233,8 +233,8 @@ class _LoginState extends State<Login> {
   loginUser(String UserName, String Password) async {
     try {
       UserLoginInformationResponse response =
-          await registrationService.userLogin(
-              UserLoginInformation(userName: UserName, password: Password));
+          await registrationService.userLogin(UserLoginInformation(
+              identityNumber: UserName, password: Password));
       if (response.hasError == true) {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Dashboard()));

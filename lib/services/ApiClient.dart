@@ -6,14 +6,15 @@ import '../ApiResponse/mobileApiResponse.dart';
 
 class ApiClient {
   Dio? _dio;
-  final _baseUrl = "http://192.168.10.172:41874/api/"; //baseurl; 10.0.2.2
+  final _baseUrl = "http://192.168.10.111/45718/api/"; //baseurl; 10.0.2.2
   var onResponseCallback;
   var onErrorCallback;
 
   ApiClient() {
-    _dio = Dio(BaseOptions(baseUrl: _baseUrl,
-        /*    connectTimeout: 5000,
-        receiveTimeout: 3000, */
+    _dio = Dio(BaseOptions(
+        baseUrl: _baseUrl,
+        connectTimeout: 60 * 1000, // 60 seconds
+        receiveTimeout: 60 * 1000, // 60 seconds,
         headers: {
           "Accept": "application/json",
           "content-type": "application/json; charset=utf-8",
@@ -43,6 +44,7 @@ class ApiClient {
         return responseInterceptorHandler.next(response);
       },
       onError: (error, errorInterceptorHandler) {
+        print(error);
         if (error.response!.statusCode != 401) {
           MobileApiResponse apiResponse = MobileApiResponse();
           apiResponse.errorMessage =

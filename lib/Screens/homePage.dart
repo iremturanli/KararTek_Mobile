@@ -24,7 +24,8 @@ class _DashboardState extends State<Dashboard> {
               width: MediaQuery.of(context).size.height / 1.5,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("assets/hakim.jpg"), fit: BoxFit.cover),
+                    image: AssetImage("assets/images/hakim.jpg"),
+                    fit: BoxFit.cover),
               ),
               child: Column(children: [
                 Padding(
