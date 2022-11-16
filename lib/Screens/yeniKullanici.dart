@@ -68,7 +68,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Ad Soyad'),
+                const Text('Ad'),
                 SizedBox(height: MediaQuery.of(context).size.height / 80),
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 1.2,
@@ -86,7 +86,30 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: Color.fromARGB(255, 255, 255, 255))),
-                        hintText: "Ad Soyad Giriniz",
+                        hintText: "Ad Giriniz",
+                        labelStyle: TextStyle(color: Colors.black)),
+                  ),
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height / 80),
+                const Text('Soyad'),
+                SizedBox(height: MediaQuery.of(context).size.height / 80),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  height: MediaQuery.of(context).size.width / 8.5,
+                  child: TextField(
+                    controller: nameController,
+                    keyboardType: TextInputType.text,
+                    autocorrect: false,
+                    decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 255, 255, 255))),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 255, 255, 255))),
+                        hintText: "Soyad Giriniz",
                         labelStyle: TextStyle(color: Colors.black)),
                   ),
                 ),
