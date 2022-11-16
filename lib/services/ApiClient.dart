@@ -1,12 +1,14 @@
 // ignore_for_file: file_names, avoid_print,prefer_typing_uninitialized_variables
 import 'dart:developer';
+import 'dart:io';
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 
 import '../ApiResponse/mobileApiResponse.dart';
 
 class ApiClient {
   Dio? _dio;
-  final _baseUrl = "http://192.168.10.111/45718/api/"; //baseurl; 10.0.2.2
+  final _baseUrl = "https://192.168.10.111:45456/api/"; //baseurl; 10.0.2.2
   var onResponseCallback;
   var onErrorCallback;
 
@@ -20,6 +22,14 @@ class ApiClient {
           "content-type": "application/json; charset=utf-8",
           "X-Requested-With": "XMLHttpRequest"
         }));
+
+    (_dio?.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (HttpClient dioClient) {
+      dioClient.badCertificateCallback =
+          ((X509Certificate cert, String host, int port) => true);
+
+      return dioClient;
+    };
     initializeInterceptors();
   }
 

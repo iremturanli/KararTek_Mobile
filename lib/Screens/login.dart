@@ -235,7 +235,7 @@ class _LoginState extends State<Login> {
       UserLoginInformationResponse response =
           await registrationService.userLogin(UserLoginInformation(
               identityNumber: UserName, password: Password));
-      if (response.hasError == true) {
+      if (response.hasError == false) {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Dashboard()));
         // Get result from server
