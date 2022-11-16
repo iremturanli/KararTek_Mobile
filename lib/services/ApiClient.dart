@@ -1,24 +1,37 @@
 // ignore_for_file: file_names, avoid_print,prefer_typing_uninitialized_variables
 import 'dart:developer';
+import 'dart:io';
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 
 import '../ApiResponse/mobileApiResponse.dart';
 
 class ApiClient {
   Dio? _dio;
-  final _baseUrl = "http://http://192.168.10.99:5207/api/"; //baseurl; 10.0.2.2
+
+  final _baseUrl = "https://192.168.10.111:45456/api/"; //baseurl; 10.0.2.2
+
   var onResponseCallback;
   var onErrorCallback;
 
   ApiClient() {
-    _dio = Dio(BaseOptions(baseUrl: _baseUrl,
-        /*    connectTimeout: 5000,
-        receiveTimeout: 3000, */
+    _dio = Dio(BaseOptions(
+        baseUrl: _baseUrl,
+        connectTimeout: 60 * 1000, // 60 seconds
+        receiveTimeout: 60 * 1000, // 60 seconds,
         headers: {
           "Accept": "application/json",
           "content-type": "application/json; charset=utf-8",
           "X-Requested-With": "XMLHttpRequest"
         }));
+
+    (_dio?.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (HttpClient dioClient) {
+      dioClient.badCertificateCallback =
+          ((X509Certificate cert, String host, int port) => true);
+
+      return dioClient;
+    };
     initializeInterceptors();
   }
 
@@ -43,6 +56,7 @@ class ApiClient {
         return responseInterceptorHandler.next(response);
       },
       onError: (error, errorInterceptorHandler) {
+        print(error);
         if (error.response!.statusCode != 401) {
           MobileApiResponse apiResponse = MobileApiResponse();
           apiResponse.errorMessage =

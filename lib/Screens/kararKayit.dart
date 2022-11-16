@@ -43,7 +43,8 @@ class _kararKayitState extends State<kararKayit> {
         iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width / 30),
         child: ListView(
           children: <Widget>[
             const SizedBox(height: 30),

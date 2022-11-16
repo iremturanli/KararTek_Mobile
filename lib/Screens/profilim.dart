@@ -1,14 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/widgets/comboBox.dart';
 import 'package:flutter_application_1/Screens/homePage.dart';
 import 'package:flutter_application_1/Screens/login.dart';
 import 'package:flutter_application_1/main.dart';
+import 'package:flutter_application_1/widgets/comboBoxdeneme.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:open_filex/open_filex.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 enum GenderCharacter { erkek, kadin }
@@ -21,6 +23,17 @@ class Profilim extends StatefulWidget {
 }
 
 class _ProfilimState extends State<Profilim> {
+  XFile? _imageFileSelected;
+  void _setImageFileListFromFile(XFile? value) {
+    //_imageFileSelected = value == null ? null : value;
+  }
+
+  final ImagePicker _picker = ImagePicker();
+
+  // getImageFromGallery() async {
+  //   _imageFileSelected = await _picker.pickImage(source: ImageSource.gallery);
+  // }
+
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController dateInput = TextEditingController();
@@ -66,7 +79,8 @@ class _ProfilimState extends State<Profilim> {
           iconTheme: IconThemeData(color: Colors.black),
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width / 30),
           child: ListView(
             children: <Widget>[
               SizedBox(height: MediaQuery.of(context).size.height / 150),
@@ -74,19 +88,31 @@ class _ProfilimState extends State<Profilim> {
                 children: [
                   CircleAvatar(
                     backgroundColor: Colors.transparent,
-                    backgroundImage: Image.asset("assets/pngwing.png").image,
+                    backgroundImage: _imageFileSelected == null
+                        ? null
+                        : FileImage(File(_imageFileSelected!.path)),
                     radius: 50,
                   ),
-                  Column(
-                    children: [
-                      SizedBox(height: MediaQuery.of(context).size.height / 10),
-                      IconButton(
-                          iconSize: 30,
-                          onPressed: () {
-                            pickFiles();
-                          },
-                          icon: Icon(Icons.camera_alt_outlined))
-                    ],
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: MediaQuery.of(context).size.height / 120),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        IconButton(
+                            iconSize: 30,
+                            onPressed: () {
+                              _imgFromGallery();
+                            },
+                            icon: Icon(Icons.image)),
+                        IconButton(
+                            iconSize: 30,
+                            onPressed: () {
+                              _imgFromCamera();
+                            },
+                            icon: Icon(Icons.camera_alt_outlined))
+                      ],
+                    ),
                   )
                 ],
               ),
@@ -440,8 +466,68 @@ class _ProfilimState extends State<Profilim> {
                             MediaQuery.of(context).size.width / 9),
                         backgroundColor: Color.fromARGB(255, 175, 0, 0)),
                     onPressed: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => Login()));
+                      Navigator.of(context);
+                      showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                                backgroundColor:
+                                    Color.fromARGB(255, 221, 226, 241),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(30))),
+                                title: const Text(
+                                    "Çıkış Yapmak İstediğinize Emin Misiniz?"),
+                                actions: <Widget>[
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              minimumSize: Size(120, 50),
+                                              backgroundColor: Color.fromARGB(
+                                                  255, 175, 172, 172),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              10)))),
+                                          onPressed: () {
+                                            Navigator.of(ctx).pop();
+                                          },
+                                          child: Text(
+                                            "İPTAL",
+                                          ),
+                                        ),
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              minimumSize: Size(120, 50),
+                                              backgroundColor: Color.fromARGB(
+                                                  255, 194, 27, 5),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              10)))),
+                                          onPressed: () {
+                                            Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Login()));
+                                          },
+                                          child: Text(
+                                            "ÇIKIŞ",
+                                          ),
+                                        ),
+                                      ]),
+                                  SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              40),
+                                ],
+                              ));
                     },
                     child: const Text(
                       'Çıkış Yap',
@@ -474,16 +560,17 @@ class _ProfilimState extends State<Profilim> {
   void _showToast() => Fluttertoast.showToast(
         msg: 'Button Tapped',
       );
-  void pickFiles() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-    if (result == null) return;
-    PlatformFile file = result.files.first;
-    viewFile(file);
-
-    // FileUploadInputElement uploadInput = FileUploadInputElement();
+  _imgFromCamera() async {
+    _imageFileSelected = await _picker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _setImageFileListFromFile(_imageFileSelected);
+    });
   }
 
-  void viewFile(file) {
-    OpenFilex.open(file.path);
+  _imgFromGallery() async {
+    _imageFileSelected = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _setImageFileListFromFile(_imageFileSelected);
+    });
   }
 }

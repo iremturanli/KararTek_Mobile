@@ -2,18 +2,18 @@
 
 class UserLoginInformation {
   UserLoginInformation({
-    required this.userName,
+    required this.identityNumber,
     required this.password,
   });
 
-  String userName;
+  String identityNumber;
   String password;
 
   factory UserLoginInformation.fromJson(Map<String, dynamic> json) =>
       UserLoginInformation(
-          userName: json["UserName"], password: json["Password"]);
+          identityNumber: json["identityNumber"], password: json["password"]);
   Map<String, dynamic> toJson() => {
-        "UserName": userName,
-        "Password": password,
+        "identityNumber": identityNumber,
+        "password": password,
       };
 }
