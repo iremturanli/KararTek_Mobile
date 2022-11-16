@@ -6,7 +6,7 @@ import '../ApiResponse/mobileApiResponse.dart';
 
 class ApiClient {
   Dio? _dio;
-  final _baseUrl = "http://192.168.10.172:41874/api/"; //baseurl; 10.0.2.2
+  final _baseUrl = "http://http://192.168.10.99:5207/api/"; //baseurl; 10.0.2.2
   var onResponseCallback;
   var onErrorCallback;
 
