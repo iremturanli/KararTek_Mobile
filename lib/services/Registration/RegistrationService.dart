@@ -44,7 +44,7 @@ class RegistrationService implements IRegistrationService {
       UserRegisterInformation userRegisterInformation) async {
     // TODO: implement userRegistration
     Response response =
-        await _apiClient!.postRequest("Auth/registe", userRegisterInformation);
+        await _apiClient!.postRequest("Auth/Register", userRegisterInformation);
     if (response.statusCode == 401) {
       print("UnAuthorized");
     }
