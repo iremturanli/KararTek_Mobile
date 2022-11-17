@@ -105,9 +105,7 @@ class _KararAramaState extends State<KararArama> {
       // if the search field is empty or only contains white-space, we'll display all users
       // results = _allUsers;
       results = _kararlar
-          .where((user) => user["Hüküm"]['esasSıraNo']['esasYılı']
-                      ['kararSıraNo']['kararYılı']['Kurul Adı']['Mahkeme']
-                  ['Karar']['Karar Tarihi']['Kayıt Tarihi']
+          .where((user) => user["Hüküm"]
               .toLowerCase()
               .contains(enteredKeyword.toLowerCase()))
           .toList();
