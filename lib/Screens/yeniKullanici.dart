@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/ApiResponse/mobileApiResponse.dart';
+import 'package:flutter_application_1/AppConfigurations/appConfigurations.dart';
 import 'package:flutter_application_1/Screens/login.dart';
+import 'package:flutter_application_1/models/UserRegisterInformation/userRegisterInformation.dart';
+import 'package:flutter_application_1/services/Registration/RegistrationService.dart';
 import 'package:flutter_application_1/widgets/comboBox.dart';
 import 'package:flutter_application_1/Screens/sifremiUnuttum.dart';
 import 'package:flutter_application_1/Screens/homePage.dart';
 import 'package:flutter_application_1/main.dart';
+import 'package:flutter_application_1/widgets/comboboxTest.dart';
+
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class yeniKullanici extends StatefulWidget {
@@ -20,6 +26,11 @@ class _yeniKullaniciState extends State<yeniKullanici> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController baroSicilController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+
+  final RegistrationService registrationService =
+      getIt.get<RegistrationService>();
+  UserRegisterInformation userRegisterInformation = UserRegisterInformation();
+  String? selectedValue;
   final List<String> kullaniciTipi = [
     'Avukat - Avukat Stajyeri',
     'Öğrenci',
@@ -33,16 +44,18 @@ class _yeniKullaniciState extends State<yeniKullanici> {
       mask: '(###) ### ## ##',
       filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
+  int? status;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(children: <Widget>[
-      new Container(
+      Container(
         height: MediaQuery.of(context).size.height,
         width: double.infinity,
-        decoration: new BoxDecoration(
-            image: new DecorationImage(
-                image: new AssetImage("assets/images/karar5.png"),
+        // ignore: prefer_const_constructors
+        decoration: BoxDecoration(
+            image: const DecorationImage(
+                image: AssetImage("assets/images/karar5.png"),
                 fit: BoxFit.cover)),
       ),
       SingleChildScrollView(
@@ -117,12 +130,28 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                 const Text('Kullanıcı Tipi'),
                 SizedBox(height: MediaQuery.of(context).size.height / 80),
                 ComboBox(
-                    items: kullaniciTipi,
-                    color_of_box: Color.fromARGB(255, 255, 255, 255),
-                    color_of_text: Colors.black,
-                    height_of_box: MediaQuery.of(context).size.width / 8.5,
-                    size_of_font: 12,
-                    width_of_box: MediaQuery.of(context).size.width / 1.2),
+                  items: kullaniciTipi,
+                  color_of_box: Color.fromARGB(255, 255, 255, 255),
+                  color_of_text: Colors.black,
+                  height_of_box: MediaQuery.of(context).size.width / 8.5,
+                  width_of_box: MediaQuery.of(context).size.width / 1.2,
+                  size_of_font: 12,
+                ),
+                // Combobox1(
+                //     items: kullaniciTipi,
+                //     value: selectedValue,
+                //     onChanged: (value) {
+                //       setState(() {
+                //         //print(value);
+                //         if (value == "Avukat - Avukat Stajyeri") {
+                //           selectedValue = value;
+                //           status = 0;
+                //         } else {
+                //           selectedValue = value;
+                //           status = 1;
+                //         }
+                //       });
+                //     }),
                 SizedBox(height: MediaQuery.of(context).size.height / 80),
                 const Text('Şehir'),
                 SizedBox(height: MediaQuery.of(context).size.height / 80),
@@ -268,10 +297,8 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                       backgroundColor: const Color.fromARGB(255, 1, 28, 63),
                     ),
                     onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Login()));
+                      //  UserRegisterInformation userRegisterInformation = UserRegisterInformation(City: ,);
+                      registerUser(userRegisterInformation);
                     },
                     child: const Text(
                       'Kayıt Ol',
@@ -289,5 +316,18 @@ class _yeniKullaniciState extends State<yeniKullanici> {
         )),
       )
     ]));
+  }
+
+  //Methods
+
+  registerUser(UserRegisterInformation userRegisterInformation) async {
+    MobileApiResponse response =
+        await registrationService.userRegistration(userRegisterInformation);
+    if (response.hasError = false) {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const Login()));
+    } else {
+      print(response.errorMessage);
+    }
   }
 }

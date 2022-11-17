@@ -1,31 +1,13 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
-class ComboBox1 extends StatefulWidget {
-  ComboBox1({
-    Key? key,
-    required this.items,
-    required this.height_of_box,
-    required this.width_of_box,
-    required this.color_of_box,
-    required this.color_of_text,
-  }) : super(key: key);
+class Combobox1 extends StatelessWidget {
+  Combobox1({Key? key, required this.items, this.value, this.onChanged})
+      : super(key: key);
   @override
-  State<ComboBox1> createState() => _ComboBox1State();
+  final String? value;
   final List<String> items;
-  final double height_of_box;
-  final double width_of_box;
-  final Color? color_of_box;
-  final Color? color_of_text;
-}
-
-class _ComboBox1State extends State<ComboBox1> {
-  // final List<String> items = [
-  //   'Yüksek Yargı Kararları',
-  //   'Avukatın Eklediği Kararlar',
-  // ];
-  // ignore: non_constant_identifier_names
-  String? selected_Value;
+  final Function(String?)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +15,10 @@ class _ComboBox1State extends State<ComboBox1> {
       child: DropdownButton2(
         isExpanded: true,
         hint: Row(
-          children: [
-            // Icon(
-            //   Icons.menu,
-            //   size: 20,
-            //   color: Color.fromARGB(255, 0, 0, 0),
-            // ),
-
+          children: const [
+            SizedBox(
+              width: 10,
+            ),
             Text(
               "Seçiniz",
               style: TextStyle(
@@ -51,27 +30,22 @@ class _ComboBox1State extends State<ComboBox1> {
             ),
           ],
         ),
-        items: widget.items
+        items: items
             .map((item) => DropdownMenuItem<String>(
                   value: item,
                   child: Text(
                     item,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
-                      color: widget.color_of_text,
+                      color: Color.fromARGB(255, 73, 73, 73),
                     ),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ))
             .toList(),
-        value: selected_Value,
-        onChanged: (value) {
-          setState(() {
-            selected_Value = value as String;
-            print(selected_Value);
-          });
-        },
+        value: value,
+        onChanged: onChanged,
         icon: const Icon(
           Icons.keyboard_arrow_down_outlined,
         ),
@@ -82,7 +56,7 @@ class _ComboBox1State extends State<ComboBox1> {
         buttonWidth: 350,
         buttonPadding: const EdgeInsets.only(left: 14, right: 14),
         buttonDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(40),
             border: Border.all(color: Colors.grey, width: 1),
             color: const Color.fromARGB(255, 255, 255, 255)),
         // buttonElevation: 1,

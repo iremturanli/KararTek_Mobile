@@ -1,6 +1,7 @@
 // ignore_for_file: file_names,constant_identifier_names, prefer_const_constructors
 
 import 'package:dio/dio.dart';
+import 'package:flutter_application_1/models/UserRegisterInformation/userRegisterInformation.dart';
 import 'package:flutter_application_1/services/Registration/IRegistrationService.dart';
 
 import '../../ApiResponse/mobileApiResponse.dart';
@@ -36,5 +37,18 @@ class RegistrationService implements IRegistrationService {
     }
     print(response);
     return UserLoginInformationResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<MobileApiResponse> userRegistration(
+      UserRegisterInformation userRegisterInformation) async {
+    // TODO: implement userRegistration
+    Response response =
+        await _apiClient!.postRequest("Auth/registe", userRegisterInformation);
+    if (response.statusCode == 401) {
+      print("UnAuthorized");
+    }
+    print(response);
+    return MobileApiResponse.fromJson(response.data);
   }
 }

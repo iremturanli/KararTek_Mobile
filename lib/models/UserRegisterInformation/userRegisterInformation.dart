@@ -1,28 +1,28 @@
 class UserRegisterInformation {
   UserRegisterInformation(
-      {required this.FirstName,
-      required this.LastName,
-      required this.UserType,
-      required this.City,
-      required this.District,
-      required this.IdentityNumber,
-      required this.PhoneNumber,
+      {this.FirstName,
+      this.LastName,
+      this.UserType,
+      this.City,
+      this.District,
+      this.IdentityNumber,
+      this.PhoneNumber,
       this.BarRegisterNo,
-      required this.Email,
+      this.Email,
       this.University,
       this.Faculty,
       this.Grade,
       this.StudentNumber});
 
-  String FirstName;
-  String LastName;
-  String UserType;
-  String City;
-  String District;
-  String IdentityNumber;
-  String PhoneNumber;
+  String? FirstName;
+  String? LastName;
+  String? UserType;
+  String? City;
+  String? District;
+  String? IdentityNumber;
+  String? PhoneNumber;
   String? BarRegisterNo;
-  String Email;
+  String? Email;
   String? University;
   String? Faculty;
   String? Grade;
