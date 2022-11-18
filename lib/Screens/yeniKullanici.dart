@@ -1,9 +1,14 @@
+// ignore_for_file: unnecessary_new, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/ApiResponse/mobileApiResponse.dart';
+import 'package:flutter_application_1/ApiResponse/userTypeDropdownResponse.dart';
 import 'package:flutter_application_1/AppConfigurations/appConfigurations.dart';
 import 'package:flutter_application_1/Screens/login.dart';
 import 'package:flutter_application_1/models/UserRegisterInformation/userRegisterInformation.dart';
+import 'package:flutter_application_1/models/UserTypeInformation/userTypeInformation.dart';
+import 'package:flutter_application_1/services/DropDownServices/UserTypeDropdownServices.dart';
 import 'package:flutter_application_1/services/Registration/RegistrationService.dart';
 import 'package:flutter_application_1/widgets/comboBox.dart';
 import 'package:flutter_application_1/Screens/sifremiUnuttum.dart';
@@ -22,6 +27,7 @@ class yeniKullanici extends StatefulWidget {
 
 class _yeniKullaniciState extends State<yeniKullanici> {
   TextEditingController nameController = TextEditingController();
+  TextEditingController lastnameController = TextEditingController();
   TextEditingController tcController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController baroSicilController = TextEditingController();
@@ -29,8 +35,14 @@ class _yeniKullaniciState extends State<yeniKullanici> {
 
   final RegistrationService registrationService =
       getIt.get<RegistrationService>();
+
+  final UserTypeDropDownService userTypeDropDownService =
+      getIt.get<UserTypeDropDownService>();
+
   UserRegisterInformation userRegisterInformation = UserRegisterInformation();
-  String? selectedValue;
+  List<UserTypeInformation> userTypeInformation = [];
+  UserTypeInformation? selectedOption;
+
   final List<String> kullaniciTipi = [
     'Avukat - Avukat Stajyeri',
     'Öğrenci',
@@ -44,7 +56,15 @@ class _yeniKullaniciState extends State<yeniKullanici> {
       mask: '(###) ### ## ##',
       filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
-  int? status;
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+    getUserTypes();
+    print("sdfadfadf");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,14 +149,36 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                 SizedBox(height: MediaQuery.of(context).size.height / 80),
                 const Text('Kullanıcı Tipi'),
                 SizedBox(height: MediaQuery.of(context).size.height / 80),
-                ComboBox(
-                  items: kullaniciTipi,
-                  color_of_box: Color.fromARGB(255, 255, 255, 255),
-                  color_of_text: Colors.black,
-                  height_of_box: MediaQuery.of(context).size.width / 8.5,
-                  width_of_box: MediaQuery.of(context).size.width / 1.2,
-                  size_of_font: 12,
+
+                new DropdownButton<UserTypeInformation>(
+                  value: selectedOption,
+                  onChanged: (UserTypeInformation? newValue) {
+                    setState(() {
+                      selectedOption = newValue;
+                      print(selectedOption!.TypeID.toString());
+                    });
+                  },
+                  items: userTypeInformation.map((UserTypeInformation user) {
+                    return new DropdownMenuItem<UserTypeInformation>(
+                      value: user,
+                      child: Text(
+                        user.TypeName!,
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    );
+                  }).toList(),
                 ),
+                // ComboBox(
+                //   items: kullaniciTipi,
+                //   color_of_box: Color.fromARGB(255, 255, 255, 255),
+                //   color_of_text: Colors.black,
+                //   height_of_box: MediaQuery.of(context).size.width / 8.5,
+                //   width_of_box: MediaQuery.of(context).size.width / 1.2,
+                //   size_of_font: 12,
+                //   onChanged: (value){
+
+                //   },
+                // ),
                 // Combobox1(
                 //     items: kullaniciTipi,
                 //     value: selectedValue,
@@ -323,9 +365,23 @@ class _yeniKullaniciState extends State<yeniKullanici> {
   registerUser(UserRegisterInformation userRegisterInformation) async {
     MobileApiResponse response =
         await registrationService.userRegistration(userRegisterInformation);
-    if (response.hasError = false) {
+    if (response.hasError == false) {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const Login()));
+    } else {
+      print(response.errorMessage);
+    }
+  }
+
+  getUserTypes() async {
+    UserTypeInformationResponse response =
+        await userTypeDropDownService.getUserTypes();
+    if (response.hasError == false) {
+      userTypeInformation.addAll(response.userTypeInformation);
+      print(response.userTypeInformation.length);
+      setState(() {
+        print("hello");
+      });
     } else {
       print(response.errorMessage);
     }
