@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_new, prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/ApiResponse/mobileApiResponse.dart';
@@ -674,8 +672,8 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                     MaterialPageRoute(
                                         builder: (context) => Login()));
                               }
-                              //  UserRegisterInformation userRegisterInformation = UserRegisterInformation(City: ,);
-                              //registerUser(userRegisterInformation);
+                               //UserRegisterInformation userRegisterInformation = UserRegisterInformation(City: ,);
+                              registerUser(userRegisterInformation);
                             },
                             child: const Text(
                               'Kayıt Ol',
@@ -697,17 +695,8 @@ class _yeniKullaniciState extends State<yeniKullanici> {
 
   //Methods
 
-  registerUser(
-      String FirstName,
-      String LastName,
-      int UserType,
-      int City,
-      String IdentityNumber,
-      String PhoneNumber,
-      String Email,
-      String BarRegisterNo,
-      String University,
-      String) async {
+  registerUser(UserRegisterInformation userRegisterInformation
+   ) async {
     MobileApiResponse response =
         await registrationService.userRegistration(UserRegisterInformation());
     if (response.hasError == false) {
