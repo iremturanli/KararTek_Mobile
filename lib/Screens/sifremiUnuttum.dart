@@ -100,9 +100,8 @@ class _sifremiUnuttumState extends State<sifremiUnuttum> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width / 1.2,
                         child: TextField(
-                          keyboardType: TextInputType.phone,
+                          keyboardType: TextInputType.emailAddress,
                           autocorrect: false,
-                          inputFormatters: [maskFormatter],
                           controller: mailController,
                           decoration: const InputDecoration(
                               filled: true,
@@ -115,7 +114,7 @@ class _sifremiUnuttumState extends State<sifremiUnuttum> {
                                   borderSide: BorderSide(
                                       color:
                                           Color.fromARGB(255, 255, 255, 255))),
-                              hintText: '(5__) ___ __ __',
+                              hintText: 'Email adresinizi giriniz',
                               labelStyle: TextStyle(color: Colors.black)),
                         ),
                       ),
@@ -133,8 +132,10 @@ class _sifremiUnuttumState extends State<sifremiUnuttum> {
                       backgroundColor: const Color.fromARGB(255, 1, 28, 63),
                     ),
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Dashboard()));
+                      if (_formKey.currentState!.validate()) {
+                        forgotMyPassword(
+                            identityController.text, mailController.text);
+                      }
                     },
                     child: const Text(
                       'Şifre Gönder',
@@ -151,10 +152,8 @@ class _sifremiUnuttumState extends State<sifremiUnuttum> {
                       backgroundColor: const Color.fromARGB(255, 194, 27, 5),
                     ),
                     onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        forgotMyPassword(
-                            identityController.text, mailController.text);
-                      }
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Login()));
                     },
                     child: const Text(
                       'Geri',

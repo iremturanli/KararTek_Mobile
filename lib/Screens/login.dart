@@ -4,6 +4,7 @@ import 'package:flutter_application_1/Screens/sifremiUnuttum.dart';
 import 'package:flutter_application_1/Screens/homePage.dart';
 
 import '../AppConfigurations/appConfigurations.dart';
+import '../main.dart';
 import '../models/UserInformation/UserInformation.dart';
 import '../models/UserLoginInformation/userLoginInformation.dart';
 import '../services/Registration/RegistrationService.dart';
@@ -209,10 +210,8 @@ class _LoginState extends State<Login> {
                           backgroundColor: Color.fromARGB(255, 194, 27, 5),
                         ),
                         onPressed: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Dashboard()));
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) => Home()));
                         },
                         child: const Text(
                           'Geri',
@@ -236,7 +235,7 @@ class _LoginState extends State<Login> {
               identityNumber: IdentityNo, password: Password));
       if (response.hasError == false) {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => Home()));
+            context, MaterialPageRoute(builder: (context) => Dashboard()));
         // Get result from server
       } else {
         showDialog(
