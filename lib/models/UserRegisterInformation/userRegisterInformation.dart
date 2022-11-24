@@ -11,6 +11,10 @@ class UserRegisterInformation {
     this.phoneNumber,
     this.barRegisterNo,
     this.email,
+    this.university,
+    this.faculty,
+    this.grade,
+    this.studentNumber,
   });
 
   String? firstName;
@@ -22,6 +26,10 @@ class UserRegisterInformation {
   String? phoneNumber;
   String? barRegisterNo;
   String? email;
+  String? university;
+  String? faculty;
+  String? grade;
+  String? studentNumber;
 
   factory UserRegisterInformation.fromJson(Map<String, dynamic> json) =>
       UserRegisterInformation(
@@ -34,6 +42,10 @@ class UserRegisterInformation {
         phoneNumber: json["phoneNumber"],
         barRegisterNo: json["barRegisterNo"],
         email: json["email"],
+        university: json["university"],
+        faculty: json["faculty"],
+        grade: json["grade"],
+        studentNumber: json["studentNumber"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -46,5 +58,9 @@ class UserRegisterInformation {
         "phoneNumber": phoneNumber,
         "barRegisterNo": barRegisterNo,
         "email": email,
+        "university": university,
+        "faculty": faculty,
+        "grade": grade,
+        "studentNumber": studentNumber,
       };
 }
