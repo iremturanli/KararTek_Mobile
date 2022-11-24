@@ -709,8 +709,8 @@ class _yeniKullaniciState extends State<yeniKullanici> {
   //Methods
 
   registerUser(UserRegisterInformation userRegisterInformation) async {
-    userRegisterInformation.districtId = 6;
-    userRegisterInformation.phoneNumber = "312123456789";
+    //userRegisterInformation.districtId = 1;
+    //userRegisterInformation.phoneNumber = "55555555555";
     MobileApiResponse response =
         await registrationService.userRegistration(userRegisterInformation);
     if (response.hasError == false) {
