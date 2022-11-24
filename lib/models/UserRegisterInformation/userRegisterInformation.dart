@@ -1,61 +1,50 @@
-class UserRegisterInformation {
-  UserRegisterInformation(
-      {this.FirstName,
-      this.LastName,
-      this.UserTypeID,
-      this.CityId,
-      this.DistrictId,
-      this.IdentityNumber,
-      this.PhoneNumber,
-      this.BarRegisterNo,
-      this.Email,
-      this.University,
-      this.Faculty,
-      this.Grade,
-      this.StudentNumber});
+// ignore_for_file: non_constant_identifier_names
 
-  String? FirstName;
-  String? LastName;
-  int? UserTypeID;
-  String? CityId;
-  String? DistrictId;
-  String? IdentityNumber;
-  String? PhoneNumber;
-  String? BarRegisterNo;
-  String? Email;
-  String? University;
-  String? Faculty;
-  String? Grade;
-  String? StudentNumber;
+class UserRegisterInformation {
+  UserRegisterInformation({
+    this.firstName,
+    this.lastName,
+    this.userTypeId,
+    this.cityId,
+    this.districtId,
+    this.identityNumber,
+    this.phoneNumber,
+    this.barRegisterNo,
+    this.email,
+  });
+
+  String? firstName;
+  String? lastName;
+  int? userTypeId;
+  int? cityId;
+  int? districtId;
+  String? identityNumber;
+  String? phoneNumber;
+  String? barRegisterNo;
+  String? email;
 
   factory UserRegisterInformation.fromJson(Map<String, dynamic> json) =>
       UserRegisterInformation(
-        FirstName: json["FirstName"],
-        LastName: json["LastName"],
-        IdentityNumber: json["IdentityNumber"],
-        PhoneNumber: json["PhoneNumber"],
-        Email: json["Email"],
-        University: json["University"],
-        StudentNumber: json["StudentNumber"],
-        Faculty: json["Faculty"],
-        Grade: json["Grade"],
-        UserTypeID: json['UserTypeId'],
-        CityId: json['CityId'],
-        DistrictId: json['DistrictId'],
-        BarRegisterNo: json['BarRegisterNo'],
+        firstName: json["firstName"],
+        lastName: json["lastName"],
+        userTypeId: json["userTypeId"],
+        cityId: json["cityId"],
+        districtId: json["districtId"],
+        identityNumber: json["identityNumber"],
+        phoneNumber: json["phoneNumber"],
+        barRegisterNo: json["barRegisterNo"],
+        email: json["email"],
       );
+
   Map<String, dynamic> toJson() => {
-        "FirstName": FirstName,
-        "LastName": LastName,
-        "UserTypeId": UserTypeID,
-        "CityId": CityId,
-        "DistrictId": DistrictId,
-        "IdentityNumber": IdentityNumber,
-        "PhoneNumber": PhoneNumber,
-        "Email": Email,
-        "University": University,
-        "Faculty": Faculty,
-        "Grade": Grade,
-        "StudentNumber": StudentNumber
+        "firstName": firstName,
+        "lastName": lastName,
+        "userTypeId": userTypeId,
+        "cityId": cityId,
+        "districtId": districtId,
+        "identityNumber": identityNumber,
+        "phoneNumber": phoneNumber,
+        "barRegisterNo": barRegisterNo,
+        "email": email,
       };
 }

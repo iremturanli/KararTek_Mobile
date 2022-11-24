@@ -11,7 +11,7 @@ class ApiClient {
 
   //final _baseUrl = "https://192.168.10.111:45458/api/"; //baseurl; 10.0.2.2
 
-  final _baseUrl = "https://192.168.10.146:45456/api/"; //baseurl; 10.0.2.2
+  final _baseUrl = "http://192.168.56.1:45457/api/"; //baseurl; 10.0.2.2
 
   var onResponseCallback;
   var onErrorCallback;

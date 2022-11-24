@@ -301,30 +301,30 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                         //         }
                         //       });
                         //     }),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height / 80),
-                        const Text('Şehir'),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height / 80),
-                        ComboBox(
-                            value: selectedValue,
-                            items: sehir,
-                            onChanged: (value) {
-                              setState(() {
-                                if (value == "Adana") {
-                                  selectedValue = value;
-                                } else {
-                                  selectedValue = value;
-                                }
-                              });
-                            },
-                            color_of_box: Color.fromARGB(255, 255, 255, 255),
-                            color_of_text: Colors.black,
-                            height_of_box:
-                                MediaQuery.of(context).size.width / 8.5,
-                            size_of_font: 12,
-                            width_of_box:
-                                MediaQuery.of(context).size.width / 1.2),
+                        //SizedBox(
+                        //    height: MediaQuery.of(context).size.height / 80),
+                        // const Text('Şehir'),
+                        // SizedBox(
+                        //     height: MediaQuery.of(context).size.height / 80),
+                        // ComboBox(
+                        //     value: selectedValue,
+                        //     items: sehir,
+                        //     onChanged: (value) {
+                        //       setState(() {
+                        //         if (value == "Adana") {
+                        //           selectedValue = value;
+                        //         } else {
+                        //           selectedValue = value;
+                        //         }
+                        //       });
+                        //     },
+                        //     color_of_box: Color.fromARGB(255, 255, 255, 255),
+                        //     color_of_text: Colors.black,
+                        //     height_of_box:
+                        //         MediaQuery.of(context).size.width / 8.5,
+                        //     size_of_font: 12,
+                        //     width_of_box:
+                        //         MediaQuery.of(context).size.width / 1.2),
                         SizedBox(
                             height: MediaQuery.of(context).size.height / 80),
                         const Text('TC Kimlik No'),
@@ -601,7 +601,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                           height: MediaQuery.of(context).size.height / 11.5,
                           child: TextFormField(
                             controller: emailController,
-                            keyboardType: TextInputType.text,
+                            keyboardType: TextInputType.emailAddress,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Bu Alan Boş Bırakılamaz';
@@ -667,13 +667,26 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                             ),
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Login()));
+                                userRegisterInformation.firstName =
+                                    nameController.text;
+                                userRegisterInformation.lastName =
+                                    lastnameController.text;
+                                userRegisterInformation.userTypeId =
+                                    selectedOption!.TypeID;
+                                userRegisterInformation.cityId =
+                                    selectedCity!.CityID;
+                                userRegisterInformation.identityNumber =
+                                    tcController.text;
+                                userRegisterInformation.phoneNumber =
+                                    phoneController.text;
+                                userRegisterInformation.barRegisterNo =
+                                    baroSicilController.text;
+                                userRegisterInformation.email =
+                                    emailController.text;
+
+                                registerUser(userRegisterInformation);
                               }
-                               //UserRegisterInformation userRegisterInformation = UserRegisterInformation(City: ,);
-                              registerUser(userRegisterInformation);
+                              //UserRegisterInformation userRegisterInformation = UserRegisterInformation(City: ,);
                             },
                             child: const Text(
                               'Kayıt Ol',
@@ -695,10 +708,11 @@ class _yeniKullaniciState extends State<yeniKullanici> {
 
   //Methods
 
-  registerUser(UserRegisterInformation userRegisterInformation
-   ) async {
+  registerUser(UserRegisterInformation userRegisterInformation) async {
+    userRegisterInformation.districtId = 6;
+    userRegisterInformation.phoneNumber = "312123456789";
     MobileApiResponse response =
-        await registrationService.userRegistration(UserRegisterInformation());
+        await registrationService.userRegistration(userRegisterInformation);
     if (response.hasError == false) {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Login()));
