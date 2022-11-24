@@ -3,8 +3,8 @@ class UserRegisterInformation {
       {this.FirstName,
       this.LastName,
       this.UserTypeID,
-      this.City,
-      this.District,
+      this.CityId,
+      this.DistrictId,
       this.IdentityNumber,
       this.PhoneNumber,
       this.BarRegisterNo,
@@ -17,8 +17,8 @@ class UserRegisterInformation {
   String? FirstName;
   String? LastName;
   int? UserTypeID;
-  String? City;
-  String? District;
+  String? CityId;
+  String? DistrictId;
   String? IdentityNumber;
   String? PhoneNumber;
   String? BarRegisterNo;
@@ -40,16 +40,16 @@ class UserRegisterInformation {
         Faculty: json["Faculty"],
         Grade: json["Grade"],
         UserTypeID: json['UserTypeId'],
-        City: json['City'],
-        District: json['District'],
+        CityId: json['CityId'],
+        DistrictId: json['DistrictId'],
         BarRegisterNo: json['BarRegisterNo'],
       );
   Map<String, dynamic> toJson() => {
         "FirstName": FirstName,
         "LastName": LastName,
         "UserTypeId": UserTypeID,
-        "City": City,
-        "District": District,
+        "CityId": CityId,
+        "DistrictId": DistrictId,
         "IdentityNumber": IdentityNumber,
         "PhoneNumber": PhoneNumber,
         "Email": Email,
