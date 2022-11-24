@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/Screens/sifremiUnuttum.dart';
 import 'package:flutter_application_1/Screens/homePage.dart';
-import 'package:flutter_application_1/main.dart';
 
 import '../AppConfigurations/appConfigurations.dart';
 import '../models/UserInformation/UserInformation.dart';
@@ -108,7 +107,7 @@ class _LoginState extends State<Login> {
                             validator: (value) {
                               if (value == null ||
                                   value.isEmpty ||
-                                  value.length < 6) {
+                                  value.length < 8) {
                                 return 'Şifre Giriniz';
                               }
                               return null;
@@ -230,11 +229,11 @@ class _LoginState extends State<Login> {
 
   /* Methods */
 
-  loginUser(String UserName, String Password) async {
+  loginUser(String IdentityNo, String Password) async {
     try {
       UserLoginInformationResponse response =
           await registrationService.userLogin(UserLoginInformation(
-              identityNumber: UserName, password: Password));
+              identityNumber: IdentityNo, password: Password));
       if (response.hasError == false) {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Dashboard()));

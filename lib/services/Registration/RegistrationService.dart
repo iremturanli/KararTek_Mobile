@@ -1,6 +1,8 @@
 // ignore_for_file: file_names,constant_identifier_names, prefer_const_constructors
 
 import 'package:dio/dio.dart';
+import 'package:flutter_application_1/ApiResponse/forgotMyPasswordResponse.dart';
+import 'package:flutter_application_1/models/ForgotMyPasswordInformation.dart/forgotMyPasswordInformation.dart';
 import 'package:flutter_application_1/models/UserRegisterInformation/userRegisterInformation.dart';
 import 'package:flutter_application_1/services/Registration/IRegistrationService.dart';
 
@@ -50,5 +52,17 @@ class RegistrationService implements IRegistrationService {
     }
     print(response);
     return MobileApiResponse.fromJson(response.data);
+  }
+
+  Future<ForgotMyPasswordInformationResponse> forgotMyPassword(
+      ForgotMyPasswordInformation forgotMyPasswordInformation) async {
+    // TODO: implement userRegistration
+    Response response = await _apiClient!
+        .postRequest("Auth/forgotMyPassword", forgotMyPasswordInformation);
+    if (response.statusCode == 401) {
+      print("UnAuthorized");
+    }
+    print(response);
+    return ForgotMyPasswordInformationResponse.fromJson(response.data);
   }
 }

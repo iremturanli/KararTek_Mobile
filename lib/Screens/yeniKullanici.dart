@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_new, prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/ApiResponse/mobileApiResponse.dart';
@@ -19,21 +17,27 @@ import 'package:flutter_application_1/widgets/comboboxTest.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class yeniKullanici extends StatefulWidget {
-  const yeniKullanici({Key? key}) : super(key: key);
+  yeniKullanici({Key? key}) : super(key: key);
 
   @override
   State<yeniKullanici> createState() => _yeniKullaniciState();
 }
 
 class _yeniKullaniciState extends State<yeniKullanici> {
+  bool isStudentVisible = false;
+  bool isLawyerVisible = false;
   TextEditingController nameController = TextEditingController();
   TextEditingController lastnameController = TextEditingController();
   TextEditingController tcController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController baroSicilController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-
+  TextEditingController universityController = TextEditingController();
+  TextEditingController facultyController = TextEditingController();
+  TextEditingController gradeController = TextEditingController();
+  TextEditingController studentNoController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  int? value1;
 
   final RegistrationService registrationService =
       getIt.get<RegistrationService>();
@@ -45,17 +49,15 @@ class _yeniKullaniciState extends State<yeniKullanici> {
   List<UserTypeInformation> userTypeInformation = [];
   UserTypeInformation? selectedOption;
 
-  // final List<String> kullaniciTipi = [
-  //   'Avukat - Avukat Stajyeri',
-  //   'Öğrenci',
-  // ];
+  final List<String> kullaniciTipi = [
+    'Avukat - Avukat Stajyeri',
+    'Öğrenci',
+  ];
   final List<String> sehir = [
     'Adana',
     '...',
     'Düzce',
   ];
-  String? selectedValue;
-
   var maskFormatter = MaskTextInputFormatter(
       mask: '(###) ### ## ##',
       filter: {"#": RegExp(r'[0-9]')},
@@ -71,6 +73,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
 
   @override
   Widget build(BuildContext context) {
+    String? selectedValue;
     return Scaffold(
         body: Stack(children: <Widget>[
       Container(
@@ -112,12 +115,19 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                             height: MediaQuery.of(context).size.height / 80),
                         SizedBox(
                           width: MediaQuery.of(context).size.width / 1.2,
-                          height: MediaQuery.of(context).size.width / 8.5,
-                          child: TextField(
+                          height: MediaQuery.of(context).size.height / 11.5,
+                          child: TextFormField(
                             controller: nameController,
                             keyboardType: TextInputType.text,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Bu Alan Boş Bırakılamaz';
+                              }
+                              return null;
+                            },
                             autocorrect: false,
                             decoration: const InputDecoration(
+                                helperText: ' ',
                                 filled: true,
                                 fillColor: Colors.white,
                                 focusedBorder: OutlineInputBorder(
@@ -132,19 +142,26 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                 labelStyle: TextStyle(color: Colors.black)),
                           ),
                         ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height / 80),
+                        //SizedBox(
+                        //  height: MediaQuery.of(context).size.height / 80),
                         const Text('Soyad'),
                         SizedBox(
                             height: MediaQuery.of(context).size.height / 80),
                         SizedBox(
                           width: MediaQuery.of(context).size.width / 1.2,
-                          height: MediaQuery.of(context).size.width / 8.5,
-                          child: TextField(
+                          height: MediaQuery.of(context).size.height / 11.5,
+                          child: TextFormField(
                             controller: lastnameController,
                             keyboardType: TextInputType.text,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Bu Alan Boş Bırakılamaz';
+                              }
+                              return null;
+                            },
                             autocorrect: false,
                             decoration: const InputDecoration(
+                                helperText: ' ',
                                 filled: true,
                                 fillColor: Colors.white,
                                 focusedBorder: OutlineInputBorder(
@@ -159,8 +176,8 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                 labelStyle: TextStyle(color: Colors.black)),
                           ),
                         ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height / 80),
+                        // SizedBox(
+                        //   height: MediaQuery.of(context).size.height / 80),
                         const Text('Kullanıcı Tipi'),
                         SizedBox(
                             height: MediaQuery.of(context).size.height / 80),
@@ -171,19 +188,33 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               color: Colors.white),
-                          child: new DropdownButton<UserTypeInformation>(
+                          child:
+                              new DropdownButtonFormField<UserTypeInformation>(
                             isExpanded: true,
-                            underline: SizedBox.shrink(),
+                            //underline: SizedBox.shrink(),
                             icon: Icon(Icons.keyboard_arrow_down_outlined),
                             dropdownColor: Colors.white,
                             value: selectedOption,
                             onChanged: (UserTypeInformation? newValue) {
                               setState(() {
-                                selectedOption = newValue;
+                                //selectedOption = newValue;
+
+                                if (newValue!.TypeID == 2) {
+                                  isStudentVisible = true;
+                                  isLawyerVisible = false;
+                                  selectedOption = newValue;
+                                } else {
+                                  isStudentVisible = false;
+                                  isLawyerVisible = true;
+                                  selectedOption = newValue;
+                                }
                                 print(selectedOption!.TypeID.toString());
-                                ;
                               });
                             },
+
+                            validator: (value) => value == null
+                                ? "Bu alan boş bırakılamaz"
+                                : null,
                             items: userTypeInformation
                                 .map((UserTypeInformation userTypeInformation) {
                               return new DropdownMenuItem<UserTypeInformation>(
@@ -245,8 +276,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                 MediaQuery.of(context).size.width / 8.5,
                             size_of_font: 12,
                             width_of_box:
-                                MediaQuery.of(context).size.width / 1.2), //?
-
+                                MediaQuery.of(context).size.width / 1.2),
                         SizedBox(
                             height: MediaQuery.of(context).size.height / 80),
                         const Text('TC Kimlik No'),
@@ -254,15 +284,22 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                             height: MediaQuery.of(context).size.height / 80),
                         SizedBox(
                             width: MediaQuery.of(context).size.width / 1.2,
-                            height: MediaQuery.of(context).size.width / 8.5,
+                            height: MediaQuery.of(context).size.height / 11.5,
                             child: TextFormField(
                               controller: tcController,
                               keyboardType: TextInputType.number,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Bu Alan Boş Bırakılamaz';
+                                }
+                                return null;
+                              },
                               inputFormatters: <TextInputFormatter>[
                                 FilteringTextInputFormatter.digitsOnly,
                                 LengthLimitingTextInputFormatter(11)
                               ],
                               decoration: const InputDecoration(
+                                  helperText: ' ',
                                   filled: true,
                                   fillColor: Colors.white,
                                   focusedBorder: OutlineInputBorder(
@@ -277,20 +314,26 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                   // Here is key idea
                                   labelStyle: TextStyle(color: Colors.black)),
                             )),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height / 80),
+
                         const Text('Cep Telefonu'),
                         SizedBox(
                             height: MediaQuery.of(context).size.height / 80),
                         SizedBox(
                           width: MediaQuery.of(context).size.width / 1.2,
-                          height: MediaQuery.of(context).size.width / 8.5,
-                          child: TextField(
+                          height: MediaQuery.of(context).size.height / 11.5,
+                          child: TextFormField(
                             keyboardType: TextInputType.phone,
                             autocorrect: false,
                             inputFormatters: [maskFormatter],
                             controller: phoneController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Bu Alan Boş Bırakılamaz';
+                              }
+                              return null;
+                            },
                             decoration: const InputDecoration(
+                                helperText: ' ',
                                 filled: true,
                                 fillColor: Colors.white,
                                 focusedBorder: OutlineInputBorder(
@@ -305,47 +348,221 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                 labelStyle: TextStyle(color: Colors.black)),
                           ),
                         ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height / 80),
-                        const Text('Baro Sicil No'),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height / 80),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width / 1.2,
-                          height: MediaQuery.of(context).size.width / 8.5,
-                          child: TextField(
-                            controller: baroSicilController,
-                            keyboardType: TextInputType.text,
-                            autocorrect: false,
-                            decoration: const InputDecoration(
-                                filled: true,
-                                fillColor: Colors.white,
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 255, 255, 255))),
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 255, 255, 255))),
-                                hintText: "Baro Sicil No Giriniz",
-                                labelStyle: TextStyle(
-                                    color: Color.fromARGB(255, 0, 0, 0))),
-                          ),
-                        ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height / 80),
+                        Visibility(
+                            visible: isLawyerVisible,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text('Baro Sicil No'),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height /
+                                        80),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.2,
+                                  height:
+                                      MediaQuery.of(context).size.height / 11.5,
+                                  child: TextFormField(
+                                    controller: baroSicilController,
+                                    keyboardType: TextInputType.text,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Bu Alan Boş Bırakılamaz';
+                                      }
+                                      return null;
+                                    },
+                                    autocorrect: false,
+                                    decoration: InputDecoration(
+                                        helperText: ' ',
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color.fromARGB(
+                                                    255, 255, 255, 255))),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color.fromARGB(
+                                                    255, 255, 255, 255))),
+                                        hintText: "Baro Sicil No Giriniz",
+                                        labelStyle: TextStyle(
+                                            color:
+                                                Color.fromARGB(255, 0, 0, 0))),
+                                  ),
+                                ),
+                              ],
+                            )),
+                        Visibility(
+                            visible: isStudentVisible,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text('Üniversite'),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height /
+                                        80),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.2,
+                                  height:
+                                      MediaQuery.of(context).size.height / 11.5,
+                                  child: TextFormField(
+                                    controller: universityController,
+                                    keyboardType: TextInputType.text,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Bu Alan Boş Bırakılamaz';
+                                      }
+                                      return null;
+                                    },
+                                    autocorrect: false,
+                                    decoration: InputDecoration(
+                                        helperText: ' ',
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color.fromARGB(
+                                                    255, 255, 255, 255))),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color.fromARGB(
+                                                    255, 255, 255, 255))),
+                                        hintText: "Üniversite Giriniz",
+                                        labelStyle: TextStyle(
+                                            color:
+                                                Color.fromARGB(255, 0, 0, 0))),
+                                  ),
+                                ),
+                                Text('Fakülte'),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height /
+                                        80),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.2,
+                                  height:
+                                      MediaQuery.of(context).size.height / 11.5,
+                                  child: TextFormField(
+                                    controller: facultyController,
+                                    keyboardType: TextInputType.text,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Bu Alan Boş Bırakılamaz';
+                                      }
+                                      return null;
+                                    },
+                                    autocorrect: false,
+                                    decoration: InputDecoration(
+                                        helperText: ' ',
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color.fromARGB(
+                                                    255, 255, 255, 255))),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color.fromARGB(
+                                                    255, 255, 255, 255))),
+                                        hintText: "Fakülte Giriniz",
+                                        labelStyle: TextStyle(
+                                            color:
+                                                Color.fromARGB(255, 0, 0, 0))),
+                                  ),
+                                ),
+                                Text('Sınıf'),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.2,
+                                  height:
+                                      MediaQuery.of(context).size.height / 11.5,
+                                  child: TextFormField(
+                                    controller: gradeController,
+                                    keyboardType: TextInputType.number,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Bu Alan Boş Bırakılamaz';
+                                      }
+                                      return null;
+                                    },
+                                    autocorrect: false,
+                                    decoration: InputDecoration(
+                                        helperText: ' ',
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color.fromARGB(
+                                                    255, 255, 255, 255))),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color.fromARGB(
+                                                    255, 255, 255, 255))),
+                                        hintText: "Sınıf Giriniz",
+                                        labelStyle: TextStyle(
+                                            color:
+                                                Color.fromARGB(255, 0, 0, 0))),
+                                  ),
+                                ),
+                                Text('Okul Numarası'),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height /
+                                        80),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.2,
+                                  height:
+                                      MediaQuery.of(context).size.height / 11.5,
+                                  child: TextFormField(
+                                    controller: studentNoController,
+                                    keyboardType: TextInputType.number,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Bu Alan Boş Bırakılamaz';
+                                      }
+                                      return null;
+                                    },
+                                    autocorrect: false,
+                                    decoration: InputDecoration(
+                                        helperText: ' ',
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color.fromARGB(
+                                                    255, 255, 255, 255))),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color.fromARGB(
+                                                    255, 255, 255, 255))),
+                                        hintText: "Öğrenci No Giriniz",
+                                        labelStyle: TextStyle(
+                                            color:
+                                                Color.fromARGB(255, 0, 0, 0))),
+                                  ),
+                                ),
+                              ],
+                            )),
+
                         const Text('E-Posta'),
                         SizedBox(
                             height: MediaQuery.of(context).size.height / 80),
                         SizedBox(
                           width: MediaQuery.of(context).size.width / 1.2,
-                          height: MediaQuery.of(context).size.width / 8.5,
-                          child: TextField(
+                          height: MediaQuery.of(context).size.height / 11.5,
+                          child: TextFormField(
                             controller: emailController,
                             keyboardType: TextInputType.text,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Bu Alan Boş Bırakılamaz';
+                              }
+                              return null;
+                            },
                             autocorrect: false,
                             decoration: const InputDecoration(
+                                helperText: ' ',
                                 filled: true,
                                 fillColor: Colors.white,
                                 focusedBorder: OutlineInputBorder(
@@ -402,20 +619,13 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                             ),
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                UserRegisterInformation
-                                    userRegisterInformation =
-                                    UserRegisterInformation(
-                                        FirstName: nameController.text,
-                                        LastName: lastnameController.text,
-                                        UserTypeID: selectedOption?.TypeID,
-                                        City: selectedValue,
-                                        IdentityNumber: tcController.text,
-                                        PhoneNumber: phoneController.text,
-                                        BarRegisterNo: baroSicilController.text,
-                                        Email: emailController.text);
-
-                                registerUser(userRegisterInformation);
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Login()));
                               }
+                               //UserRegisterInformation userRegisterInformation = UserRegisterInformation(City: ,);
+                              registerUser(userRegisterInformation);
                             },
                             child: const Text(
                               'Kayıt Ol',
@@ -437,13 +647,13 @@ class _yeniKullaniciState extends State<yeniKullanici> {
 
   //Methods
 
-  registerUser(UserRegisterInformation userRegisterInformation) async {
+  registerUser(UserRegisterInformation userRegisterInformation
+   ) async {
     MobileApiResponse response =
-        await registrationService.userRegistration(userRegisterInformation);
-    //
+        await registrationService.userRegistration(UserRegisterInformation());
     if (response.hasError == false) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const Login()));
+          context, MaterialPageRoute(builder: (context) => Login()));
     } else {
       print(response.errorMessage);
     }

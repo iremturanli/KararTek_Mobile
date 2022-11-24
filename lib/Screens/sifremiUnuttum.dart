@@ -4,6 +4,11 @@ import 'package:flutter_application_1/Screens/homePage.dart';
 import 'package:flutter_application_1/Screens/login.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
+import '../ApiResponse/forgotMyPasswordResponse.dart';
+import '../AppConfigurations/appConfigurations.dart';
+import '../models/ForgotMyPasswordInformation.dart/forgotMyPasswordInformation.dart';
+import '../services/Registration/RegistrationService.dart';
+
 class sifremiUnuttum extends StatefulWidget {
   const sifremiUnuttum({Key? key}) : super(key: key);
 
@@ -12,9 +17,11 @@ class sifremiUnuttum extends StatefulWidget {
 }
 
 class _sifremiUnuttumState extends State<sifremiUnuttum> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-
+  TextEditingController identityController = TextEditingController();
+  TextEditingController mailController = TextEditingController();
+  final RegistrationService registrationService =
+      getIt.get<RegistrationService>();
+  final _formKey = GlobalKey<FormState>();
   var maskFormatter = new MaskTextInputFormatter(
       mask: '(###) ### ## ##',
       filter: {"#": RegExp(r'[0-9]')},
@@ -25,6 +32,7 @@ class _sifremiUnuttumState extends State<sifremiUnuttum> {
     return Scaffold(
         body: SingleChildScrollView(
       child: Form(
+          key: _formKey,
           child: Container(
               height: MediaQuery.of(context).size.height,
               width: double.infinity,
@@ -60,7 +68,7 @@ class _sifremiUnuttumState extends State<sifremiUnuttum> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width / 1.2,
                         child: TextField(
-                          controller: nameController,
+                          controller: identityController,
                           keyboardType: TextInputType.number,
                           inputFormatters: <TextInputFormatter>[
                             FilteringTextInputFormatter.digitsOnly,
@@ -86,7 +94,7 @@ class _sifremiUnuttumState extends State<sifremiUnuttum> {
                         ),
                       ),
                       SizedBox(height: MediaQuery.of(context).size.height / 80),
-                      const Text('Cep Telefonu',
+                      const Text('Email',
                           style: TextStyle(fontWeight: FontWeight.w500)),
                       SizedBox(height: MediaQuery.of(context).size.height / 80),
                       SizedBox(
@@ -95,7 +103,7 @@ class _sifremiUnuttumState extends State<sifremiUnuttum> {
                           keyboardType: TextInputType.phone,
                           autocorrect: false,
                           inputFormatters: [maskFormatter],
-                          controller: phoneController,
+                          controller: mailController,
                           decoration: const InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
@@ -143,8 +151,10 @@ class _sifremiUnuttumState extends State<sifremiUnuttum> {
                       backgroundColor: const Color.fromARGB(255, 194, 27, 5),
                     ),
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Login()));
+                      if (_formKey.currentState!.validate()) {
+                        forgotMyPassword(
+                            identityController.text, mailController.text);
+                      }
                     },
                     child: const Text(
                       'Geri',
@@ -154,5 +164,22 @@ class _sifremiUnuttumState extends State<sifremiUnuttum> {
                 ],
               ))),
     ));
+  }
+
+  forgotMyPassword(String IdentityNo, String email) async {
+    try {
+      ForgotMyPasswordInformationResponse response = await registrationService
+          .forgotMyPassword(ForgotMyPasswordInformation(
+              identityNumber: IdentityNo, email: email));
+      if (response.hasError == false) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Login()));
+        // Get result from server
+      } else {
+        print(response.errorMessage);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }
