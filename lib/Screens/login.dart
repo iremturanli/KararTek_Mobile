@@ -237,9 +237,41 @@ class _LoginState extends State<Login> {
               identityNumber: IdentityNo, password: Password));
       if (response.hasError == false) {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => Dashboard()));
+            context, MaterialPageRoute(builder: (context) => Home()));
         // Get result from server
       } else {
+        showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (ctx) => AlertDialog(
+                  backgroundColor: Color.fromARGB(255, 221, 226, 241),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(30))),
+                  title: const Text(
+                      "Bilgiler hatalıdır kontrol ederek tekrar deneyiniz!"),
+                  actions: <Widget>[
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                minimumSize: Size(120, 50),
+                                backgroundColor:
+                                    Color.fromARGB(255, 175, 172, 172),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)))),
+                            onPressed: () {
+                              Navigator.of(ctx).pop();
+                            },
+                            child: Text(
+                              "TAMAM",
+                            ),
+                          ),
+                        ]),
+                    SizedBox(height: MediaQuery.of(context).size.height / 40),
+                  ],
+                ));
         print(response.errorMessage);
       }
     } catch (e) {

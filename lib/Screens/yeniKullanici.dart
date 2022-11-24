@@ -6,6 +6,7 @@ import 'package:flutter_application_1/ApiResponse/mobileApiResponse.dart';
 import 'package:flutter_application_1/ApiResponse/userTypeDropdownResponse.dart';
 import 'package:flutter_application_1/AppConfigurations/appConfigurations.dart';
 import 'package:flutter_application_1/Screens/login.dart';
+import 'package:flutter_application_1/models/CityInformation/CityInformation.dart';
 import 'package:flutter_application_1/models/UserRegisterInformation/userRegisterInformation.dart';
 import 'package:flutter_application_1/models/UserTypeInformation/userTypeInformation.dart';
 import 'package:flutter_application_1/services/DropDownServices/UserTypeDropdownServices.dart';
@@ -17,6 +18,9 @@ import 'package:flutter_application_1/main.dart';
 import 'package:flutter_application_1/widgets/comboboxTest.dart';
 
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+
+import '../ApiResponse/CityDropdownResponse.dart';
+import '../services/DropDownServices/CityDropdownServices.dart';
 
 class yeniKullanici extends StatefulWidget {
   yeniKullanici({Key? key}) : super(key: key);
@@ -46,10 +50,14 @@ class _yeniKullaniciState extends State<yeniKullanici> {
 
   final UserTypeDropDownService userTypeDropDownService =
       getIt.get<UserTypeDropDownService>();
+  final CityDropdownService cityDropdownService =
+      getIt.get<CityDropdownService>();
 
   UserRegisterInformation userRegisterInformation = UserRegisterInformation();
   List<UserTypeInformation> userTypeInformation = [];
+  List<CityInformation> cityInformation = [];
   UserTypeInformation? selectedOption;
+  CityInformation? selectedCity;
 
   final List<String> kullaniciTipi = [
     'Avukat - Avukat Stajyeri',
@@ -70,7 +78,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
 
     super.initState();
     getUserTypes();
-    print("sdfadfadf");
+    getCities();
   }
 
   @override
@@ -223,6 +231,46 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                 value: userTypeInformation,
                                 child: Text(
                                   userTypeInformation.TypeName!,
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                        const Text('Şehir'),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height / 80),
+
+                        Container(
+                          height: 45,
+                          width: 330,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.white),
+                          child: new DropdownButtonFormField<CityInformation>(
+                            isExpanded: true,
+                            //underline: SizedBox.shrink(),
+                            icon: Icon(Icons.keyboard_arrow_down_outlined),
+                            dropdownColor: Colors.white,
+                            value: selectedCity,
+                            onChanged: (CityInformation? newValue) {
+                              setState(() {
+                                //selectedOption = newValue;
+
+                                selectedCity = newValue;
+                                print(selectedCity!.CityID.toString());
+                              });
+                            },
+
+                            validator: (value) => value == null
+                                ? "Bu alan boş bırakılamaz"
+                                : null,
+                            items: cityInformation
+                                .map((CityInformation cityInformation) {
+                              return new DropdownMenuItem<CityInformation>(
+                                value: cityInformation,
+                                child: Text(
+                                  cityInformation.CityName!,
                                   style: TextStyle(color: Colors.black),
                                 ),
                               );
@@ -674,8 +722,23 @@ class _yeniKullaniciState extends State<yeniKullanici> {
     UserTypeInformationResponse response =
         await userTypeDropDownService.getUserTypes();
     if (response.hasError == false) {
-      userTypeInformation.addAll(response.userTypeInformation);
+      userTypeInformation.add(response.userTypeInformation[0]);
+      userTypeInformation.add(response.userTypeInformation[1]);
       print(response.userTypeInformation.length);
+      setState(() {
+        print("hello");
+      });
+    } else {
+      print(response.errorMessage);
+    }
+  }
+
+  getCities() async {
+    CityInformationResponse response = await cityDropdownService.getCities();
+    if (response.hasError == false) {
+      cityInformation.addAll(response.cityInformation);
+
+      print(response.cityInformation.length);
       setState(() {
         print("hello");
       });
