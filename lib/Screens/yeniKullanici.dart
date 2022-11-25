@@ -717,6 +717,38 @@ class _yeniKullaniciState extends State<yeniKullanici> {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Login()));
     } else {
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (ctx) => AlertDialog(
+                backgroundColor: Color.fromARGB(255, 221, 226, 241),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(30))),
+                title: const Text(
+                    "Girdiğiniz bilgiler kayıtlı bir kullanıcının bilgileri ile eşleşmektedir!"),
+                actions: <Widget>[
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              minimumSize: Size(120, 50),
+                              backgroundColor:
+                                  Color.fromARGB(255, 175, 172, 172),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)))),
+                          onPressed: () {
+                            Navigator.of(ctx).pop();
+                          },
+                          child: Text(
+                            "TAMAM",
+                          ),
+                        ),
+                      ]),
+                  SizedBox(height: MediaQuery.of(context).size.height / 40),
+                ],
+              ));
       print(response.errorMessage);
     }
   }
