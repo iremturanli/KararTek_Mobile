@@ -8,7 +8,8 @@ import 'package:flutter_application_1/services/DropDownServices/JudgmentTypeRadi
 import '../AppConfigurations/appConfigurations.dart';
 
 class RadioButton extends StatefulWidget {
-  const RadioButton({Key? key}) : super(key: key);
+  int? decisionValue;
+  RadioButton({Key? key, this.decisionValue}) : super(key: key);
 
   @override
   State<RadioButton> createState() => _RadioButtonState();
@@ -85,7 +86,7 @@ class _RadioButtonState extends State<RadioButton> {
             onChanged: ((YuksekYargi? value) {
               setState(() {
                 _yuksekYargi = value;
-                decisionValue = EDecisionTypes.AnayasaMahkemesi;
+                widget.decisionValue = EDecisionTypes.AnayasaMahkemesi;
                 print(decisionValue);
               });
             }),

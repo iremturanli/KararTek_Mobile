@@ -1,10 +1,14 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/ApiResponse/SearchTypeDropdownResponse.dart';
 import 'package:flutter_application_1/Screens/AramaSonuclari.dart';
+import 'package:flutter_application_1/models/SearchTypeInformation/searchTypeInformation.dart';
+import 'package:flutter_application_1/services/DropDownServices/SearchTypeDropdownService.dart';
 import 'package:flutter_application_1/widgets/ModalBottomDetayl%C4%B1Arama.dart';
-import 'package:flutter_application_1/widgets/RadioButton.dart';
-import 'package:flutter_application_1/widgets/dropDownCustom.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+
+import '../AppConfigurations/appConfigurations.dart';
+import '../models/EDecisionTypes.dart';
 
 class KararArama extends StatefulWidget {
   const KararArama({Key? key}) : super(key: key);
@@ -14,11 +18,21 @@ class KararArama extends StatefulWidget {
   _KararAramaState createState() => _KararAramaState();
 }
 
+enum YuksekYargi { yargitay, danistay, anayasaMahkemesi }
+
+YuksekYargi? _yuksekYargi = YuksekYargi.yargitay;
+
 class _KararAramaState extends State<KararArama> {
-  bool isVisible = false;
   final textEditingController = TextEditingController();
-  // This holds a list of fiction users
-  // You can use data fetched from a database or a server as well
+  bool isVisible = false;
+
+  final SearchTypeDropdownService searchTypeDropdownService =
+      getIt.get<SearchTypeDropdownService>();
+  List<SearchTypeInformation> searchTypeInformation = [];
+  SearchTypeInformation? selectedOption;
+
+  int? decisionValue;
+
   final List<Map<String, dynamic>> _kararlar = [
     {
       "id": "1",
@@ -82,13 +96,6 @@ class _KararAramaState extends State<KararArama> {
     },
   ];
 
-  String? selectedValue;
-
-  final List<String> kararlar = [
-    'Yüksek Yargı Kararları',
-    'Avukatın Eklediği Kararlar',
-  ];
-
   // This list holds the data for the list view
   List<Map<String, dynamic>> _bulunanKararlar = [];
   // @override
@@ -97,6 +104,14 @@ class _KararAramaState extends State<KararArama> {
   //   _foundUsers = _allUsers;
   //   super.initState();
   // }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+    getSearchTypes();
+  }
 
   // This function is called whenever the text field changes
   void _runFilter(String enteredKeyword) {
@@ -174,26 +189,116 @@ class _KararAramaState extends State<KararArama> {
                 ),
               ),
               const SizedBox(height: 30),
-              //ComboBox(items: kararlar,),
-              DropDownCustom(
-                items: kararlar,
-                value: selectedValue,
-                onChanged: (value) {
+              DropdownButtonFormField<SearchTypeInformation>(
+                // ignore: prefer_const_constructors
+                decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(40)),
+
+                    // ignore: prefer_const_constructors
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 1, color: Colors.grey),
+                        borderRadius: BorderRadius.circular(40))),
+                isExpanded: true,
+                icon: const Icon(Icons.keyboard_arrow_down_outlined),
+                dropdownColor: const Color.fromARGB(255, 255, 255, 255),
+                value: selectedOption,
+                onChanged: (SearchTypeInformation? newValue) {
                   setState(() {
-                    //print(value);
-                    if (value == "Yüksek Yargı Kararları") {
+                    //selectedOption = newValue;
+
+                    if (newValue!.TypeID == 2) {
                       isVisible = true;
-                      selectedValue = value;
+                      selectedOption = newValue;
                     } else {
                       isVisible = false;
-                      selectedValue = value;
+                      selectedOption = newValue;
                     }
+                    print(selectedOption!.TypeID.toString());
                   });
                 },
+                validator: (value) =>
+                    value == null ? "Bu alan boş bırakılamaz" : null,
+                items: searchTypeInformation
+                    .map((SearchTypeInformation searchTypeInformation) {
+                  return DropdownMenuItem<SearchTypeInformation>(
+                    value: searchTypeInformation,
+                    child: Text(
+                      searchTypeInformation.TypeName!,
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  );
+                }).toList(),
               ),
               Visibility(
                 visible: isVisible,
-                child: RadioButton(),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: RadioListTile(
+                          activeColor: const Color.fromARGB(255, 1, 28, 63),
+                          title: Transform.translate(
+                              offset: const Offset(-20, 0),
+                              child: const Text(
+                                  style: TextStyle(fontSize: 11), 'Yargıtay')),
+                          value: YuksekYargi.yargitay,
+                          groupValue: _yuksekYargi,
+                          onChanged: (YuksekYargi? value) {
+                            setState(() {
+                              _yuksekYargi = value;
+                              decisionValue = EDecisionTypes.Yargitay;
+                            });
+                          }),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: RadioListTile(
+                        activeColor: const Color.fromARGB(255, 1, 28, 63),
+                        title: Transform.translate(
+                            offset: const Offset(-20, 0),
+                            child: const Text(
+                                style: TextStyle(fontSize: 11), 'Danıştay')),
+                        value: YuksekYargi.danistay,
+                        groupValue: _yuksekYargi,
+                        onChanged: ((YuksekYargi? value) {
+                          setState(() {
+                            _yuksekYargi = value;
+                            decisionValue = EDecisionTypes.Danistay;
+                            print(decisionValue);
+                          });
+                        }),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: RadioListTile(
+                        enableFeedback: true, //
+                        activeColor: const Color.fromARGB(255, 1, 28, 63),
+                        title: Transform.translate(
+                            offset: const Offset(-20, 0),
+                            child: const Text(
+                              maxLines: 2,
+                              style: TextStyle(fontSize: 10.2),
+                              'Anayasa Mahkemesi',
+                              // overflow: TextOverflow.fade,
+                            )),
+                        value: YuksekYargi.anayasaMahkemesi,
+                        groupValue: _yuksekYargi,
+                        onChanged: ((YuksekYargi? value) {
+                          setState(() {
+                            _yuksekYargi = value;
+                            decisionValue = EDecisionTypes.AnayasaMahkemesi;
+                            print(decisionValue);
+                          });
+                        }),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 70),
               Column(
@@ -206,7 +311,7 @@ class _KararAramaState extends State<KararArama> {
                         minimumSize: const Size(350, 55),
                         backgroundColor: const Color.fromARGB(255, 1, 28, 63)),
                     onPressed: () {
-                      //
+                      //?
                     },
                     child: const Text(
                       'Arama Yap',
@@ -245,5 +350,20 @@ class _KararAramaState extends State<KararArama> {
         ),
       ),
     );
+  }
+
+  getSearchTypes() async {
+    SearchTypeInformationResponse response =
+        await searchTypeDropdownService.getSearchTypes();
+    if (response.hasError == false) {
+      searchTypeInformation.addAll(response.searchTypeInformation);
+
+      print(response.searchTypeInformation.length);
+      setState(() {
+        print("hello");
+      });
+    } else {
+      print(response.errorMessage);
+    }
   }
 }
