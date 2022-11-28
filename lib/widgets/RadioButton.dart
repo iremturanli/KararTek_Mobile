@@ -1,4 +1,11 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/ApiResponse/JudgmentTypeRadioButtonResponse.dart';
+import 'package:flutter_application_1/models/EDecisionTypes.dart';
+import 'package:flutter_application_1/models/JudgmentTypeInformation/judgmentTypeInformation.dart';
+import 'package:flutter_application_1/services/DropDownServices/JudgmentTypeRadioButtonService.dart';
+
+import '../AppConfigurations/appConfigurations.dart';
 
 class RadioButton extends StatefulWidget {
   const RadioButton({Key? key}) : super(key: key);
@@ -12,6 +19,14 @@ enum YuksekYargi { yargitay, danistay, anayasaMahkemesi }
 YuksekYargi? _yuksekYargi = YuksekYargi.yargitay;
 
 class _RadioButtonState extends State<RadioButton> {
+  final JudgmentTypeRadioButtonService judgmentTypeRadioButtonService =
+      getIt.get<JudgmentTypeRadioButtonService>();
+  List<JudgmentTypeInformation> judgmentTypeInformation = [];
+  int? decisionValue;
+
+  @override
+  void initState() {}
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -30,6 +45,7 @@ class _RadioButtonState extends State<RadioButton> {
               onChanged: (YuksekYargi? value) {
                 setState(() {
                   _yuksekYargi = value;
+                  decisionValue = EDecisionTypes.Yargitay;
                 });
               }),
         ),
@@ -45,6 +61,8 @@ class _RadioButtonState extends State<RadioButton> {
             onChanged: ((YuksekYargi? value) {
               setState(() {
                 _yuksekYargi = value;
+                decisionValue = EDecisionTypes.Danistay;
+                print(decisionValue);
               });
             }),
           ),
@@ -67,6 +85,8 @@ class _RadioButtonState extends State<RadioButton> {
             onChanged: ((YuksekYargi? value) {
               setState(() {
                 _yuksekYargi = value;
+                decisionValue = EDecisionTypes.AnayasaMahkemesi;
+                print(decisionValue);
               });
             }),
           ),
@@ -74,42 +94,19 @@ class _RadioButtonState extends State<RadioButton> {
       ],
     );
   }
+
+  // getJudgmentTypes() async {
+  //   JudgmentTypeInformationResponse response =
+  //       await judgmentTypeRadioButtonService.getJudgmentTypes();
+  //   if (response.hasError == false) {
+  //     judgmentTypeInformation.addAll(response.judgmentTypeInformation);
+
+  //     print(response.judgmentTypeInformation.length);
+  //     setState(() {
+  //       print("hello");
+  //     });
+  //   } else {
+  //     print(response.errorMessage);
+  //   }
+  // }
 }
-
-
-          
-              
- 
-  // Column(
-  //             mainAxisAlignment: MainAxisAlignment.spaceAround,
-  //             children: [
-  //               RadioListTile(
-  //                 title: Text('Yargıtay'),
-  //                 value: 'yargitay',
-  //                 groupValue: yuksek_Yargi,
-  //                 onChanged: ((value) {
-  //                   setState(() {
-  //                     yuksek_Yargi = value.toString();
-  //                   });
-  //                 }),
-  // //               ),
-  // //               RadioListTile(
-  // //                   title: Text('Danıştay'),
-  // //                   value: 'danistay',
-  // //                   groupValue: yuksek_Yargi,
-  // //                   onChanged: ((value) {
-  // //                     setState(() {
-  // //                       yuksek_Yargi = value.toString();
-  // //                     });
-  // //                   })),
-  // //               RadioListTile(
-  // //                   title: const Text('Anayasa'),
-  // //                   value: 'anayasa_mahkemesi',
-  // //                   groupValue: yuksek_Yargi,
-  // //                   onChanged: ((value) {
-  // //                     setState(() {
-  // //                       yuksek_Yargi = value.toString();
-  // //                     });
-  // //                   })),
-  // //             ],
-  // //           ),

@@ -1,7 +1,7 @@
-import 'package:flutter_application_1/models/CityInformation/CityInformation.dart';
+import 'package:flutter_application_1/models/CityInformation/cityInformation.dart';
 
 //import '../models/CityInformation/cityInformation.dart';
-import '../models/UserInformation/UserInformation.dart';
+import '../models/UserInformation/userInformation.dart';
 
 import 'mobileApiResponse.dart';
 

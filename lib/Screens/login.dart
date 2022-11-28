@@ -5,7 +5,7 @@ import 'package:flutter_application_1/Screens/homePage.dart';
 
 import '../AppConfigurations/appConfigurations.dart';
 import '../main.dart';
-import '../models/UserInformation/UserInformation.dart';
+import '../models/UserInformation/userInformation.dart';
 import '../models/UserLoginInformation/userLoginInformation.dart';
 import '../services/Registration/RegistrationService.dart';
 import '../../apiResponse/userLoginInformationResponse.dart';
@@ -210,8 +210,10 @@ class _LoginState extends State<Login> {
                           backgroundColor: Color.fromARGB(255, 194, 27, 5),
                         ),
                         onPressed: () {
-                          Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (context) => Home()));
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Dashboard())); //düzelt
                         },
                         child: const Text(
                           'Geri',

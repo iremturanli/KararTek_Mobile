@@ -1,4 +1,5 @@
 import 'package:flutter_application_1/services/DropDownServices/CityDropdownServices.dart';
+import 'package:flutter_application_1/services/DropDownServices/JudgmentTypeRadioButtonService.dart';
 import 'package:flutter_application_1/services/DropDownServices/UserTypeDropdownServices.dart';
 import 'package:get_it/get_it.dart';
 import '../services/ApiClient.dart';
@@ -13,6 +14,8 @@ void configureInjection() {
       () => UserTypeDropDownService(getIt<ApiClient>()));
   getIt.registerLazySingleton<CityDropdownService>(
       () => CityDropdownService(getIt<ApiClient>()));
+  getIt.registerLazySingleton<JudgmentTypeRadioButtonService>(
+      () => JudgmentTypeRadioButtonService(getIt<ApiClient>()));
 /*  getIt.registerLazySingleton<SchoolService>(
       () => SchoolService(getIt<ApiClient>()));
   getIt.registerLazySingleton<UserService>(

@@ -1,4 +1,4 @@
-import '../models/UserInformation/UserInformation.dart';
+import '../models/UserInformation/userInformation.dart';
 
 import 'mobileApiResponse.dart';
 
