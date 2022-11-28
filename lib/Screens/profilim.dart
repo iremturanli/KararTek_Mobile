@@ -344,7 +344,7 @@ class _ProfilimState extends State<Profilim> {
               SizedBox(height: MediaQuery.of(context).size.height / 35),
               Text('Doğum Tarihi'),
               SizedBox(height: MediaQuery.of(context).size.height / 120),
-              TextField(
+              TextFormField(
                 controller: dateInput,
 
                 //editing controller of this TextField

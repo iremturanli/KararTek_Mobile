@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/Screens/sifremiUnuttum.dart';
 import 'package:flutter_application_1/Screens/homePage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../AppConfigurations/appConfigurations.dart';
 import '../main.dart';
@@ -233,6 +234,9 @@ class _LoginState extends State<Login> {
       UserLoginInformationResponse response =
           await registrationService.userLogin(UserLoginInformation(
               identityNumber: IdentityNo, password: Password));
+      // final SharedPreferences sharedPreferences =
+      //     await SharedPreferences.getInstance();
+      // sharedPreferences.setString('token', 'token');
       if (response.hasError == false) {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Dashboard()));

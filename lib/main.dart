@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/Screens/homePage.dart';
 import 'package:flutter_application_1/Screens/yeniKullanici.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter_application_1/Screens/login.dart';
@@ -141,8 +142,10 @@ class Home extends StatelessWidget {
                         backgroundColor: const Color.fromARGB(255, 1, 28, 63),
                       ),
                       onPressed: () {
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (context) => Login()));
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Dashboard()));
                       },
                       child: const Text(
                         'Giriş',

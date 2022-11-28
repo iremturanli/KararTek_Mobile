@@ -9,12 +9,12 @@ class MobileApiResponse {
 
   factory MobileApiResponse.fromJson(Map<String, dynamic> json) =>
       MobileApiResponse(
-        hasError: json["success"],
+        hasError: json["hasError"],
         errorMessage: json["message"],
       );
 
   Map<String, dynamic> toJson() => {
-        "success": hasError,
+        "hasError": hasError,
         "message": errorMessage,
       };
 }

@@ -714,8 +714,41 @@ class _yeniKullaniciState extends State<yeniKullanici> {
     MobileApiResponse response =
         await registrationService.userRegistration(userRegisterInformation);
     if (response.hasError == false) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Login()));
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (ctx) => AlertDialog(
+                backgroundColor: Color.fromARGB(255, 221, 226, 241),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(30))),
+                title: const Text(
+                    "Kayıt işlemi tamamlandı. Şifreniz e-mail adresinize iletilecektir."),
+                actions: <Widget>[
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              minimumSize: Size(120, 50),
+                              backgroundColor:
+                                  Color.fromARGB(255, 175, 172, 172),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)))),
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Login()));
+                          },
+                          child: Text(
+                            "TAMAM",
+                          ),
+                        ),
+                      ]),
+                  SizedBox(height: MediaQuery.of(context).size.height / 40),
+                ],
+              ));
     } else {
       showDialog(
           barrierDismissible: false,
