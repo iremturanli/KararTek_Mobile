@@ -4,16 +4,12 @@ import 'package:flutter_application_1/ApiResponse/mobileApiResponse.dart';
 import 'package:flutter_application_1/ApiResponse/userTypeDropdownResponse.dart';
 import 'package:flutter_application_1/AppConfigurations/appConfigurations.dart';
 import 'package:flutter_application_1/Screens/login.dart';
-import 'package:flutter_application_1/models/CityInformation/CityInformation.dart';
+import 'package:flutter_application_1/models/CityInformation/cityInformation.dart';
 import 'package:flutter_application_1/models/UserRegisterInformation/userRegisterInformation.dart';
 import 'package:flutter_application_1/models/UserTypeInformation/userTypeInformation.dart';
 import 'package:flutter_application_1/services/DropDownServices/UserTypeDropdownServices.dart';
 import 'package:flutter_application_1/services/Registration/RegistrationService.dart';
-import 'package:flutter_application_1/widgets/comboBox.dart';
-import 'package:flutter_application_1/Screens/sifremiUnuttum.dart';
-import 'package:flutter_application_1/Screens/homePage.dart';
 import 'package:flutter_application_1/main.dart';
-import 'package:flutter_application_1/widgets/comboboxTest.dart';
 
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -21,12 +17,13 @@ import '../ApiResponse/CityDropdownResponse.dart';
 import '../services/DropDownServices/CityDropdownServices.dart';
 
 class yeniKullanici extends StatefulWidget {
-  yeniKullanici({Key? key}) : super(key: key);
+  const yeniKullanici({Key? key}) : super(key: key);
 
   @override
   State<yeniKullanici> createState() => _yeniKullaniciState();
 }
 
+// ignore: camel_case_types
 class _yeniKullaniciState extends State<yeniKullanici> {
   bool isStudentVisible = false;
   bool isLawyerVisible = false;
@@ -41,7 +38,6 @@ class _yeniKullaniciState extends State<yeniKullanici> {
   TextEditingController gradeController = TextEditingController();
   TextEditingController studentNoController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  int? value1;
 
   final RegistrationService registrationService =
       getIt.get<RegistrationService>();
@@ -57,19 +53,11 @@ class _yeniKullaniciState extends State<yeniKullanici> {
   UserTypeInformation? selectedOption;
   CityInformation? selectedCity;
 
-  final List<String> kullaniciTipi = [
-    'Avukat - Avukat Stajyeri',
-    'Öğrenci',
-  ];
-  final List<String> sehir = [
-    'Adana',
-    '...',
-    'Düzce',
-  ];
   var maskFormatter = MaskTextInputFormatter(
       mask: '(###) ### ## ##',
       filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
+
   @override
   void initState() {
     // TODO: implement initState
@@ -197,6 +185,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                               borderRadius: BorderRadius.circular(5),
                               color: Colors.white),
                           child:
+                              // ignore: unnecessary_new
                               new DropdownButtonFormField<UserTypeInformation>(
                             isExpanded: true,
                             //underline: SizedBox.shrink(),
@@ -225,7 +214,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                 : null,
                             items: userTypeInformation
                                 .map((UserTypeInformation userTypeInformation) {
-                              return new DropdownMenuItem<UserTypeInformation>(
+                              return DropdownMenuItem<UserTypeInformation>(
                                 value: userTypeInformation,
                                 child: Text(
                                   userTypeInformation.TypeName!,
@@ -245,7 +234,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               color: Colors.white),
-                          child: new DropdownButtonFormField<CityInformation>(
+                          child: DropdownButtonFormField<CityInformation>(
                             isExpanded: true,
                             //underline: SizedBox.shrink(),
                             icon: Icon(Icons.keyboard_arrow_down_outlined),
@@ -253,8 +242,6 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                             value: selectedCity,
                             onChanged: (CityInformation? newValue) {
                               setState(() {
-                                //selectedOption = newValue;
-
                                 selectedCity = newValue;
                                 print(selectedCity!.CityID.toString());
                               });
@@ -265,7 +252,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                 : null,
                             items: cityInformation
                                 .map((CityInformation cityInformation) {
-                              return new DropdownMenuItem<CityInformation>(
+                              return DropdownMenuItem<CityInformation>(
                                 value: cityInformation,
                                 child: Text(
                                   cityInformation.CityName!,
@@ -275,56 +262,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                             }).toList(),
                           ),
                         ),
-                        // ComboBox(
-                        //   items: kullaniciTipi,
-                        //   color_of_box: Color.fromARGB(255, 255, 255, 255),
-                        //   color_of_text: Colors.black,
-                        //   height_of_box: MediaQuery.of(context).size.width / 8.5,
-                        //   width_of_box: MediaQuery.of(context).size.width / 1.2,
-                        //   size_of_font: 12,
-                        //   onChanged: (value){
 
-                        //   },
-                        // ),
-                        // Combobox1(
-                        //     items: kullaniciTipi,
-                        //     value: selectedValue,
-                        //     onChanged: (value) {
-                        //       setState(() {
-                        //         //print(value);
-                        //         if (value == "Avukat - Avukat Stajyeri") {
-                        //           selectedValue = value;
-                        //           status = 0;
-                        //         } else {
-                        //           selectedValue = value;
-                        //           status = 1;
-                        //         }
-                        //       });
-                        //     }),
-                        //SizedBox(
-                        //    height: MediaQuery.of(context).size.height / 80),
-                        // const Text('Şehir'),
-                        // SizedBox(
-                        //     height: MediaQuery.of(context).size.height / 80),
-                        // ComboBox(
-                        //     value: selectedValue,
-                        //     items: sehir,
-                        //     onChanged: (value) {
-                        //       setState(() {
-                        //         if (value == "Adana") {
-                        //           selectedValue = value;
-                        //         } else {
-                        //           selectedValue = value;
-                        //         }
-                        //       });
-                        //     },
-                        //     color_of_box: Color.fromARGB(255, 255, 255, 255),
-                        //     color_of_text: Colors.black,
-                        //     height_of_box:
-                        //         MediaQuery.of(context).size.width / 8.5,
-                        //     size_of_font: 12,
-                        //     width_of_box:
-                        //         MediaQuery.of(context).size.width / 1.2),
                         SizedBox(
                             height: MediaQuery.of(context).size.height / 80),
                         const Text('TC Kimlik No'),
@@ -709,8 +647,6 @@ class _yeniKullaniciState extends State<yeniKullanici> {
   //Methods
 
   registerUser(UserRegisterInformation userRegisterInformation) async {
-    //userRegisterInformation.districtId = 1;
-    //userRegisterInformation.phoneNumber = "55555555555";
     MobileApiResponse response =
         await registrationService.userRegistration(userRegisterInformation);
     if (response.hasError == false) {

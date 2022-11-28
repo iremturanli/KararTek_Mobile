@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/AramaSonuclari.dart';
 import 'package:flutter_application_1/widgets/ModalBottomDetayl%C4%B1Arama.dart';
@@ -9,9 +10,8 @@ class KararArama extends StatefulWidget {
   const KararArama({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _KararAramaState createState() => _KararAramaState();
-
-  _runFilter(TextEditingController textEditingController) {}
 }
 
 class _KararAramaState extends State<KararArama> {
@@ -206,7 +206,7 @@ class _KararAramaState extends State<KararArama> {
                         minimumSize: const Size(350, 55),
                         backgroundColor: const Color.fromARGB(255, 1, 28, 63)),
                     onPressed: () {
-                      _runFilter(textEditingController.text);
+                      //
                     },
                     child: const Text(
                       'Arama Yap',

@@ -1,6 +1,6 @@
 import 'package:flutter_application_1/models/ForgotMyPasswordInformation.dart/forgotMyPasswordInformation.dart';
 
-import '../models/UserInformation/UserInformation.dart';
+import '../models/UserInformation/userInformation.dart';
 
 import 'mobileApiResponse.dart';
 

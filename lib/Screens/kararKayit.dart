@@ -1,12 +1,22 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/ApiResponse/CommissionDropdownResponse.dart';
+import 'package:flutter_application_1/ApiResponse/CourtDropdownResponse.dart';
+import 'package:flutter_application_1/models/CourtInformation/CourtInformation.dart';
+import 'package:flutter_application_1/services/DropDownServices/CommissionDropdownService.dart';
+import 'package:flutter_application_1/services/DropDownServices/CourtDropdownService.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
+import '../AppConfigurations/appConfigurations.dart';
+import '../models/CommissionInformation/commissionInformation.dart';
+
+// ignore: camel_case_types
 class kararKayit extends StatefulWidget {
-  kararKayit({
+  const kararKayit({
     Key? key,
   }) : super(key: key);
 
@@ -15,16 +25,29 @@ class kararKayit extends StatefulWidget {
 }
 
 class _kararKayitState extends State<kararKayit> {
+  final CommissionDropdownService commissionDropdownService =
+      getIt.get<CommissionDropdownService>();
+  final CourtDropdownService courtDropdownService =
+      getIt.get<CourtDropdownService>();
+
   late List<String> docPaths;
+  CommissionInformation? selectedCommission;
+  List<CommissionInformation> commissionInformation = [];
+
+  CourtInformation? selectedCourt;
+  List<CourtInformation> courtInformation = [];
 
   TextEditingController dateInput = TextEditingController();
+
   @override
   void initState() {
     dateInput.text = "";
     super.initState();
+    getCommissions();
+    getCourts();
   }
 
-  bool _isTap = false;
+  final bool _isTap = false;
 
   @override
   Widget build(BuildContext context) {
@@ -49,40 +72,71 @@ class _kararKayitState extends State<kararKayit> {
           children: <Widget>[
             const SizedBox(height: 30),
             Text('Daire/Kurul Adı*'),
-            SizedBox(height: MediaQuery.of(context).size.height / 65),
-            TextFormField(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Color.fromARGB(246, 246, 246, 246),
-                focusedBorder: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(8))),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  // ignore: prefer_const_constructors
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: const Color.fromARGB(255, 189, 189, 189),
-                  ),
-                ),
+            Container(
+              height: 45,
+              width: 330,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5), color: Colors.white),
+              child: DropdownButtonFormField<CommissionInformation>(
+                isExpanded: true,
+                //underline: SizedBox.shrink(),
+                icon: Icon(Icons.keyboard_arrow_down_outlined),
+                dropdownColor: Colors.white,
+                value: selectedCommission,
+                onChanged: (CommissionInformation? newValue) {
+                  setState(() {
+                    selectedCommission = newValue;
+                    print(selectedCommission!.CommissionID.toString());
+                  });
+                },
+
+                validator: (value) =>
+                    value == null ? "Bu alan boş bırakılamaz" : null,
+                items: commissionInformation
+                    .map((CommissionInformation commissionInformation) {
+                  return DropdownMenuItem<CommissionInformation>(
+                    value: commissionInformation,
+                    child: Text(
+                      commissionInformation.CommissionName!,
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  );
+                }).toList(),
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height / 35),
             Text('Mahkeme'),
             SizedBox(height: MediaQuery.of(context).size.height / 65),
-            TextFormField(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: const Color.fromARGB(246, 246, 246, 246),
-                focusedBorder: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(8))),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  // ignore: prefer_const_constructors
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: const Color.fromARGB(255, 189, 189, 189),
-                  ),
-                ),
+            Container(
+              height: 45,
+              width: 330,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5), color: Colors.white),
+              child: DropdownButtonFormField<CourtInformation>(
+                isExpanded: true,
+                //underline: SizedBox.shrink(),
+                icon: Icon(Icons.keyboard_arrow_down_outlined),
+                dropdownColor: Colors.white,
+                value: selectedCourt,
+                onChanged: (CourtInformation? newValue) {
+                  setState(() {
+                    selectedCourt = newValue;
+                    print(selectedCourt!.CourtID.toString());
+                  });
+                },
+
+                validator: (value) =>
+                    value == null ? "Bu alan boş bırakılamaz" : null,
+                items:
+                    courtInformation.map((CourtInformation courtInformation) {
+                  return DropdownMenuItem<CourtInformation>(
+                    value: courtInformation,
+                    child: Text(
+                      courtInformation.CourtName!,
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  );
+                }).toList(),
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height / 35),
@@ -231,7 +285,6 @@ class _kararKayitState extends State<kararKayit> {
             SizedBox(height: MediaQuery.of(context).size.height / 65),
             TextField(
               controller: dateInput,
-
               //editing controller of this TextField
               decoration: InputDecoration(
                   prefixIcon: Icon(Icons.calendar_today,
@@ -371,5 +424,34 @@ class _kararKayitState extends State<kararKayit> {
 
   void viewFile(file) {
     OpenFilex.open(file.path);
+  }
+
+  getCommissions() async {
+    CommissionInformationResponse response =
+        await commissionDropdownService.getCommissions();
+    if (response.hasError == false) {
+      commissionInformation.addAll(response.commissionInformation);
+
+      print(response.commissionInformation.length);
+      setState(() {
+        print("hello");
+      });
+    } else {
+      print(response.errorMessage);
+    }
+  }
+
+  getCourts() async {
+    CourtInformationResponse response = await courtDropdownService.getCourts();
+    if (response.hasError == false) {
+      courtInformation.addAll(response.courtInformation);
+
+      print(response.courtInformation.length);
+      setState(() {
+        print("hello");
+      });
+    } else {
+      print(response.errorMessage);
+    }
   }
 }
