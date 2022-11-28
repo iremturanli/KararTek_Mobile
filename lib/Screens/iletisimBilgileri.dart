@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
@@ -52,8 +53,9 @@ class iletisimBilgileri extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height / 30,
-            left: MediaQuery.of(context).size.height / 80),
+          top: MediaQuery.of(context).size.height / 30,
+          left: MediaQuery.of(context).size.height / 80,
+        ),
         child: Column(children: [
           Row(
             // ignore: prefer_const_literals_to_create_immutables
@@ -104,22 +106,26 @@ class iletisimBilgileri extends StatelessWidget {
                   onPressed: _launchEmail,
                   child: Text('bilgi@karartek.com.tr',
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 14.3,
                           fontWeight: FontWeight.bold,
                           color: Colors.black))),
             ],
           ),
           Row(
-            children: const [
-              Text('Sorularınız ve Sorunlarınız: ',
+            // ignore: prefer_const_literals_to_create_immutables
+            children: [
+              Text('Sorularınız ve Sorunlarınız:',
                   style: TextStyle(fontSize: 16)),
               TextButton(
-                  onPressed: _launchEmail, //??
-                  child: Text('destek@karartek.com.tr',
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold))),
+                onPressed: _launchEmail, //??
+                child: Text('destek@karartek.com.tr',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold)),
+              ),
             ],
           ),
           CustomDivider(),
