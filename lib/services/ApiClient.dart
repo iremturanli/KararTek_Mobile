@@ -11,7 +11,7 @@ class ApiClient {
 
   //final _baseUrl = "https://192.168.10.111:45458/api/"; //baseurl; 10.0.2.2
 
-  final _baseUrl = "https://192.168.10.90:45456/api/"; //baseurl; 10.0.2.2
+  final _baseUrl = "https://192.168.10.90:45460/api/"; //baseurl; 10.0.2.2
 
   var onResponseCallback;
   var onErrorCallback;
@@ -96,6 +96,16 @@ class ApiClient {
     _dio!.options.method = "POST";
     _dio!.options.followRedirects = true;
     response = await _dio!.post(endPoint, data: formData);
+    log("Post Dio Response: " + response.toString());
+    //  print("Post Dio Response: " + response.toString());
+    return response;
+  }
+
+  Future<Response> postById(String endPoint) async {
+    Response response;
+    _dio!.options.method = "POST";
+    _dio!.options.followRedirects = true;
+    response = await _dio!.post(endPoint);
     log("Post Dio Response: " + response.toString());
     //  print("Post Dio Response: " + response.toString());
     return response;

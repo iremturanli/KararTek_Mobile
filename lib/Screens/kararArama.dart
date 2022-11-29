@@ -13,6 +13,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../AppConfigurations/appConfigurations.dart';
 import '../models/EDecisionTypes.dart';
+import '../models/JudgmentInformation/judgmentListInformation.dart';
 
 class KararArama extends StatefulWidget {
   const KararArama({Key? key}) : super(key: key);
@@ -35,7 +36,7 @@ class _KararAramaState extends State<KararArama> {
   final JudgmentService judgmentService = getIt.get<JudgmentService>();
 
   List<SearchTypeInformation> searchTypeInformation = [];
-  List<JudgmentInformation> judgments = [];
+  List<JudgmentListInformation> judgments = [];
   SearchTypeInformation? selectedOption;
   int? decisionValue;
 
@@ -102,15 +103,6 @@ class _KararAramaState extends State<KararArama> {
     },
   ];
 
-  // This list holds the data for the list view
-  List<Map<String, dynamic>> _bulunanKararlar = [];
-  // @override
-  // initState() {
-  //   // at the beginning, all users are shown
-  //   _foundUsers = _allUsers;
-  //   super.initState();
-  // }
-
   @override
   void initState() {
     // TODO: implement initState
@@ -120,30 +112,8 @@ class _KararAramaState extends State<KararArama> {
   }
 
   // This function is called whenever the text field changes
-  void _runFilter(String enteredKeyword) {
-    List<Map<String, dynamic>> results = [];
-    if (enteredKeyword.isNotEmpty) {
-      // if the search field is empty or only contains white-space, we'll display all users
-      // results = _allUsers;
-      results = _kararlar
-          .where((user) => user["Hüküm"]
-              .toLowerCase()
-              .contains(enteredKeyword.toLowerCase()))
-          .toList();
-      // we use the toLowerCase() method to make it case-insensitive
-    }
 
-    //Refresh the UI
-    setState(() {
-      _bulunanKararlar = results;
-
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => AramaSonuclari(_bulunanKararlar)));
-    });
-  }
-
+  //
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -212,7 +182,6 @@ class _KararAramaState extends State<KararArama> {
                 onChanged: (SearchTypeInformation? newValue) {
                   setState(() {
                     //selectedOption = newValue;
-
                     if (newValue!.TypeID == 2) {
                       isVisible = true;
                       selectedOption = newValue;
@@ -320,7 +289,7 @@ class _KararAramaState extends State<KararArama> {
                       JudgmentDtoInformation judgmentDtoInformation =
                           JudgmentDtoInformation(
                               keyword: textEditingController.text,
-                              searchTypeID: selectedOption,
+                              searchTypeID: selectedOption!.TypeID,
                               judgmentTypeID: decisionValue);
                       getJudgments(judgmentDtoInformation);
                     },
@@ -344,7 +313,7 @@ class _KararAramaState extends State<KararArama> {
                       context: context,
                       builder: (BuildContext context) => ModalBottom(
                         press: () {
-                          _runFilter(textEditingController.text);
+                          //_runFilter(textEditingController.text);
                         },
                         searchWord: textEditingController,
                       ),
@@ -368,11 +337,8 @@ class _KararAramaState extends State<KararArama> {
         await searchTypeDropdownService.getSearchTypes();
     if (response.hasError == false) {
       searchTypeInformation.addAll(response.searchTypeInformation);
-
+      setState(() {});
       print(response.searchTypeInformation.length);
-      setState(() {
-        print("hello");
-      });
     } else {
       print(response.errorMessage);
     }
@@ -383,7 +349,16 @@ class _KararAramaState extends State<KararArama> {
       SearchDataApiResponse response =
           await judgmentService.getJudgments(judgmentDtoInformation);
       if (response.success == true) {
+        judgments.clear();
         judgments.addAll(response.data!);
+        print(response.success);
+        setState(() {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AramaSonuclari(judgments)));
+        });
+
         print(response);
       } else {
         print(response.message);

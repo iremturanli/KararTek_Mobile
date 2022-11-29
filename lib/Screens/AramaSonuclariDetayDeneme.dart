@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../models/JudgmentInformation/judgmentListInformation.dart';
+
 class AramaSonuclariDetayDeneme extends StatefulWidget {
-  List<Map<String, dynamic>> List_;
+  List<JudgmentListInformation> judgments = [];
   final int ListIndex;
 
   AramaSonuclariDetayDeneme(
-      {Key? key, required this.List_, required this.ListIndex})
+      {Key? key, required this.judgments, required this.ListIndex})
       : super(key: key);
 
   @override
@@ -120,7 +122,7 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
                 ],
               ),
               Text(
-                '${widget.List_[widget.ListIndex]["esasSıraNo"]}/${widget.List_[widget.ListIndex]["esasYılı"]}',
+                '${widget.judgments[widget.ListIndex].meritsNo}/${widget.judgments[widget.ListIndex].meritsYear}',
               ),
               const CustomDivider(),
               const Text('Mahkeme',
@@ -128,7 +130,7 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
               Text(
-                '${widget.List_[widget.ListIndex]["Mahkeme"]}',
+                '${widget.judgments[widget.ListIndex].courtName}',
               ),
               const CustomDivider(),
               const Text('Hüküm',
@@ -136,26 +138,26 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
               Text(
-                '${widget.List_[widget.ListIndex]["Hüküm"]}',
+                '${widget.judgments[widget.ListIndex].decree}',
               ),
               const CustomDivider(),
               const Text('Karar',
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
-              Text('${widget.List_[widget.ListIndex]["Karar"]}'),
+              Text('${widget.judgments[widget.ListIndex].decision}'),
               const CustomDivider(),
               const Text('Karar Tarihi',
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
-              Text('${widget.List_[widget.ListIndex]["Karar Tarihi"]}'),
+              Text('${widget.judgments[widget.ListIndex].judgmentDate}'),
               const CustomDivider(),
               const Text('Kayıt Tarihi',
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
-              Text('${widget.List_[widget.ListIndex]["Karar Tarihi"]}'),
+              Text('${widget.judgments[widget.ListIndex].createDate}'),
               const CustomDivider()
             ])),
       ),

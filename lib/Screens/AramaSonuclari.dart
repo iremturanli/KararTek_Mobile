@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/AramaSonuclariDetayDeneme.dart';
+import 'package:flutter_application_1/models/JudgmentInformation/judgmentListInformation.dart';
 import 'package:flutter_application_1/widgets/ModalBottomAramaSonuclari.dart';
 import 'package:flutter_application_1/widgets/comboBox.dart';
 
+import '../models/JudgmentInformation/judgmentInformation.dart';
+
 class AramaSonuclari extends StatefulWidget {
-  List<Map<String, dynamic>> _bulunanKararlar;
-  AramaSonuclari(this._bulunanKararlar, {Key? key}) : super(key: key);
+  List<JudgmentListInformation> judgments;
+  AramaSonuclari(this.judgments, {Key? key}) : super(key: key);
 
   @override
   State<AramaSonuclari> createState() => _AramaSonuclariState();
@@ -14,7 +17,6 @@ class AramaSonuclari extends StatefulWidget {
 class _AramaSonuclariState extends State<AramaSonuclari> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     //print(widget._bulunanKararlar);
@@ -38,7 +40,7 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                 fontWeight: FontWeight.bold,
                 color: Colors.black)),
         actions: <Widget>[
-          widget._bulunanKararlar.isNotEmpty
+          widget.judgments.isNotEmpty
               ? IconButton(
                   onPressed: () => showModalBottomSheet<void>(
                       isDismissible: false,
@@ -62,9 +64,9 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
               //sizedBox
               height: height / 2,
               width: width,
-              child: widget._bulunanKararlar.isNotEmpty
+              child: widget.judgments.isNotEmpty
                   ? ListView.builder(
-                      itemCount: widget._bulunanKararlar.length,
+                      itemCount: widget.judgments.length,
                       itemBuilder: ((context, index) => Card(
                             color: const Color.fromARGB(255, 247, 246, 246),
                             elevation: 1,
@@ -74,18 +76,17 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                                   backgroundColor:
                                       const Color.fromARGB(255, 1, 28, 63),
                                   child: Text(
-                                    widget._bulunanKararlar[index]["id"]
-                                        .toString(),
+                                    widget.judgments[index].id.toString(),
                                     style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 15,
                                         fontWeight: FontWeight.w500),
                                   )),
                               title: Text(
-                                "${widget._bulunanKararlar[index]["Kurul Adı"]}-${widget._bulunanKararlar[index]["kararSıraNo"]}/${widget._bulunanKararlar[index]["kararYılı"]}",
+                                "${widget.judgments[index].commissionName}-${widget.judgments[index].decreeNo}/${widget.judgments[index].decreeYear}",
                               ),
                               subtitle: Text(
-                                '${widget._bulunanKararlar[index]["Karar"]}',
+                                '${widget.judgments[index].decision}',
                                 maxLines: 4,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -95,7 +96,7 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             AramaSonuclariDetayDeneme(
-                                                List_: widget._bulunanKararlar,
+                                                judgments: widget.judgments,
                                                 ListIndex: index)));
                               }),
                             ),
