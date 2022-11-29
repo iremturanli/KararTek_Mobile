@@ -730,7 +730,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
       userTypeInformation.add(response.userTypeInformation[1]);
       print(response.userTypeInformation.length);
       setState(() {
-        print("hello");
+        print("success");
       });
     } else {
       print(response.errorMessage);
@@ -744,7 +744,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
 
       print(response.cityInformation.length);
       setState(() {
-        print("hello");
+        print("success");
       });
     } else {
       print(response.errorMessage);
