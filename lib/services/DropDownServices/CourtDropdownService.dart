@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_application_1/ApiResponse/CommissionDropdownResponse.dart';
 import 'package:flutter_application_1/ApiResponse/CourtDropdownResponse.dart';
+import 'package:flutter_application_1/models/CommissionInformation/commissionInformation.dart';
 
 import '../../ApiResponse/mobileApiResponse.dart';
 import '../ApiClient.dart';
@@ -8,7 +9,7 @@ import 'ICourtDropdownServices.dart';
 
 class CourtDropdownService implements ICourtDropdownService {
   ApiClient? _apiClient;
-  CourtropdownService(ApiClient apiClient) {
+  CourtDropdownService(ApiClient apiClient) {
     _apiClient = apiClient;
     _apiClient!.onResponseCallback = onResponseCallback;
     _apiClient!.onErrorCallback = onErrorCallback;
@@ -26,7 +27,7 @@ class CourtDropdownService implements ICourtDropdownService {
 
   @override
   Future<CourtInformationResponse> getCourts() async {
-    Response response = await _apiClient!.getRequest("Court/GetAll");
+    Response response = await _apiClient!.getRequest("Court/GetAll/{id}");
     if (response.statusCode == 401) {
       print("UnAuthorized");
     }

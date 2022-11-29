@@ -433,9 +433,7 @@ class _kararKayitState extends State<kararKayit> {
       commissionInformation.addAll(response.commissionInformation);
 
       print(response.commissionInformation.length);
-      setState(() {
-        print("hello");
-      });
+      setState(() {});
     } else {
       print(response.errorMessage);
     }
@@ -447,9 +445,7 @@ class _kararKayitState extends State<kararKayit> {
       courtInformation.addAll(response.courtInformation);
 
       print(response.courtInformation.length);
-      setState(() {
-        print("hello");
-      });
+      setState(() {});
     } else {
       print(response.errorMessage);
     }

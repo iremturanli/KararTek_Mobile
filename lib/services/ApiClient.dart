@@ -81,7 +81,8 @@ class ApiClient {
   }
 
   Future<Response> getRequest(String endPoint,
-      {Map<String, dynamic>? filter}) async {
+      {Map<String, dynamic>? filter,
+      Map<String, Object>? queryParameters}) async {
     Response response;
     _dio!.options.method = "GET";
     response = await _dio!.get(endPoint, queryParameters: filter);
