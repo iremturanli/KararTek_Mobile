@@ -1,9 +1,13 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/ApiResponse/SearchDataResponse.dart';
 import 'package:flutter_application_1/ApiResponse/SearchTypeDropdownResponse.dart';
 import 'package:flutter_application_1/Screens/AramaSonuclari.dart';
+import 'package:flutter_application_1/models/JudgmentInformation/judgmentDtoInformation.dart';
+import 'package:flutter_application_1/models/JudgmentInformation/judgmentInformation.dart';
 import 'package:flutter_application_1/models/SearchTypeInformation/searchTypeInformation.dart';
 import 'package:flutter_application_1/services/DropDownServices/SearchTypeDropdownService.dart';
+import 'package:flutter_application_1/services/JudgmentServices/judgmentService.dart';
 import 'package:flutter_application_1/widgets/ModalBottomDetayl%C4%B1Arama.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
@@ -28,9 +32,11 @@ class _KararAramaState extends State<KararArama> {
 
   final SearchTypeDropdownService searchTypeDropdownService =
       getIt.get<SearchTypeDropdownService>();
-  List<SearchTypeInformation> searchTypeInformation = [];
-  SearchTypeInformation? selectedOption;
+  final JudgmentService judgmentService = getIt.get<JudgmentService>();
 
+  List<SearchTypeInformation> searchTypeInformation = [];
+  List<JudgmentInformation> judgments = [];
+  SearchTypeInformation? selectedOption;
   int? decisionValue;
 
   final List<Map<String, dynamic>> _kararlar = [
@@ -311,7 +317,12 @@ class _KararAramaState extends State<KararArama> {
                         minimumSize: const Size(350, 55),
                         backgroundColor: const Color.fromARGB(255, 1, 28, 63)),
                     onPressed: () {
-                      //?
+                      JudgmentDtoInformation judgmentDtoInformation =
+                          JudgmentDtoInformation(
+                              keyword: textEditingController.text,
+                              searchTypeID: selectedOption,
+                              judgmentTypeID: decisionValue);
+                      getJudgments(judgmentDtoInformation);
                     },
                     child: const Text(
                       'Arama Yap',
@@ -364,6 +375,21 @@ class _KararAramaState extends State<KararArama> {
       });
     } else {
       print(response.errorMessage);
+    }
+  }
+
+  getJudgments(JudgmentDtoInformation judgmentDtoInformation) async {
+    try {
+      SearchDataApiResponse response =
+          await judgmentService.getJudgments(judgmentDtoInformation);
+      if (response.success == true) {
+        judgments.addAll(response.data!);
+        print(response);
+      } else {
+        print(response.message);
+      }
+    } catch (e) {
+      print(e);
     }
   }
 }

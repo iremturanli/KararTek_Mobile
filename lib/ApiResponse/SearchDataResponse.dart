@@ -2,7 +2,7 @@ import 'package:flutter_application_1/models/JudgmentInformation/judgmentInforma
 
 class SearchDataApiResponse {
   SearchDataApiResponse({
-    this.data,
+    required this.data,
     this.success,
     this.message,
   });

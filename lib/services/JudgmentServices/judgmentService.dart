@@ -2,8 +2,10 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter_application_1/ApiResponse/JudgmentTypeRadioButtonResponse.dart';
+import 'package:flutter_application_1/ApiResponse/SearchDataResponse.dart';
 import 'package:flutter_application_1/ApiResponse/forgotMyPasswordResponse.dart';
 import 'package:flutter_application_1/models/ForgotMyPasswordInformation.dart/forgotMyPasswordInformation.dart';
+import 'package:flutter_application_1/models/JudgmentInformation/judgmentDtoInformation.dart';
 import 'package:flutter_application_1/models/JudgmentInformation/judgmentInformation.dart';
 import 'package:flutter_application_1/models/UserRegisterInformation/userRegisterInformation.dart';
 import 'package:flutter_application_1/services/JudgmentServices/IJudgmentService.dart';
@@ -33,14 +35,14 @@ class JudgmentService implements IJudgmentService {
   }
 
   @override
-  Future<JudgmentTypeInformationResponse> getJudgments(
-      JudgmentInformation judgmentInformation) async {
+  Future<SearchDataApiResponse> getJudgments(
+      JudgmentDtoInformation judgmentDtoInformation) async {
     Response response = await _apiClient!
-        .postRequest("Judgments/GetJudgmentByType", judgmentInformation);
+        .postRequest("Judgments/GetJudgmentByType", judgmentDtoInformation);
     if (response.statusCode == 401) {
       print("UnAuthorized");
     }
     print(response);
-    return JudgmentTypeInformationResponse.fromJson(response.data);
+    return SearchDataApiResponse.fromJson(response.data);
   }
 }
