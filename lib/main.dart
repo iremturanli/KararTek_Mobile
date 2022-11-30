@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/Screens/homePage.dart';
 import 'package:flutter_application_1/Screens/yeniKullanici.dart';
+import 'package:flutter_application_1/services/LocalSharedPreferences/LocalSharedPreference.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter_application_1/Screens/login.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'AppConfigurations/appConfigurations.dart';
 
-void main() {
+void main() async {
   configureInjection();
+  WidgetsFlutterBinding.ensureInitialized();
+  await LocalSharedPreference.init();
   runApp(const MyApp());
 }
 
@@ -142,10 +145,8 @@ class Home extends StatelessWidget {
                         backgroundColor: const Color.fromARGB(255, 1, 28, 63),
                       ),
                       onPressed: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Dashboard()));
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context) => Login()));
                       },
                       child: const Text(
                         'Giriş',

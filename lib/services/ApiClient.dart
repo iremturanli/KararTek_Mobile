@@ -40,19 +40,19 @@ class ApiClient {
 
   initializeInterceptors() {
     _dio!.interceptors.add(InterceptorsWrapper(
-      // onRequest: (options, requestInterceptorHandler) {
-      //   TODO: // SharePreference Ekleneycek
-      //   String token = LocalSharedPreference.getString(
-      //       LocalSharedPreference.SHARED_MEM_KEY_DEVICE_TOKEN);
-      //   if (token != "") {
-      //     print("Bearer Token:" + token);
-      //     options.headers["AUTH_TOKEN"] = options.headers["Authorization"] =
-      //         "Bearer " + token; //Sending token with every request accept login
-      //     return requestInterceptorHandler.next(options);
-      //   } //else {
-      //   return requestInterceptorHandler.next(options);
-      //   //}
-      // },
+      onRequest: (options, requestInterceptorHandler) {
+        String token = LocalSharedPreference.getString(
+            LocalSharedPreference.SHARED_MEM_KEY_DEVICE_TOKEN);
+
+        if (token != "") {
+          print("Bearer Token:" + token);
+          options.headers["AUTH_TOKEN"] = options.headers["Authorization"] =
+              "Bearer " + token; //Sending token with every request accept login
+          return requestInterceptorHandler.next(options);
+        } else {
+          return requestInterceptorHandler.next(options);
+        }
+      },
       onResponse: (response, responseInterceptorHandler) {
         print('onResponse:${response.statusCode}');
         return responseInterceptorHandler.next(response);

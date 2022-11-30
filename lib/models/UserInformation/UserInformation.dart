@@ -14,7 +14,8 @@ class UserInformation {
       this.University,
       this.Faculty,
       this.Grade,
-      this.StudentNumber});
+      this.StudentNumber,
+      this.token});
 
   int? Id;
   String? FirstName;
@@ -30,6 +31,7 @@ class UserInformation {
   String? Faculty;
   String? Grade;
   String? StudentNumber;
+  String? token;
 
   factory UserInformation.fromJson(Map<String, dynamic> json) =>
       UserInformation(
