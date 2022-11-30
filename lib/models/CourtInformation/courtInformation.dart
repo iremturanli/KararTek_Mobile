@@ -1,5 +1,8 @@
 class CourtInformation {
-  CourtInformation({this.CourtID, this.CourtName});
+  CourtInformation({
+    this.CourtID,
+    this.CourtName,
+  });
 
   int? CourtID;
   String? CourtName;

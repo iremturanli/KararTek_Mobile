@@ -60,8 +60,9 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
                         size: 30,
                       ),
                 onPressed: () {
-                  addLike(widget.judgments[widget.ListIndex].id!);
+                  //  addLike(widget.judgments[widget.ListIndex].id!);
                   setState(() {
+                    addLike(widget.judgments[widget.ListIndex].id!);
                     isLiked = !isLiked;
                   });
                   if (isLiked) {

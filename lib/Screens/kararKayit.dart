@@ -1,8 +1,7 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ApiResponse/CommissionDropdownResponse.dart';
-import 'package:flutter_application_1/ApiResponse/CourtDropdownResponse.dart';
-import 'package:flutter_application_1/models/CourtInformation/CourtInformation.dart';
+
 import 'package:flutter_application_1/services/DropDownServices/CommissionDropdownService.dart';
 import 'package:flutter_application_1/services/DropDownServices/CourtDropdownService.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -11,8 +10,10 @@ import 'package:open_filex/open_filex.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
+import '../ApiResponse/CourtDropdownResponse.dart';
 import '../AppConfigurations/appConfigurations.dart';
 import '../models/CommissionInformation/commissionInformation.dart';
+import '../models/CourtInformation/CourtInformation.dart';
 
 // ignore: camel_case_types
 class kararKayit extends StatefulWidget {
@@ -45,7 +46,6 @@ class _kararKayitState extends State<kararKayit> {
     dateInput.text = "";
     super.initState();
     getCommissions();
-    getCourts();
   }
 
   final bool _isTap = false;
@@ -90,6 +90,8 @@ class _kararKayitState extends State<kararKayit> {
                     lookCourt = selectedCommission!.CommissionID;
                     print(selectedCommission!.CommissionID.toString());
                   });
+
+                  getCourts();
                 },
 
                 validator: (value) =>
@@ -432,6 +434,7 @@ class _kararKayitState extends State<kararKayit> {
     CommissionInformationResponse response =
         await commissionDropdownService.getCommissions();
     if (response.hasError == false) {
+      commissionInformation.clear();
       commissionInformation.addAll(response.commissionInformation);
 
       print(response.commissionInformation.length);
@@ -443,9 +446,9 @@ class _kararKayitState extends State<kararKayit> {
 
   getCourts() async {
     CourtInformationResponse response = await courtDropdownService.getCourts(2);
-    if (response.hasError == false) {
+    if (response.success == true) {
+      //courtInformation.clear();
       courtInformation.addAll(response.courtInformation);
-      print(courtInformation[1].CourtName);
 
       setState(() {
         print(response.courtInformation.length);

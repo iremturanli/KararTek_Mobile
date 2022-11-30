@@ -10,13 +10,13 @@ import 'mobileApiResponse.dart';
 class CourtInformationResponse extends MobileApiResponse {
   CourtInformationResponse({
     required this.courtInformation,
-    this.hasError,
+    this.success,
     this.message,
   });
 
   List<CourtInformation> courtInformation;
 
-  bool? hasError;
+  bool? success;
 
   String? message;
 
@@ -25,14 +25,14 @@ class CourtInformationResponse extends MobileApiResponse {
         courtInformation: List<CourtInformation>.from(json["courts"] != null
             ? json["courts"].map((x) => CourtInformation.fromJson(x))
             : []),
-        hasError: json["hasError"],
+        success: json["success"],
         message: json["message"],
       );
 
   Map<String, dynamic> toJson() => {
         "courts": List<CourtInformation>.from(
             courtInformation.map((x) => x.toJson())),
-        "hasError": hasError,
+        "success": success,
         "message": message,
       };
 }

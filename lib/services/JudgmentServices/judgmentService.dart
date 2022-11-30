@@ -46,7 +46,7 @@ class JudgmentService implements IJudgmentService {
     Map<String, dynamic> filterObject = {"id": id};
 
     Response response =
-        await _apiClient!.postById("Judgments/JudgmentToLike" + id.toString());
+        await _apiClient!.postById("Judgments/JudgmentToLike/" + id.toString());
     if (response.statusCode == 401) {
       print("UnAuthorized");
     }
