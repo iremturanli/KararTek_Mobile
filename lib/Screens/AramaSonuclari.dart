@@ -7,7 +7,7 @@ import 'package:flutter_application_1/widgets/comboBox.dart';
 import '../models/JudgmentInformation/judgmentInformation.dart';
 
 class AramaSonuclari extends StatefulWidget {
-  List<JudgmentListInformation> judgments;
+  List<JudgmentListInformation> judgments = [];
   AramaSonuclari(this.judgments, {Key? key}) : super(key: key);
 
   @override

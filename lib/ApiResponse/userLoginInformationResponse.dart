@@ -12,7 +12,6 @@ class UserLoginInformationResponse extends MobileApiResponse {
   UserInformation? userInformation;
 
   bool? hasError;
-
   String? message;
 
   factory UserLoginInformationResponse.fromJson(Map<String, dynamic> json) =>
@@ -29,3 +28,5 @@ class UserLoginInformationResponse extends MobileApiResponse {
         "message": message,
       };
 }
+
+//token for sharedlocalpreference

@@ -6,6 +6,7 @@ import 'package:flutter_application_1/Screens/homePage.dart';
 import '../AppConfigurations/appConfigurations.dart';
 import '../models/UserInformation/userInformation.dart';
 import '../models/UserLoginInformation/userLoginInformation.dart';
+import '../services/LocalSharedPreferences/LocalSharedPreference.dart';
 import '../services/Registration/RegistrationService.dart';
 import '../../apiResponse/userLoginInformationResponse.dart';
 
@@ -237,6 +238,9 @@ class _LoginState extends State<Login> {
       //     await SharedPreferences.getInstance();
       // sharedPreferences.setString('token', 'token');
       if (response.hasError == false) {
+        LocalSharedPreference.setString(
+            LocalSharedPreference.SHARED_MEM_KEY_DEVICE_TOKEN, response.token);
+
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Dashboard()));
         // Get result from server

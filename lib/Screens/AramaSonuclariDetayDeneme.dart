@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/ApiResponse/BaseApiResponse.dart';
+import 'package:flutter_application_1/services/JudgmentServices/judgmentService.dart';
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../AppConfigurations/appConfigurations.dart';
 import '../models/JudgmentInformation/judgmentListInformation.dart';
 
 class AramaSonuclariDetayDeneme extends StatefulWidget {
@@ -18,6 +21,7 @@ class AramaSonuclariDetayDeneme extends StatefulWidget {
 }
 
 class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
+  final JudgmentService judgmentService = getIt.get<JudgmentService>();
   bool isLiked = false;
   bool isSaved = false;
   int likeCounter = 0;
@@ -56,6 +60,7 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
                         size: 30,
                       ),
                 onPressed: () {
+                  addLike(widget.judgments[widget.ListIndex].id!);
                   setState(() {
                     isLiked = !isLiked;
                   });
@@ -162,5 +167,14 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
             ])),
       ),
     );
+  }
+
+  addLike(int id) async {
+    BaseResponseApi response = await judgmentService.addLike(id);
+    if (response.success == true) {
+      setState(() {});
+    } else {
+      print(response.message);
+    }
   }
 }
