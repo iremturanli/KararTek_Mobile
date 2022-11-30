@@ -90,8 +90,9 @@ class _kararKayitState extends State<kararKayit> {
                     lookCourt = selectedCommission!.CommissionID;
                     print(selectedCommission!.CommissionID.toString());
                   });
-
-                  getCourts();
+                  selectedCourt = null;
+                  getCourts(lookCourt);
+                  //selectedCommission = null;
                 },
 
                 validator: (value) =>
@@ -444,17 +445,18 @@ class _kararKayitState extends State<kararKayit> {
     }
   }
 
-  getCourts() async {
-    CourtInformationResponse response = await courtDropdownService.getCourts(2);
+  getCourts(int? id) async {
+    CourtInformationResponse response =
+        await courtDropdownService.getCourts(id!);
     if (response.success == true) {
-      //courtInformation.clear();
+      courtInformation.clear();
       courtInformation.addAll(response.courtInformation);
 
       setState(() {
         print(response.courtInformation.length);
       });
     } else {
-      print(response.errorMessage);
+      print(response.message);
     }
   }
 }

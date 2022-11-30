@@ -7,7 +7,7 @@ import '../models/UserInformation/userInformation.dart';
 
 import 'mobileApiResponse.dart';
 
-class CourtInformationResponse extends MobileApiResponse {
+class CourtInformationResponse {
   CourtInformationResponse({
     required this.courtInformation,
     this.success,
@@ -22,15 +22,15 @@ class CourtInformationResponse extends MobileApiResponse {
 
   factory CourtInformationResponse.fromJson(Map<String, dynamic> json) =>
       CourtInformationResponse(
-        courtInformation: List<CourtInformation>.from(json["courts"] != null
-            ? json["courts"].map((x) => CourtInformation.fromJson(x))
+        courtInformation: List<CourtInformation>.from(json["data"] != null
+            ? json["data"].map((x) => CourtInformation.fromJson(x))
             : []),
         success: json["success"],
         message: json["message"],
       );
 
   Map<String, dynamic> toJson() => {
-        "courts": List<CourtInformation>.from(
+        "data": List<CourtInformation>.from(
             courtInformation.map((x) => x.toJson())),
         "success": success,
         "message": message,
