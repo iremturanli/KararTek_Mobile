@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/Screens/sifremiUnuttum.dart';
 import 'package:flutter_application_1/Screens/homePage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../AppConfigurations/appConfigurations.dart';
-import '../main.dart';
 import '../models/UserInformation/userInformation.dart';
 import '../models/UserLoginInformation/userLoginInformation.dart';
 import '../services/Registration/RegistrationService.dart';

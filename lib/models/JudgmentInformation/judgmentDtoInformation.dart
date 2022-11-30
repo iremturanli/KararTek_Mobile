@@ -10,17 +10,17 @@ class JudgmentDtoInformation {
   });
 
   String? keyword;
-  SearchTypeInformation? searchTypeID;
+  int? searchTypeID;
   int? judgmentTypeID;
 
   factory JudgmentDtoInformation.fromJson(Map<String, dynamic> json) =>
       JudgmentDtoInformation(
           keyword: json["keyword"],
-          searchTypeID: json["searchTypeID"],
-          judgmentTypeID: json["judgmentTypeID"]);
+          searchTypeID: json["searchTypeId"],
+          judgmentTypeID: json["judgmentTypeId"]);
   Map<String, dynamic> toJson() => {
         "keyword": keyword,
-        "searchTypeID": searchTypeID,
-        "judgmentTypeID": judgmentTypeID
+        "searchTypeId": searchTypeID,
+        "judgmentTypeId": judgmentTypeID
       };
 }

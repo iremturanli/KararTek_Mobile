@@ -101,6 +101,16 @@ class ApiClient {
     return response;
   }
 
+  Future<Response> postById(String endPoint) async {
+    Response response;
+    _dio!.options.method = "POST";
+    _dio!.options.followRedirects = true;
+    response = await _dio!.post(endPoint);
+    log("Post Dio Response: " + response.toString());
+    //  print("Post Dio Response: " + response.toString());
+    return response;
+  }
+
   Future<Response> postRequestQueryString(
       String endPoint, dynamic formData) async {
     Response response;
