@@ -1,31 +1,34 @@
+// ignore: file_names
 import '../models/UserInformation/userInformation.dart';
 
 import 'mobileApiResponse.dart';
 
 class UserLoginInformationResponse extends MobileApiResponse {
   UserLoginInformationResponse({
-    this.userInformation,
+    //this.userInformation,
     this.hasError,
     this.message,
+    this.token,
   });
 
-  UserInformation? userInformation;
-
+  //UserInformation? userInformation;
+  String? token;
   bool? hasError;
   String? message;
 
   factory UserLoginInformationResponse.fromJson(Map<String, dynamic> json) =>
       UserLoginInformationResponse(
-        userInformation:
-            UserInformation.fromJson(json["data"] == null ? {} : json["data"]),
-        hasError: json["hasError"],
-        message: json["message"],
-      );
+          // userInformation: UserInformation.fromJson(
+          //     json["data"] == null ? {} : json["data"]),
+          hasError: json["hasError"],
+          message: json["message"],
+          token: json["token"]);
 
   Map<String, dynamic> toJson() => {
-        "data": userInformation!.toJson(),
+        //"data": userInformation!.toJson(),
         "hasError": hasError,
         "message": message,
+        "token": token
       };
 }
 

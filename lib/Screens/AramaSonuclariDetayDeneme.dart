@@ -60,15 +60,17 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
                         size: 30,
                       ),
                 onPressed: () {
-                  addLike(widget.judgments[widget.ListIndex].id!);
+                  //TODO:begeni azalt
                   setState(() {
                     isLiked = !isLiked;
                   });
+                  addLike(widget.judgments[widget.ListIndex].id!, isLiked);
                   if (isLiked) {
                     likeCounter++;
                     Fluttertoast.showToast(msg: "$likeCounter beğeni");
                   } else {
                     likeCounter--;
+                    //
                     Fluttertoast.showToast(msg: 'Beğeni geri çekildi.');
                   }
                 },
@@ -169,10 +171,9 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
     );
   }
 
-  addLike(int id) async {
-    BaseResponseApi response = await judgmentService.addLike(id);
+  addLike(int id, bool isLiked) async {
+    BaseResponseApi response = await judgmentService.addLike(id, isLiked);
     if (response.success == true) {
-      setState(() {});
     } else {
       print(response.message);
     }

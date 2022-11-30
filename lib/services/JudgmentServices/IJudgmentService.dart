@@ -11,5 +11,5 @@ import '../IBaseService.dart';
 abstract class IJudgmentService implements IBaseService {
   Future<SearchDataApiResponse> getJudgments(
       JudgmentDtoInformation judgmentDtoInformation);
-  Future<BaseResponseApi> addLike(int id);
+  Future<BaseResponseApi> addLike(int id, bool check);
 }

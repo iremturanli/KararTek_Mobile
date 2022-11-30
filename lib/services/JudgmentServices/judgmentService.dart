@@ -41,12 +41,11 @@ class JudgmentService implements IJudgmentService {
   }
 
   @override
-  Future<BaseResponseApi> addLike(int id) async {
+  Future<BaseResponseApi> addLike(int id, bool check) async {
     // TODO: implement addLike
-    Map<String, dynamic> filterObject = {"id": id};
-
-    Response response =
-        await _apiClient!.postById("Judgments/JudgmentToLike" + id.toString());
+    Map<String, dynamic> filterObject = {"id": id.toString(), "check": check};
+    Response response = await _apiClient!
+        .postRequestQueryString("Judgments/JudgmentToLike", filterObject);
     if (response.statusCode == 401) {
       print("UnAuthorized");
     }

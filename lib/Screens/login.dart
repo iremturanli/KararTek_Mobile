@@ -234,12 +234,10 @@ class _LoginState extends State<Login> {
       UserLoginInformationResponse response =
           await registrationService.userLogin(UserLoginInformation(
               identityNumber: IdentityNo, password: Password));
-      // final SharedPreferences sharedPreferences =
-      //     await SharedPreferences.getInstance();
-      // sharedPreferences.setString('token', 'token');
+
       if (response.hasError == false) {
         LocalSharedPreference.setString(
-            LocalSharedPreference.SHARED_MEM_KEY_DEVICE_TOKEN, response.token);
+            LocalSharedPreference.SHARED_MEM_KEY_DEVICE_TOKEN, response.token!);
 
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Dashboard()));

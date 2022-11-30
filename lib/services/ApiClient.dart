@@ -12,7 +12,7 @@ class ApiClient {
 
   //final _baseUrl = "https://192.168.10.111:45458/api/"; //baseurl; 10.0.2.2
 
-  final _baseUrl = "https://192.168.10.90:45462/api/"; //baseurl; 10.0.2.2
+  final _baseUrl = "https://192.168.10.90:45458/api/"; //baseurl; 10.0.2.2
 
   var onResponseCallback;
   var onErrorCallback;
@@ -41,17 +41,17 @@ class ApiClient {
   initializeInterceptors() {
     _dio!.interceptors.add(InterceptorsWrapper(
       onRequest: (options, requestInterceptorHandler) {
-        TODO: // SharePreference Ekleneycek
         String token = LocalSharedPreference.getString(
             LocalSharedPreference.SHARED_MEM_KEY_DEVICE_TOKEN);
+
         if (token != "") {
           print("Bearer Token:" + token);
           options.headers["AUTH_TOKEN"] = options.headers["Authorization"] =
               "Bearer " + token; //Sending token with every request accept login
           return requestInterceptorHandler.next(options);
-        } //else {
-        return requestInterceptorHandler.next(options);
-        //}
+        } else {
+          return requestInterceptorHandler.next(options);
+        }
       },
       onResponse: (response, responseInterceptorHandler) {
         print('onResponse:${response.statusCode}');
