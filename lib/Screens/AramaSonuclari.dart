@@ -8,7 +8,7 @@ import '../models/JudgmentInformation/judgmentInformation.dart';
 
 class AramaSonuclari extends StatefulWidget {
   List<JudgmentListInformation> judgments = [];
-  AramaSonuclari(this.judgments, {Key? key}) : super(key: key);
+  wwwwwssssssswwwwsAramaSonuclari(this.judgments, {Key? key}) : super(key: key);
 
   @override
   State<AramaSonuclari> createState() => _AramaSonuclariState();

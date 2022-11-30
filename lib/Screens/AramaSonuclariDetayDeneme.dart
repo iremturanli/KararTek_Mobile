@@ -22,6 +22,7 @@ class AramaSonuclariDetayDeneme extends StatefulWidget {
 
 class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
   final JudgmentService judgmentService = getIt.get<JudgmentService>();
+
   bool isLiked = false;
   bool isSaved = false;
   int likeCounter = 0;

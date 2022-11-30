@@ -1,6 +1,7 @@
 import 'package:flutter_application_1/models/JudgmentInformation/judgmentInformation.dart';
 
 import '../models/JudgmentInformation/judgmentListInformation.dart';
+import '../models/LawyerJudgmentInformation/LawyerJudgmentListInformation.dart';
 
 class SearchDataApiResponse {
   SearchDataApiResponse({
@@ -9,14 +10,14 @@ class SearchDataApiResponse {
     this.message,
   });
 
-  List<JudgmentListInformation>? data;
+  List<LawyerJudgmentListInformation>? data;
   bool? success;
   String? message;
 
   factory SearchDataApiResponse.fromJson(Map<String, dynamic> json) =>
       SearchDataApiResponse(
-        data: List<JudgmentListInformation>.from(
-            json["data"].map((x) => JudgmentListInformation.fromJson(x))),
+        data: List<LawyerJudgmentListInformation>.from(
+            json["data"].map((x) => LawyerJudgmentListInformation.fromJson(x))),
         success: json["success"],
         message: json["message"],
       );

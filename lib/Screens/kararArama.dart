@@ -5,15 +5,20 @@ import 'package:flutter_application_1/ApiResponse/SearchTypeDropdownResponse.dar
 import 'package:flutter_application_1/Screens/AramaSonuclari.dart';
 import 'package:flutter_application_1/models/JudgmentInformation/judgmentDtoInformation.dart';
 import 'package:flutter_application_1/models/JudgmentInformation/judgmentInformation.dart';
+import 'package:flutter_application_1/models/LawyerJudgmentInformation/LawyerJudgmentInformation.dart';
 import 'package:flutter_application_1/models/SearchTypeInformation/searchTypeInformation.dart';
 import 'package:flutter_application_1/services/DropDownServices/SearchTypeDropdownService.dart';
 import 'package:flutter_application_1/services/JudgmentServices/judgmentService.dart';
+import 'package:flutter_application_1/services/LawyerJudgmentServices/LawyerJudgmentService.dart';
 import 'package:flutter_application_1/widgets/ModalBottomDetayl%C4%B1Arama.dart';
+import 'package:get_it/get_it.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../AppConfigurations/appConfigurations.dart';
 import '../models/EDecisionTypes.dart';
 import '../models/JudgmentInformation/judgmentListInformation.dart';
+import '../models/LawyerJudgmentInformation/LawyerJudgmentDtoInformation.dart';
+import '../models/LawyerJudgmentInformation/LawyerJudgmentListInformation.dart';
 
 class KararArama extends StatefulWidget {
   const KararArama({Key? key}) : super(key: key);
@@ -34,9 +39,12 @@ class _KararAramaState extends State<KararArama> {
   final SearchTypeDropdownService searchTypeDropdownService =
       getIt.get<SearchTypeDropdownService>();
   final JudgmentService judgmentService = getIt.get<JudgmentService>();
+  final LawyerJudgmentService lawyerJudgmentService =
+      getIt.get<LawyerJudgmentService>();
 
   List<SearchTypeInformation> searchTypeInformation = [];
   List<JudgmentListInformation> judgments = [];
+  List<LawyerJudgmentListInformation> lawyerJudgments = [];
   SearchTypeInformation? selectedOption;
   int? decisionValue;
 
@@ -291,7 +299,11 @@ class _KararAramaState extends State<KararArama> {
                               keyword: textEditingController.text,
                               searchTypeID: selectedOption!.TypeID,
                               judgmentTypeID: decisionValue);
-                      getJudgments(judgmentDtoInformation);
+                      if (selectedOption!.TypeID == 1) {
+                        getLawyerJudgments(judgmentDtoInformation);
+                      } else {
+                        getJudgments(judgmentDtoInformation);
+                      }
                     },
                     child: const Text(
                       'Arama Yap',
@@ -357,6 +369,31 @@ class _KararAramaState extends State<KararArama> {
               context,
               MaterialPageRoute(
                   builder: (context) => AramaSonuclari(judgments)));
+        });
+
+        print(response);
+      } else {
+        print(response.message);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  getLawyerJudgments(
+    JudgmentDtoInformation judgmentDtoInformation) async {
+    try {
+      SearchDataApiResponse response = await lawyerJudgmentService
+          .getLawyerJudgments(judgmentDtoInformation);
+      if (response.success == true) {
+        lawyerJudgments.clear();
+        lawyerJudgments.addAll(response.data!);
+        print(response.success);
+        setState(() {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AramaSonuclari(lawyerJudgments)));
         });
 
         print(response);
