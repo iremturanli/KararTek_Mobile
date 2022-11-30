@@ -238,8 +238,8 @@ class _LoginState extends State<Login> {
       //     await SharedPreferences.getInstance();
       // sharedPreferences.setString('token', 'token');
       if (response.hasError == false) {
-        LocalSharedPreference.setString(
-            LocalSharedPreference.SHARED_MEM_KEY_DEVICE_TOKEN, response.token);
+        //LocalSharedPreference.setString(
+        //  LocalSharedPreference.SHARED_MEM_KEY_DEVICE_TOKEN, response.token);
 
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Dashboard()));
