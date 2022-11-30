@@ -31,6 +31,7 @@ class _kararKayitState extends State<kararKayit> {
       getIt.get<CourtDropdownService>();
 
   late List<String> docPaths;
+  int? lookCourt;
   CommissionInformation? selectedCommission;
   List<CommissionInformation> commissionInformation = [];
 
@@ -86,6 +87,7 @@ class _kararKayitState extends State<kararKayit> {
                 onChanged: (CommissionInformation? newValue) {
                   setState(() {
                     selectedCommission = newValue;
+                    lookCourt = selectedCommission!.CommissionID;
                     print(selectedCommission!.CommissionID.toString());
                   });
                 },
@@ -440,12 +442,14 @@ class _kararKayitState extends State<kararKayit> {
   }
 
   getCourts() async {
-    CourtInformationResponse response = await courtDropdownService.getCourts();
+    CourtInformationResponse response = await courtDropdownService.getCourts(2);
     if (response.hasError == false) {
       courtInformation.addAll(response.courtInformation);
+      print(courtInformation[1].CourtName);
 
-      print(response.courtInformation.length);
-      setState(() {});
+      setState(() {
+        print(response.courtInformation.length);
+      });
     } else {
       print(response.errorMessage);
     }

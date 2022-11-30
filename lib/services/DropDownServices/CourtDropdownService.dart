@@ -26,8 +26,10 @@ class CourtDropdownService implements ICourtDropdownService {
   }
 
   @override
-  Future<CourtInformationResponse> getCourts() async {
-    Response response = await _apiClient!.getRequest("Court/GetAll/{id}");
+  Future<CourtInformationResponse> getCourts(int id) async {
+    Map<String, dynamic> filterObject = {"id": id};
+    Response response =
+        await _apiClient!.getRequest("Court/GetAll", filter: filterObject);
     if (response.statusCode == 401) {
       print("UnAuthorized");
     }
