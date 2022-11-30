@@ -9,6 +9,7 @@ import '../services/ApiClient.dart';
 import '../services/DropDownServices/CityDropdownService.dart';
 import '../services/DropDownServices/CommissionDropdownService.dart';
 import '../services/DropDownServices/CourtDropdownService.dart';
+import '../services/LawyerJudgmentServices/LawyerJudgmentService.dart';
 import '../services/Registration/RegistrationService.dart';
 
 GetIt getIt = GetIt.instance;
@@ -31,6 +32,8 @@ void configureInjection() {
       () => SearchTypeDropdownService(getIt<ApiClient>()));
   getIt.registerLazySingleton<JudgmentService>(
       () => JudgmentService(getIt<ApiClient>()));
+  getIt.registerLazySingleton<LawyerJudgmentService>(
+      () => LawyerJudgmentService(getIt<ApiClient>()));
 
 /*  getIt.registerLazySingleton<SchoolService>(
       () => SchoolService(getIt<ApiClient>()));
