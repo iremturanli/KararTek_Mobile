@@ -23,7 +23,7 @@ class CourtInformationResponse extends MobileApiResponse {
   factory CourtInformationResponse.fromJson(Map<String, dynamic> json) =>
       CourtInformationResponse(
         courtInformation: List<CourtInformation>.from(json["courts"] != null
-            ? json["courts"].map((x) => CommissionInformation.fromJson(x))
+            ? json["courts"].map((x) => CourtInformation.fromJson(x))
             : []),
         hasError: json["hasError"],
         message: json["message"],
