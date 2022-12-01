@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
         //     borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
         //   ),
         // ),
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.grey,
       ),
       home: const SplashScreen(),
     );
