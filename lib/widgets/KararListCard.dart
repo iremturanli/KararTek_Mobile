@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/KararOnayDetay.dart';
 
 class CardData extends StatelessWidget {
-  final String param1;
+  final String? param1;
   final String? param2;
   const CardData({
     Key? key,

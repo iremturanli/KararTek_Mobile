@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/Screens/homePage.dart';
 import 'package:flutter_application_1/Screens/yeniKullanici.dart';
 import 'package:flutter_application_1/services/LocalSharedPreferences/LocalSharedPreference.dart';
 import 'package:lottie/lottie.dart';
@@ -27,6 +26,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return MaterialApp(
+      // ignore: prefer_const_literals_to_create_immutables
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -49,20 +49,7 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
 
-        // ignore: prefer_const_constructors
-        // inputDecorationTheme: InputDecorationTheme(
-        //   //To always use the color (even when not in focus), set enabledBorder and border as well:
-        //   focusedBorder: const UnderlineInputBorder(
-        //       borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0))),
-        //   // ignore: prefer_const_constructors
-        //   enabledBorder: UnderlineInputBorder(
-        //     borderSide: const BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
-        //   ),
-        //   border: const UnderlineInputBorder(
-        //     borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
-        //   ),
-        // ),
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.grey, //onlymaterialcolor?
       ),
       home: const SplashScreen(),
     );
@@ -145,8 +132,10 @@ class Home extends StatelessWidget {
                         backgroundColor: const Color.fromARGB(255, 1, 28, 63),
                       ),
                       onPressed: () {
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (context) => Login()));
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Login()));
                       },
                       child: const Text(
                         'Giriş',

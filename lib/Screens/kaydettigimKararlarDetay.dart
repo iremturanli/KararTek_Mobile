@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentListInformation.dart';
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
 
 class KaydettigimKararDetay extends StatelessWidget {
-  List<Map<String, dynamic>> List_;
+  List<LawyerJudgmentListInformation> savedJudgments = [];
+  // ignore: non_constant_identifier_names
   final int ListIndex;
   KaydettigimKararDetay({
     Key? key,
+    required this.savedJudgments,
+    // ignore: non_constant_identifier_names
     required this.ListIndex,
-    required this.List_,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -17,8 +20,8 @@ class KaydettigimKararDetay extends StatelessWidget {
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
-        iconTheme: IconThemeData(color: Colors.black),
-        title: const Text('Karar Havuzum ',
+        iconTheme: const IconThemeData(color: Colors.black),
+        title: const Text('Kaydettiğim Kararlar ',
             style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
@@ -29,68 +32,68 @@ class KaydettigimKararDetay extends StatelessWidget {
             padding: EdgeInsets.all(MediaQuery.of(context).size.height / 50),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text('Esas No',
+              const Text('Esas No',
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
               Text(
-                '${List_[ListIndex]["esasSıraNo"]}/${List_[ListIndex]["esasYılı"]}',
+                '${savedJudgments[ListIndex].meritsNo}/${savedJudgments[ListIndex].meritsNo}',
               ),
-              CustomDivider(),
-              Text('Mahkeme',
+              const CustomDivider(),
+              const Text('Mahkeme',
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
               Text(
-                '${List_[ListIndex]["Mahkeme"]}',
+                '${savedJudgments[ListIndex].courtName}',
               ),
-              CustomDivider(),
-              Text('Hüküm',
+              const CustomDivider(),
+              const Text('Hüküm',
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
               Text(
-                '${List_[ListIndex]["Hüküm"]}',
+                '${savedJudgments[ListIndex].decree}',
               ),
-              CustomDivider(),
-              Text('Avukat Açıklaması',
+              const CustomDivider(),
+              const Text('Avukat Açıklaması',
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
-              Text('${List_[ListIndex]["Avukat Açıklaması"]}'),
-              CustomDivider(),
-              Text('TBB Açıklaması', //????
+              Text('${savedJudgments[ListIndex].lawyerAssesment}'),
+              const CustomDivider(),
+              const Text('TBB Açıklaması', //????
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
-              Text('${List_[ListIndex]["TBB Açıklaması"]}'),
-              CustomDivider(),
-              Text('Karar',
+              Text('${savedJudgments[ListIndex].tbbComments}'),
+              const CustomDivider(),
+              const Text('Karar',
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
               Text(
-                '${List_[ListIndex]["Karar"]}',
+                '${savedJudgments[ListIndex].decision}',
               ),
-              CustomDivider(),
-              Text('Karar Tarihi',
+              const CustomDivider(),
+              const Text('Karar Tarihi',
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
-              Text('${List_[ListIndex]["Karar Tarihi"]}'),
-              CustomDivider(),
-              Text('Kayıt Tarihi',
+              Text('${savedJudgments[ListIndex].judgmentDate}'),
+              const CustomDivider(),
+              const Text('Kayıt Tarihi',
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
-              Text('${List_[ListIndex]["Kayıt Tarihi"]}'),
-              CustomDivider(),
-              Text("TBB'ye Gönderilme Tarihi",
+              Text('${savedJudgments[ListIndex].createDate}'),
+              const CustomDivider(),
+              const Text("TBB'ye Gönderilme Tarihi",
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
-              Text('${List_[ListIndex]["TBB'ye Gönderilme Tarihi"]}'),
-              CustomDivider(),
+              Text('${savedJudgments[ListIndex].createDate}'),
+              const CustomDivider(),
             ])),
       ),
     );
