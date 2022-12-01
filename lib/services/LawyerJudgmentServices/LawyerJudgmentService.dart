@@ -46,7 +46,19 @@ class LawyerJudgmentService implements ILawyerJudgmentService {
   Future<SearchDataApiResponse> getLawyerJudgments(
       JudgmentDtoInformation judgmentDtoInformation) async {
     Response response = await _apiClient!.postRequest(
-        "LawyerJudgments/GetLawyerJudgmentsByType", judgmentDtoInformation);
+        "LawyerJudgment/GetLawyerJudgmentsByType", judgmentDtoInformation);
+    if (response.statusCode == 401) {
+      print("UnAuthorized");
+    }
+    print(response);
+    return SearchDataApiResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<SearchDataApiResponse> addLawyerJudgment(
+      JudgmentDtoInformation judgmentDtoInformation) async {
+    Response response = await _apiClient!.postRequest(
+        "LawyerJudgment/AddLawyerJudgments", judgmentDtoInformation);
     if (response.statusCode == 401) {
       print("UnAuthorized");
     }

@@ -1,9 +1,11 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ApiResponse/CommissionDropdownResponse.dart';
+import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentInformation.dart';
 
 import 'package:flutter_application_1/services/DropDownServices/CommissionDropdownService.dart';
 import 'package:flutter_application_1/services/DropDownServices/CourtDropdownService.dart';
+import 'package:flutter_application_1/services/LawyerJudgmentServices/LawyerJudgmentService.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:open_filex/open_filex.dart';
@@ -30,20 +32,30 @@ class _kararKayitState extends State<kararKayit> {
       getIt.get<CommissionDropdownService>();
   final CourtDropdownService courtDropdownService =
       getIt.get<CourtDropdownService>();
+  final LawyerJudgmentService lawyerJudgmentService =
+      getIt.get<LawyerJudgmentService>();
 
   late List<String> docPaths;
   int? lookCourt;
   CommissionInformation? selectedCommission;
   List<CommissionInformation> commissionInformation = [];
-
+  LawyerJudgmentInformation lawyerJudgmentInformation = LawyerJudgmentInformation();
   CourtInformation? selectedCourt;
   List<CourtInformation> courtInformation = [];
 
-  TextEditingController dateInput = TextEditingController();
+  TextEditingController dateInputController = TextEditingController();
+  TextEditingController assesmentController = TextEditingController();
+  TextEditingController decreeTypeController = TextEditingController();
+  TextEditingController hukumController = TextEditingController();
+  TextEditingController esasNoController = TextEditingController();
+  TextEditingController esasYearController = TextEditingController();
+  TextEditingController kararNoController = TextEditingController();
+  TextEditingController kararYearController = TextEditingController();
+  TextEditingController kararController = TextEditingController();
 
   @override
   void initState() {
-    dateInput.text = "";
+    dateInputController.text = "";
     super.initState();
     getCommissions();
   }
@@ -145,9 +157,33 @@ class _kararKayitState extends State<kararKayit> {
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height / 35),
+            Text('Hüküm*'),
+            SizedBox(height: MediaQuery.of(context).size.height / 65),
+            TextFormField(
+              controller: hukumController,
+              textAlignVertical: TextAlignVertical.top,
+              minLines: 3,
+              maxLines: null,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: const Color.fromARGB(246, 246, 246, 246),
+                focusedBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8))),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  // ignore: prefer_const_constructors
+                  borderSide: BorderSide(
+                    width: 1,
+                    color: const Color.fromARGB(255, 189, 189, 189),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height / 35),
             Text('Avukat Değerlendirmesi*'),
             SizedBox(height: MediaQuery.of(context).size.height / 65),
             TextFormField(
+              controller: assesmentController,
               textAlignVertical: TextAlignVertical.top,
               minLines: 3,
               maxLines: null,
@@ -170,6 +206,7 @@ class _kararKayitState extends State<kararKayit> {
             Text('Dava Türü'),
             SizedBox(height: MediaQuery.of(context).size.height / 65),
             TextFormField(
+              controller: decreeTypeController,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: const Color.fromARGB(246, 246, 246, 246),
@@ -193,6 +230,7 @@ class _kararKayitState extends State<kararKayit> {
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height / 17,
                   child: TextFormField(
+                    controller: esasYearController,
                     decoration: InputDecoration(
                         filled: true,
                         fillColor: const Color.fromARGB(246, 246, 246, 246),
@@ -216,6 +254,7 @@ class _kararKayitState extends State<kararKayit> {
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height / 17,
                   child: TextFormField(
+                    controller: esasNoController,
                     decoration: InputDecoration(
                         filled: true,
                         fillColor: const Color.fromARGB(246, 246, 246, 246),
@@ -243,6 +282,7 @@ class _kararKayitState extends State<kararKayit> {
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height / 17,
                   child: TextFormField(
+                    controller: kararYearController,
                     decoration: InputDecoration(
                         filled: true,
                         fillColor: const Color.fromARGB(246, 246, 246, 246),
@@ -266,6 +306,7 @@ class _kararKayitState extends State<kararKayit> {
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height / 17,
                   child: TextFormField(
+                    controller: kararNoController,
                     decoration: InputDecoration(
                         filled: true,
                         fillColor: const Color.fromARGB(246, 246, 246, 246),
@@ -288,8 +329,8 @@ class _kararKayitState extends State<kararKayit> {
             SizedBox(height: MediaQuery.of(context).size.height / 35),
             Text('Karar Tarihi'),
             SizedBox(height: MediaQuery.of(context).size.height / 65),
-            TextField(
-              controller: dateInput,
+            TextFormField(
+              controller: dateInputController,
               //editing controller of this TextField
               decoration: InputDecoration(
                   prefixIcon: Icon(Icons.calendar_today,
@@ -346,10 +387,10 @@ class _kararKayitState extends State<kararKayit> {
                 if (pickedDate != null) {
                   print(pickedDate);
                   String formattedDate =
-                      DateFormat('dd/MM/yyyy').format(pickedDate);
+                      DateFormat('dd-MM-yyyy').format(pickedDate);
                   print(formattedDate);
                   setState(() {
-                    dateInput.text = formattedDate;
+                    dateInputController.text = formattedDate;
                   });
                 } else {}
               },
@@ -358,6 +399,7 @@ class _kararKayitState extends State<kararKayit> {
             Text('Karar'),
             SizedBox(height: MediaQuery.of(context).size.height / 65),
             TextFormField(
+              controller: kararController,
               textAlignVertical: TextAlignVertical.top,
               minLines: 3,
               maxLines: null,
@@ -401,7 +443,19 @@ class _kararKayitState extends State<kararKayit> {
                   ),
                   minimumSize: const Size(150, 45),
                   backgroundColor: HexColor('#5DB075')),
-              onPressed: () {},
+              onPressed: () {
+               lawyerJudgmentInformation.commissionId = selectedCommission!.CommissionID;
+               lawyerJudgmentInformation.courtId=selectedCourt!.CourtID;
+               lawyerJudgmentInformation.decree=hukumController.text;
+               lawyerJudgmentInformation.lawyerAssesment=assesmentController.text;
+               lawyerJudgmentInformation.decreeType=decreeTypeController.text;
+               lawyerJudgmentInformation.meritsYear=esasYearController.text;
+               lawyerJudgmentInformation.meritsNo=esasNoController.text;
+               lawyerJudgmentInformation.decreeYear=kararYearController.text;
+               lawyerJudgmentInformation.decreeNo=kararNoController.text;
+               lawyerJudgmentInformation.judgmentDate=;
+
+               },
               icon: Icon(Icons.save),
               label: const Text(
                 'Kaydet',
@@ -430,6 +484,8 @@ class _kararKayitState extends State<kararKayit> {
   void viewFile(file) {
     OpenFilex.open(file.path);
   }
+
+  addLawyerJudgment(){};
 
   getCommissions() async {
     CommissionInformationResponse response =
