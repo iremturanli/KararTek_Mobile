@@ -2,6 +2,7 @@
 
 import 'package:flutter_application_1/ApiResponse/BaseApiResponse.dart';
 import 'package:flutter_application_1/ApiResponse/JudgmentTypeRadioButtonResponse.dart';
+import 'package:flutter_application_1/ApiResponse/SearchDataLawyerResponse.dart';
 import 'package:flutter_application_1/ApiResponse/SearchDataResponse.dart';
 import 'package:flutter_application_1/models/JudgmentInformation/judgmentDtoInformation.dart';
 import 'package:flutter_application_1/models/JudgmentInformation/judgmentInformation.dart';
@@ -9,7 +10,7 @@ import 'package:flutter_application_1/models/JudgmentInformation/judgmentInforma
 import '../IBaseService.dart';
 
 abstract class IJudgmentService implements IBaseService {
-  Future<SearchDataApiResponse> getJudgments(
+  Future<SearchDataLawyerResponse> getJudgments(
       JudgmentDtoInformation judgmentDtoInformation);
   Future<BaseResponseApi> addLike(int id, bool check);
 }

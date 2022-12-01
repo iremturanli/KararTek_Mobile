@@ -10,14 +10,14 @@ class SearchDataApiResponse {
     this.message,
   });
 
-  List<LawyerJudgmentListInformation>? data;
+  List<JudgmentListInformation>? data;
   bool? success;
   String? message;
 
   factory SearchDataApiResponse.fromJson(Map<String, dynamic> json) =>
       SearchDataApiResponse(
-        data: List<LawyerJudgmentListInformation>.from(
-            json["data"].map((x) => LawyerJudgmentListInformation.fromJson(x))),
+        data: List<JudgmentListInformation>.from(
+            json["data"].map((x) => JudgmentListInformation.fromJson(x))),
         success: json["success"],
         message: json["message"],
       );

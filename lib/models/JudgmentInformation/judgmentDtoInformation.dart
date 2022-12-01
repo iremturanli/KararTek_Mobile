@@ -6,7 +6,7 @@ class JudgmentDtoInformation {
   JudgmentDtoInformation({
     required this.keyword,
     required this.searchTypeID,
-    required this.judgmentTypeID,
+    this.judgmentTypeID,
   });
 
   String? keyword;

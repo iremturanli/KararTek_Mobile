@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/AramaSonuclariDetayDeneme.dart';
 import 'package:flutter_application_1/models/JudgmentInformation/judgmentListInformation.dart';
+import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentListInformation.dart';
 import 'package:flutter_application_1/widgets/ModalBottomAramaSonuclari.dart';
-import 'package:flutter_application_1/widgets/comboBox.dart';
-
-import '../models/JudgmentInformation/judgmentInformation.dart';
 
 class AramaSonuclari extends StatefulWidget {
-  List<JudgmentListInformation> judgments = [];
-  AramaSonuclari(this.judgments, {Key? key}) : super(key: key);
+  // List<JudgmentListInformation> judgments = [];
+  List<LawyerJudgmentListInformation> judgments = [];
+  final int? searchTypeId;
+  AramaSonuclari(
+      {Key? key, required this.judgments, required this.searchTypeId})
+      : super(key: key);
 
   @override
   State<AramaSonuclari> createState() => _AramaSonuclariState();
@@ -96,6 +98,8 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             AramaSonuclariDetayDeneme(
+                                                searchTypeId:
+                                                    widget.searchTypeId,
                                                 judgments: widget.judgments,
                                                 ListIndex: index)));
                               }),

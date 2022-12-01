@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentListInformation.dart';
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
 import 'package:flutter_application_1/widgets/KararRedPopUp.dart';
 import 'package:flutter_application_1/widgets/KararListCard.dart';
 
 class KararDetay extends StatelessWidget {
-  List<Map<String, dynamic>> List_;
+  List<LawyerJudgmentListInformation> pendingApprovalJudgments = [];
+  // ignore: non_constant_identifier_names
   final int ListIndex;
-  KararDetay({
-    required this.List_,
-    Key? key,
-    required this.ListIndex,
-  }) : super(key: key);
+  KararDetay(
+      {Key? key,
+      required this.ListIndex,
+      required this.pendingApprovalJudgments})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class KararDetay extends StatelessWidget {
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         title: const Text('Karar Detay',
             style: TextStyle(
                 fontSize: 30,
@@ -35,64 +37,71 @@ class KararDetay extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Esas No',
+            const Text('Esas No',
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
             Text(
-              '${List_[ListIndex]["esasSıraNo"]}/${List_[ListIndex]["esasYılı"]}',
+              '${pendingApprovalJudgments[ListIndex].meritsNo}/${pendingApprovalJudgments[ListIndex].meritsYear}',
             ),
-            CustomDivider(),
-            Text('Kurul Adı',
+            const CustomDivider(),
+            const Text('Kurul Adı',
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
             Text(
-              '${List_[ListIndex]["Kurul Adı"]}',
+              '${pendingApprovalJudgments[ListIndex].commissionName}',
             ),
-            CustomDivider(),
-            Text('Mahkeme',
+            const CustomDivider(),
+            const Text('Mahkeme',
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
-            Text('${List_[ListIndex]["Mahkeme"]}'),
-            CustomDivider(),
-            Text('Hüküm',
+            Text('${pendingApprovalJudgments[ListIndex].courtName}'),
+            const CustomDivider(),
+            const Text('Hüküm',
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
-            Text('${List_[ListIndex]["Hüküm"]}'),
-            CustomDivider(),
-            Text('Avukat Açıklaması',
+            Text('${pendingApprovalJudgments[ListIndex].decree}'),
+            const CustomDivider(),
+            const Text('Avukat Açıklaması',
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
-            Text('${List_[ListIndex]["Avukat Açıklaması"]}'),
-            CustomDivider(),
-            Text('Karar',
+            Text('${pendingApprovalJudgments[ListIndex].lawyerAssesment}'),
+            const CustomDivider(),
+            const Text('Karar',
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
-            Text('${List_[ListIndex]["Karar"]}'),
-            CustomDivider(),
-            Text('Karar Tarihi',
+            Text('${pendingApprovalJudgments[ListIndex].decision}'),
+            const CustomDivider(),
+            const Text('Karar Tarihi',
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
-            Text('${List_[ListIndex]["Karar Tarihi"]}'),
-            CustomDivider(),
-            Text('Kayıt Tarihi',
+            Text('${pendingApprovalJudgments[ListIndex].judgmentDate}'),
+            const CustomDivider(),
+            const Text('Kayıt Tarihi',
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
-            Text('${List_[ListIndex]["Kayıt Tarihi"]}'),
-            CustomDivider(),
-            Text("TBB'ye Gönderilme Tarihi",
+            Text('${pendingApprovalJudgments[ListIndex].createDate}'),
+            const CustomDivider(),
+            const Text("TBB'ye Gönderilme Tarihi",
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
-            Text('${List_[ListIndex]["TBB'ye Gönderilme Tarihi"]}'),
-            CustomDivider(),
+            Text('${pendingApprovalJudgments[ListIndex].createDate}'),
+            const CustomDivider(),
+            const Text('Kararı Ekleyen Kişi',
+                style: TextStyle(
+                    color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
+            SizedBox(height: MediaQuery.of(context).size.height / 100),
+            Text(
+                '${pendingApprovalJudgments[ListIndex].userName} ${pendingApprovalJudgments[ListIndex].lastName}'),
+            const CustomDivider(),
             SizedBox(height: MediaQuery.of(context).size.height / 10),
             Padding(
               padding: EdgeInsets.only(
@@ -102,16 +111,17 @@ class KararDetay extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50),
                   ),
-                  minimumSize: Size(350, 50),
-                  backgroundColor: Color.fromARGB(255, 1, 28, 63),
+                  minimumSize: const Size(350, 50),
+                  backgroundColor: const Color.fromARGB(255, 1, 28, 63),
                 ),
                 onPressed: () {
                   showDialog(
                       barrierDismissible: false,
                       context: context,
                       builder: (ctx) => AlertDialog(
-                            backgroundColor: Color.fromARGB(255, 221, 226, 241),
-                            shape: RoundedRectangleBorder(
+                            backgroundColor:
+                                const Color.fromARGB(255, 221, 226, 241),
+                            shape: const RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(30))),
                             title: const Text(
@@ -123,10 +133,10 @@ class KararDetay extends StatelessWidget {
                                   children: [
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                          minimumSize: Size(120, 50),
-                                          backgroundColor:
-                                              Color.fromARGB(255, 194, 27, 5),
-                                          shape: RoundedRectangleBorder(
+                                          minimumSize: const Size(120, 50),
+                                          backgroundColor: const Color.fromARGB(
+                                              255, 194, 27, 5),
+                                          shape: const RoundedRectangleBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(10)))),
                                       onPressed: () {
@@ -136,16 +146,18 @@ class KararDetay extends StatelessWidget {
                                             context: context,
                                             builder: (ctx) => AlertDialog(
                                                   backgroundColor:
-                                                      Color.fromARGB(
+                                                      const Color.fromARGB(
                                                           255, 221, 226, 241),
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  30))),
+                                                  shape:
+                                                      const RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          30))),
                                                   title: const Text(
                                                       "Kararı reddetme sebebiniz nedir?"),
-                                                  content: OnayPopUp(),
+                                                  content: const OnayPopUp(),
                                                   actions: <Widget>[
                                                     Row(
                                                         mainAxisAlignment:
@@ -155,15 +167,17 @@ class KararDetay extends StatelessWidget {
                                                           ElevatedButton(
                                                             style: ElevatedButton.styleFrom(
                                                                 minimumSize:
-                                                                    Size(120,
+                                                                    const Size(
+                                                                        120,
                                                                         50),
                                                                 backgroundColor:
-                                                                    Color.fromARGB(
+                                                                    const Color
+                                                                            .fromARGB(
                                                                         255,
                                                                         175,
                                                                         172,
                                                                         172),
-                                                                shape: RoundedRectangleBorder(
+                                                                shape: const RoundedRectangleBorder(
                                                                     borderRadius:
                                                                         BorderRadius.all(
                                                                             Radius.circular(10)))),
@@ -171,23 +185,24 @@ class KararDetay extends StatelessWidget {
                                                               Navigator.of(ctx)
                                                                   .pop();
                                                             },
-                                                            child: Text(
+                                                            child: const Text(
                                                               "İPTAL",
                                                             ),
                                                           ),
                                                           ElevatedButton(
                                                             style: ElevatedButton.styleFrom(
                                                                 minimumSize:
-                                                                    Size(120,
+                                                                    const Size(
+                                                                        120,
                                                                         50),
                                                                 backgroundColor:
-                                                                    Color
-                                                                        .fromARGB(
-                                                                            255,
-                                                                            194,
-                                                                            27,
-                                                                            5),
-                                                                shape: RoundedRectangleBorder(
+                                                                    const Color
+                                                                            .fromARGB(
+                                                                        255,
+                                                                        194,
+                                                                        27,
+                                                                        5),
+                                                                shape: const RoundedRectangleBorder(
                                                                     borderRadius:
                                                                         BorderRadius.all(
                                                                             Radius.circular(10)))),
@@ -195,7 +210,7 @@ class KararDetay extends StatelessWidget {
                                                               Navigator.of(ctx)
                                                                   .pop();
                                                             },
-                                                            child: Text(
+                                                            child: const Text(
                                                               "REDDET",
                                                             ),
                                                           ),
@@ -209,22 +224,22 @@ class KararDetay extends StatelessWidget {
                                                   ],
                                                 ));
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         "REDDET",
                                       ),
                                     ),
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                          minimumSize: Size(120, 50),
-                                          backgroundColor: Color.fromARGB(
+                                          minimumSize: const Size(120, 50),
+                                          backgroundColor: const Color.fromARGB(
                                               255, 130, 184, 113),
-                                          shape: RoundedRectangleBorder(
+                                          shape: const RoundedRectangleBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(10)))),
                                       onPressed: () {
                                         Navigator.of(ctx).pop();
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         "ONAYLA",
                                       ),
                                     ),

@@ -21,6 +21,7 @@ class LawyerJudgmentListInformation {
     this.userName,
     this.lastName,
     this.lawyerAssesment,
+    this.stateId,
   });
 
   int? id;
@@ -40,6 +41,7 @@ class LawyerJudgmentListInformation {
   String? commissionName;
   String? courtName;
   int? userId;
+  int? stateId;
   String? stateName;
   String? userName;
   String? lastName;
@@ -47,28 +49,28 @@ class LawyerJudgmentListInformation {
 
   factory LawyerJudgmentListInformation.fromJson(Map<String, dynamic> json) =>
       LawyerJudgmentListInformation(
-        id: json["id"],
-        commissionId: json["commissionId"],
-        courtId: json["courtId"],
-        decree: json["decree"],
-        decreeType: json["decreeType"],
-        meritsYear: json["meritsYear"],
-        meritsNo: json["meritsNo"],
-        decreeYear: json["decreeYear"],
-        decreeNo: json["decreeNo"],
-        decision: json["decision"],
-        tbbComments: json["tbbComments"],
-        likes: json["likes"],
-        judgmentDate: DateTime.parse(json["judgmentDate"]),
-        createDate: DateTime.parse(json["createDate"]),
-        commissionName: json["commissionName"],
-        courtName: json["courtName"],
-        userId: json["userId"],
-        stateName: json["stateName"],
-        userName: json["userName"],
-        lastName: json["lastName"],
-        lawyerAssesment: json["lawyerAssesment"],
-      );
+          id: json["id"],
+          commissionId: json["commissionId"],
+          courtId: json["courtId"],
+          decree: json["decree"],
+          decreeType: json["decreeType"],
+          meritsYear: json["meritsYear"],
+          meritsNo: json["meritsNo"],
+          decreeYear: json["decreeYear"],
+          decreeNo: json["decreeNo"],
+          decision: json["decision"],
+          tbbComments: json["tbbComments"],
+          likes: json["likes"],
+          judgmentDate: DateTime.parse(json["judgmentDate"]),
+          createDate: DateTime.parse(json["createDate"]),
+          commissionName: json["commissionName"],
+          courtName: json["courtName"],
+          userId: json["userId"],
+          stateName: json["stateName"],
+          userName: json["userName"],
+          lastName: json["lastName"],
+          lawyerAssesment: json["lawyerAssesment"],
+          stateId: json["stateId"]);
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -92,5 +94,6 @@ class LawyerJudgmentListInformation {
         "userName": userName,
         "lastName": lastName,
         "lawyerAssesment": lawyerAssesment,
+        "stateId": stateId
       };
 }

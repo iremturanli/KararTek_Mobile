@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ApiResponse/BaseApiResponse.dart';
+import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentListInformation.dart';
 import 'package:flutter_application_1/services/JudgmentServices/judgmentService.dart';
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -8,11 +9,14 @@ import '../AppConfigurations/appConfigurations.dart';
 import '../models/JudgmentInformation/judgmentListInformation.dart';
 
 class AramaSonuclariDetayDeneme extends StatefulWidget {
-  List<JudgmentListInformation> judgments = [];
+  List<LawyerJudgmentListInformation> judgments = [];
   final int ListIndex;
-
+  final int? searchTypeId;
   AramaSonuclariDetayDeneme(
-      {Key? key, required this.judgments, required this.ListIndex})
+      {Key? key,
+      required this.judgments,
+      required this.ListIndex,
+      required this.searchTypeId})
       : super(key: key);
 
   @override
@@ -23,6 +27,7 @@ class AramaSonuclariDetayDeneme extends StatefulWidget {
 class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
   final JudgmentService judgmentService = getIt.get<JudgmentService>();
 
+  bool isVisible = false;
   bool isLiked = false;
   bool isSaved = false;
   int likeCounter = 0;
@@ -50,20 +55,18 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
               IconButton(
                 tooltip: 'Beğen',
                 icon: !isLiked
-                    ? Icon(
+                    ? const Icon(
                         Icons.favorite_border,
                         color: Colors.red,
                         size: 30,
                       )
-                    : Icon(
+                    : const Icon(
                         Icons.favorite,
                         color: Colors.red,
                         size: 30,
                       ),
                 onPressed: () {
-                  //  addLike(widget.judgments[widget.ListIndex].id!);
                   setState(() {
-                    addLike(widget.judgments[widget.ListIndex].id!);
                     isLiked = !isLiked;
                   });
                   addLike(widget.judgments[widget.ListIndex].id!, isLiked);
@@ -79,6 +82,7 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
               ),
               IconButton(
                 tooltip: 'İndir',
+                // ignore: prefer_const_constructors
                 icon: Icon(
                   Icons.download,
                   color: Colors.black,
@@ -91,14 +95,16 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
               IconButton(
                 tooltip: 'Hızlı Erişime Ekle',
                 icon: !isSaved
+                    // ignore: prefer_const_constructors
                     ? Icon(
                         Icons.bookmark_outline_sharp,
-                        color: Color.fromARGB(255, 21, 145, 28),
+                        color: const Color.fromARGB(255, 21, 145, 28),
                         size: 30,
                       )
+                    // ignore: prefer_const_constructors
                     : Icon(
                         Icons.bookmark_outlined,
-                        color: Color.fromARGB(255, 21, 145, 28),
+                        color: const Color.fromARGB(255, 21, 145, 28),
                         size: 30,
                       ),
                 onPressed: () {
@@ -119,17 +125,9 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
             padding: EdgeInsets.all(MediaQuery.of(context).size.height / 50),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  const Text('Esas No',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 117, 117, 117),
-                          fontSize: 17)),
-                ],
-              ),
+              const Text('Esas No',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               Text(
                 '${widget.judgments[widget.ListIndex].meritsNo}/${widget.judgments[widget.ListIndex].meritsYear}',
               ),
@@ -156,6 +154,33 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
               SizedBox(height: MediaQuery.of(context).size.height / 100),
               Text('${widget.judgments[widget.ListIndex].decision}'),
               const CustomDivider(),
+              widget.searchTypeId == 1
+                  ? Visibility(
+                      visible: !isVisible,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Avukat Değerlendirmesi',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 117, 117, 117),
+                                  fontSize: 17)),
+                          SizedBox(
+                              height: MediaQuery.of(context).size.height / 100),
+                          Text(
+                              '${widget.judgments[widget.ListIndex].lawyerAssesment}'),
+                          const CustomDivider(),
+                          const Text('Kararı Ekleyen Kişi',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 117, 117, 117),
+                                  fontSize: 17)),
+                          SizedBox(
+                              height: MediaQuery.of(context).size.height / 100),
+                          Text(
+                              '${widget.judgments[widget.ListIndex].userName}  ${widget.judgments[widget.ListIndex].lastName} '),
+                          const CustomDivider(),
+                        ],
+                      ))
+                  : SizedBox(height: MediaQuery.of(context).size.height / 100),
               const Text('Karar Tarihi',
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
