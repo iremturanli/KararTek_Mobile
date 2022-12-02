@@ -20,7 +20,7 @@ class LawyerJudgmentInformation {
     this.stateName,
     this.userName,
     this.lastName,
-    this.lawyerAssesment,
+    this.lawyerAssessment,
   });
 
   int? id;
@@ -43,7 +43,7 @@ class LawyerJudgmentInformation {
   String? stateName;
   String? userName;
   String? lastName;
-  String? lawyerAssesment;
+  String? lawyerAssessment;
 
   factory LawyerJudgmentInformation.fromJson(Map<String, dynamic> json) =>
       LawyerJudgmentInformation(
@@ -67,7 +67,7 @@ class LawyerJudgmentInformation {
         stateName: json["stateName"],
         userName: json["userName"],
         lastName: json["lastName"],
-        lawyerAssesment: json["lawyerAssesment"],
+        lawyerAssessment: json["lawyerAssessment"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -91,6 +91,6 @@ class LawyerJudgmentInformation {
         "stateName": stateName,
         "userName": userName,
         "lastName": lastName,
-        "lawyerAssesment": lawyerAssesment,
+        "lawyerAssessment": lawyerAssessment,
       };
 }

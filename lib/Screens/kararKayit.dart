@@ -1,6 +1,8 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ApiResponse/CommissionDropdownResponse.dart';
+import 'package:flutter_application_1/ApiResponse/mobileApiResponse.dart';
+import 'package:flutter_application_1/Screens/KaydettigimKararlar.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentInformation.dart';
 
 import 'package:flutter_application_1/services/DropDownServices/CommissionDropdownService.dart';
@@ -13,6 +15,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
 import '../ApiResponse/CourtDropdownResponse.dart';
+import '../ApiResponse/SearchDataLawyerResponse.dart';
 import '../AppConfigurations/appConfigurations.dart';
 import '../models/CommissionInformation/commissionInformation.dart';
 import '../models/CourtInformation/CourtInformation.dart';
@@ -39,12 +42,13 @@ class _kararKayitState extends State<kararKayit> {
   int? lookCourt;
   CommissionInformation? selectedCommission;
   List<CommissionInformation> commissionInformation = [];
-  LawyerJudgmentInformation lawyerJudgmentInformation = LawyerJudgmentInformation();
+  LawyerJudgmentInformation lawyerJudgmentInformation =
+      LawyerJudgmentInformation();
   CourtInformation? selectedCourt;
+  DateTime? selectedDate;
   List<CourtInformation> courtInformation = [];
-
   TextEditingController dateInputController = TextEditingController();
-  TextEditingController assesmentController = TextEditingController();
+  TextEditingController assessmentController = TextEditingController();
   TextEditingController decreeTypeController = TextEditingController();
   TextEditingController hukumController = TextEditingController();
   TextEditingController esasNoController = TextEditingController();
@@ -183,7 +187,7 @@ class _kararKayitState extends State<kararKayit> {
             Text('Avukat Değerlendirmesi*'),
             SizedBox(height: MediaQuery.of(context).size.height / 65),
             TextFormField(
-              controller: assesmentController,
+              controller: assessmentController,
               textAlignVertical: TextAlignVertical.top,
               minLines: 3,
               maxLines: null,
@@ -384,15 +388,22 @@ class _kararKayitState extends State<kararKayit> {
                     //DateTime.now() - not to allow to choose before today.
                     lastDate: DateTime(2100));
 
-                if (pickedDate != null) {
-                  print(pickedDate);
-                  String formattedDate =
-                      DateFormat('dd-MM-yyyy').format(pickedDate);
-                  print(formattedDate);
+                // if (pickedDate != null) {
+                //   print(pickedDate);
+                //   String formattedDate =
+                //       DateFormat('dd-MM-yyyy').format(pickedDate);
+                //   print(formattedDate);
+                //   setState(() {
+                //     dateInputController.text = formattedDate;
+                //   });
+                // } else {}
+                if (pickedDate != null && pickedDate != selectedDate) {
                   setState(() {
-                    dateInputController.text = formattedDate;
+                    selectedDate = pickedDate;
+                    dateInputController.text =
+                        DateFormat("dd-MM-yyyy").format(pickedDate);
                   });
-                } else {}
+                }
               },
             ),
             SizedBox(height: MediaQuery.of(context).size.height / 35),
@@ -444,18 +455,22 @@ class _kararKayitState extends State<kararKayit> {
                   minimumSize: const Size(150, 45),
                   backgroundColor: HexColor('#5DB075')),
               onPressed: () {
-               lawyerJudgmentInformation.commissionId = selectedCommission!.CommissionID;
-               lawyerJudgmentInformation.courtId=selectedCourt!.CourtID;
-               lawyerJudgmentInformation.decree=hukumController.text;
-               lawyerJudgmentInformation.lawyerAssesment=assesmentController.text;
-               lawyerJudgmentInformation.decreeType=decreeTypeController.text;
-               lawyerJudgmentInformation.meritsYear=esasYearController.text;
-               lawyerJudgmentInformation.meritsNo=esasNoController.text;
-               lawyerJudgmentInformation.decreeYear=kararYearController.text;
-               lawyerJudgmentInformation.decreeNo=kararNoController.text;
-               lawyerJudgmentInformation.judgmentDate=;
-
-               },
+                lawyerJudgmentInformation.commissionId =
+                    selectedCommission!.CommissionID;
+                lawyerJudgmentInformation.courtId = selectedCourt!.CourtID;
+                lawyerJudgmentInformation.decree = hukumController.text;
+                lawyerJudgmentInformation.lawyerAssessment =
+                    assessmentController.text;
+                lawyerJudgmentInformation.decreeType =
+                    decreeTypeController.text;
+                lawyerJudgmentInformation.meritsYear = esasYearController.text;
+                lawyerJudgmentInformation.meritsNo = esasNoController.text;
+                lawyerJudgmentInformation.decreeYear = kararYearController.text;
+                lawyerJudgmentInformation.decreeNo = kararNoController.text;
+                lawyerJudgmentInformation.decision = kararController.text;
+                lawyerJudgmentInformation.judgmentDate = selectedDate;
+                addLawyerJudgment(lawyerJudgmentInformation);
+              },
               icon: Icon(Icons.save),
               label: const Text(
                 'Kaydet',
@@ -485,7 +500,24 @@ class _kararKayitState extends State<kararKayit> {
     OpenFilex.open(file.path);
   }
 
-  addLawyerJudgment(){};
+  addLawyerJudgment(LawyerJudgmentInformation lawyerJudgmentInformation) async {
+    try {
+      MobileApiResponse response = await lawyerJudgmentService
+          .addLawyerJudgment(lawyerJudgmentInformation);
+      if (response.hasError == false) {
+        setState(() {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => KaydettigimKararlar()));
+        });
+
+        print(response);
+      } else {
+        print(response.hasError);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   getCommissions() async {
     CommissionInformationResponse response =
