@@ -8,7 +8,7 @@ import '../IBaseService.dart';
 abstract class ILawyerJudgmentService implements IBaseService {
   Future<SearchDataLawyerResponse> getLawyerJudgments(
       JudgmentDtoInformation judgmentDtoInformation);
-  Future<BaseResponseApi> addLike(int id);
+  Future<BaseResponseApi> addLawyerJudgmentLike(int id, bool check);
   Future<SearchDataLawyerResponse> getAllLawyerJudgments();
   Future<SearchDataLawyerResponse> getLawyerJudgmentByUserId();
 }

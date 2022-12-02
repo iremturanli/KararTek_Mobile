@@ -76,4 +76,17 @@ class LawyerJudgmentService implements ILawyerJudgmentService {
     print(response);
     return SearchDataLawyerResponse.fromJson(response.data);
   }
+
+  @override
+  Future<BaseResponseApi> addLawyerJudgmentLike(int id, bool check) async {
+    Map<String, dynamic> filterObject = {"id": id.toString(), "check": check};
+    Response response = await _apiClient!
+        .postRequestQueryString("LawyerJudgment/JudgmentToLike", filterObject);
+    if (response.statusCode == 401) {
+      print("UnAuthorized");
+    }
+    print(response);
+
+    return BaseResponseApi.fromJson(response.data);
+  }
 }

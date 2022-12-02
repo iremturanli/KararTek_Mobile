@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ApiResponse/BaseApiResponse.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentListInformation.dart';
 import 'package:flutter_application_1/services/JudgmentServices/judgmentService.dart';
+import 'package:flutter_application_1/services/LawyerJudgmentServices/LawyerJudgmentService.dart';
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -26,6 +27,8 @@ class AramaSonuclariDetayDeneme extends StatefulWidget {
 
 class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
   final JudgmentService judgmentService = getIt.get<JudgmentService>();
+  final LawyerJudgmentService lawyerJudgmentService =
+      getIt.get<LawyerJudgmentService>();
 
   bool isVisible = false;
   bool isLiked = false;
@@ -69,7 +72,11 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
                   setState(() {
                     isLiked = !isLiked;
                   });
-                  addLike(widget.judgments[widget.ListIndex].id!, isLiked);
+                  widget.searchTypeId == 1
+                      ? addLike(widget.judgments[widget.ListIndex].id!, isLiked)
+                      : addLawyerJudgmentLike(
+                          widget.judgments[widget.ListIndex].id!, isLiked);
+
                   if (isLiked) {
                     likeCounter++;
                     Fluttertoast.showToast(msg: "$likeCounter beğeni");
@@ -199,6 +206,14 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
   }
 
   addLike(int id, bool isLiked) async {
+    BaseResponseApi response = await judgmentService.addLike(id, isLiked);
+    if (response.success == true) {
+    } else {
+      print(response.message);
+    }
+  }
+
+  addLawyerJudgmentLike(int id, bool isLiked) async {
     BaseResponseApi response = await judgmentService.addLike(id, isLiked);
     if (response.success == true) {
     } else {
