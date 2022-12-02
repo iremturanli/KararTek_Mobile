@@ -3,10 +3,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_application_1/ApiResponse/BaseApiResponse.dart';
 import 'package:flutter_application_1/ApiResponse/SearchDataLawyerResponse.dart';
+import 'package:flutter_application_1/models/LawyerJudgmentInformation/judgmentApprovalDto.dart';
 import 'package:flutter_application_1/models/JudgmentInformation/judgmentDtoInformation.dart';
+import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentAddDto.dart';
 
 import '../../ApiResponse/mobileApiResponse.dart';
-import '../../models/LawyerJudgmentInformation/lawyerJudgmentInformation.dart';
 import '../ApiClient.dart';
 import 'ILawyerJudgmentService.dart';
 
@@ -91,10 +92,23 @@ class LawyerJudgmentService implements ILawyerJudgmentService {
     return BaseResponseApi.fromJson(response.data);
   }
 
+  @override
   Future<MobileApiResponse> addLawyerJudgment(
-      LawyerJudgmentInformation lawyerJudgmentInformation) async {
-    Response response = await _apiClient!.postRequest(
-        "LawyerJudgment/AddLawyerJudgments", lawyerJudgmentInformation);
+      LawyerJudgmentAddDto lawyerJudgmentAddDto) async {
+    Response response = await _apiClient!
+        .postRequest("LawyerJudgment/AddLawyerJudgments", lawyerJudgmentAddDto);
+    if (response.statusCode == 401) {
+      print("UnAuthorized");
+    }
+    print(response);
+    return MobileApiResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<MobileApiResponse> approveJudgment(
+      ApproveJudgmentDto approveJudgmentDto) async {
+    Response response = await _apiClient!
+        .postRequest("LawyerJudgment/Approval", approveJudgmentDto);
     if (response.statusCode == 401) {
       print("UnAuthorized");
     }

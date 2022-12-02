@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 
 class OnayPopUp extends StatelessWidget {
-  const OnayPopUp({Key? key}) : super(key: key);
+  final TextEditingController rejectMessage;
+  OnayPopUp({
+    Key? key,
+    required this.rejectMessage,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: TextFormField(
+          controller: rejectMessage,
           minLines: 8,
           maxLines: null,
           decoration: const InputDecoration(

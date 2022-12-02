@@ -4,8 +4,10 @@ import 'package:flutter_application_1/widgets/CustomDivider.dart';
 
 class KaydettigimKararDetay extends StatelessWidget {
   List<LawyerJudgmentListInformation> savedJudgments = [];
+
   // ignore: non_constant_identifier_names
   final int ListIndex;
+
   KaydettigimKararDetay({
     Key? key,
     required this.savedJudgments,
@@ -14,6 +16,7 @@ class KaydettigimKararDetay extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    bool isVisible = true;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -62,12 +65,23 @@ class KaydettigimKararDetay extends StatelessWidget {
               SizedBox(height: MediaQuery.of(context).size.height / 100),
               Text('${savedJudgments[ListIndex].lawyerAssesment}'),
               const CustomDivider(),
-              const Text('TBB Açıklaması', //????
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
-              SizedBox(height: MediaQuery.of(context).size.height / 100),
-              Text('${savedJudgments[ListIndex].tbbComments}'),
-              const CustomDivider(),
+              savedJudgments[ListIndex].tbbComments != ""
+                  ? Visibility(
+                      visible: isVisible,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('TBB Açıklaması',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 117, 117, 117),
+                                  fontSize: 17)),
+                          SizedBox(
+                              height: MediaQuery.of(context).size.height / 100),
+                          Text('${savedJudgments[ListIndex].tbbComments}'),
+                          const CustomDivider()
+                        ],
+                      ))
+                  : const SizedBox(),
               const Text('Karar',
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),

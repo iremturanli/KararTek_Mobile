@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ApiResponse/CommissionDropdownResponse.dart';
 import 'package:flutter_application_1/ApiResponse/mobileApiResponse.dart';
 import 'package:flutter_application_1/Screens/KaydettigimKararlar.dart';
+import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentAddDto.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentInformation.dart';
 
 import 'package:flutter_application_1/services/DropDownServices/CommissionDropdownService.dart';
@@ -42,8 +43,7 @@ class _kararKayitState extends State<kararKayit> {
   int? lookCourt;
   CommissionInformation? selectedCommission;
   List<CommissionInformation> commissionInformation = [];
-  LawyerJudgmentInformation lawyerJudgmentInformation =
-      LawyerJudgmentInformation();
+  LawyerJudgmentAddDto lawyerJudgmentInformation = LawyerJudgmentAddDto();
   CourtInformation? selectedCourt;
   DateTime? selectedDate;
   List<CourtInformation> courtInformation = [];
@@ -500,10 +500,10 @@ class _kararKayitState extends State<kararKayit> {
     OpenFilex.open(file.path);
   }
 
-  addLawyerJudgment(LawyerJudgmentInformation lawyerJudgmentInformation) async {
+  addLawyerJudgment(LawyerJudgmentAddDto lawyerJudgmentAddDto) async {
     try {
-      MobileApiResponse response = await lawyerJudgmentService
-          .addLawyerJudgment(lawyerJudgmentInformation);
+      MobileApiResponse response =
+          await lawyerJudgmentService.addLawyerJudgment(lawyerJudgmentAddDto);
       if (response.hasError == false) {
         setState(() {
           Navigator.push(context,
