@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/ApiResponse/UserInformationResponse.dart';
 import 'package:flutter_application_1/widgets/comboBox.dart';
 import 'package:flutter_application_1/Screens/homePage.dart';
 import 'package:flutter_application_1/Screens/login.dart';
@@ -12,6 +13,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+
+import '../AppConfigurations/appConfigurations.dart';
+import '../models/UserInformation/UserListInformation.dart';
+import '../services/UserService/UserService.dart';
 
 enum GenderCharacter { erkek, kadin }
 
@@ -28,22 +33,28 @@ class _ProfilimState extends State<Profilim> {
     //_imageFileSelected = value == null ? null : value;
   }
 
+  final UserService userService = getIt.get<UserService>();
+
+  List<UserListInformation> userInformations = [];
   final ImagePicker _picker = ImagePicker();
 
   // getImageFromGallery() async {
   //   _imageFileSelected = await _picker.pickImage(source: ImageSource.gallery);
   // }
 
-  TextEditingController nameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
   TextEditingController dateInput = TextEditingController();
+
   @override
   void initState() {
     dateInput.text = "";
+    GetUserById();
     super.initState();
+    String? name = userInformations[0].firstName;
   }
 
   bool _isTap = false;
+
+  TextEditingController phoneController = TextEditingController();
 
   GenderCharacter? _character = GenderCharacter.erkek;
   final List<String> il = [
@@ -118,7 +129,10 @@ class _ProfilimState extends State<Profilim> {
               ),
               Text('Ad'),
               SizedBox(height: MediaQuery.of(context).size.height / 120),
+              Text(userInformations[0].firstName!),
               TextFormField(
+                //controller: nameController,
+
                 enabled: false,
                 readOnly: true,
                 decoration: InputDecoration(
@@ -572,5 +586,23 @@ class _ProfilimState extends State<Profilim> {
     setState(() {
       _setImageFileListFromFile(_imageFileSelected);
     });
+  }
+
+  GetUserById() async {
+    try {
+      UserInformationResponse response = await userService.getUserById();
+      if (response.success == true) {
+        userInformations.addAll(response.data!);
+
+        print(response.success);
+        setState(() {});
+
+        print(response);
+      } else {
+        print(response.message);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

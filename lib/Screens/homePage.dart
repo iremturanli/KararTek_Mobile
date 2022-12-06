@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Screens/profilim2.dart';
 import 'package:flutter_application_1/widgets/menu.dart';
 import 'package:flutter_application_1/Screens/iletisimList.dart';
 import 'package:flutter_application_1/Screens/kararArama.dart';
@@ -73,7 +74,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
                 makeDashboardItem("Profilim", Icons.person, (() {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Profilim()));
+                      MaterialPageRoute(builder: (context) => Profilim2()));
                 })),
               ],
             ),

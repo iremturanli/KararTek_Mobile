@@ -6,7 +6,7 @@ import 'package:flutter_application_1/services/DropDownServices/IJudgmentTypeRad
 
 import '../../ApiResponse/mobileApiResponse.dart';
 import '../ApiClient.dart';
-import 'ICourtDropdownServices.dart';
+import 'IDistrictDropdownServices.dart';
 
 class JudgmentTypeRadioButtonService
     implements IJudgmentTypeRadioButtonService {

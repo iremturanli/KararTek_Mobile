@@ -91,6 +91,7 @@ class LawyerJudgmentService implements ILawyerJudgmentService {
     return BaseResponseApi.fromJson(response.data);
   }
 
+  @override
   Future<MobileApiResponse> addLawyerJudgment(
       LawyerJudgmentInformation lawyerJudgmentInformation) async {
     Response response = await _apiClient!.postRequest(

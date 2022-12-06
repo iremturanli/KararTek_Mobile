@@ -2,6 +2,8 @@
 
 import 'package:flutter_application_1/ApiResponse/BaseApiResponse.dart';
 import 'package:flutter_application_1/ApiResponse/SearchDataLawyerResponse.dart';
+import 'package:flutter_application_1/ApiResponse/mobileApiResponse.dart';
+import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentInformation.dart';
 import '../../models/JudgmentInformation/judgmentDtoInformation.dart';
 import '../IBaseService.dart';
 
@@ -11,4 +13,6 @@ abstract class ILawyerJudgmentService implements IBaseService {
   Future<BaseResponseApi> addLawyerJudgmentLike(int id, bool check);
   Future<SearchDataLawyerResponse> getAllLawyerJudgments();
   Future<SearchDataLawyerResponse> getLawyerJudgmentByUserId();
+  Future<MobileApiResponse> addLawyerJudgment(
+      LawyerJudgmentInformation lawyerJudgmentInformation);
 }

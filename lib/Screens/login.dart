@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/Screens/sifremiUnuttum.dart';
 import 'package:flutter_application_1/Screens/homePage.dart';
+import 'package:flutter_application_1/main.dart';
 
 import '../AppConfigurations/appConfigurations.dart';
 import '../models/UserInformation/userInformation.dart';
@@ -213,7 +214,7 @@ class _LoginState extends State<Login> {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Dashboard())); //düzelt
+                                  builder: (context) => Home())); //düzelt
                         },
                         child: const Text(
                           'Geri',

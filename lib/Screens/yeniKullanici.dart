@@ -5,6 +5,7 @@ import 'package:flutter_application_1/ApiResponse/userTypeDropdownResponse.dart'
 import 'package:flutter_application_1/AppConfigurations/appConfigurations.dart';
 import 'package:flutter_application_1/Screens/login.dart';
 import 'package:flutter_application_1/models/CityInformation/cityInformation.dart';
+import 'package:flutter_application_1/models/DistrictInformation/districtInformation.dart';
 import 'package:flutter_application_1/models/UserRegisterInformation/userRegisterInformation.dart';
 import 'package:flutter_application_1/models/UserTypeInformation/userTypeInformation.dart';
 import 'package:flutter_application_1/services/DropDownServices/UserTypeDropdownServices.dart';
@@ -14,7 +15,9 @@ import 'package:flutter_application_1/main.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../ApiResponse/CityDropdownResponse.dart';
+import '../ApiResponse/DistrictDropdownResponse.dart';
 import '../services/DropDownServices/CityDropdownService.dart';
+import '../services/DropDownServices/DistrictDropdownService.dart';
 
 class yeniKullanici extends StatefulWidget {
   const yeniKullanici({Key? key}) : super(key: key);
@@ -27,6 +30,7 @@ class yeniKullanici extends StatefulWidget {
 class _yeniKullaniciState extends State<yeniKullanici> {
   bool isStudentVisible = false;
   bool isLawyerVisible = false;
+  int? lookCity;
   TextEditingController nameController = TextEditingController();
   TextEditingController lastnameController = TextEditingController();
   TextEditingController tcController = TextEditingController();
@@ -46,12 +50,16 @@ class _yeniKullaniciState extends State<yeniKullanici> {
       getIt.get<UserTypeDropDownService>();
   final CityDropdownService cityDropdownService =
       getIt.get<CityDropdownService>();
+  final DistrictDropdownService districtDropdownService =
+      getIt.get<DistrictDropdownService>();
 
   UserRegisterInformation userRegisterInformation = UserRegisterInformation();
   List<UserTypeInformation> userTypeInformation = [];
   List<CityInformation> cityInformation = [];
+  List<DistrictInformation> districtInformation = [];
   UserTypeInformation? selectedOption;
   CityInformation? selectedCity;
+  DistrictInformation? selectedDistrict;
 
   var maskFormatter = MaskTextInputFormatter(
       mask: '(###) ### ## ##',
@@ -243,8 +251,12 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                             onChanged: (CityInformation? newValue) {
                               setState(() {
                                 selectedCity = newValue;
+                                lookCity = selectedCity!.CityID;
+
                                 print(selectedCity!.CityID.toString());
                               });
+                              selectedDistrict = null;
+                              getDistricts(lookCity);
                             },
 
                             validator: (value) => value == null
@@ -256,6 +268,44 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                 value: cityInformation,
                                 child: Text(
                                   cityInformation.CityName!,
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                        const Text('İlçe'),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height / 80),
+
+                        Container(
+                          height: 45,
+                          width: 330,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.white),
+                          child: DropdownButtonFormField<DistrictInformation>(
+                            isExpanded: true,
+                            //underline: SizedBox.shrink(),
+                            icon: Icon(Icons.keyboard_arrow_down_outlined),
+                            dropdownColor: Colors.white,
+                            value: selectedDistrict,
+                            onChanged: (DistrictInformation? newValue) {
+                              setState(() {
+                                selectedDistrict = newValue;
+                                print(selectedDistrict!.DistrictID.toString());
+                              });
+                            },
+
+                            validator: (value) => value == null
+                                ? "Bu alan boş bırakılamaz"
+                                : null,
+                            items: districtInformation
+                                .map((DistrictInformation districtInformation) {
+                              return DropdownMenuItem<DistrictInformation>(
+                                value: districtInformation,
+                                child: Text(
+                                  districtInformation.DistrictName!,
                                   style: TextStyle(color: Colors.black),
                                 ),
                               );
@@ -740,6 +790,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
   getCities() async {
     CityInformationResponse response = await cityDropdownService.getCities();
     if (response.hasError == false) {
+      cityInformation.clear();
       cityInformation.addAll(response.cityInformation);
 
       print(response.cityInformation.length);
@@ -748,6 +799,21 @@ class _yeniKullaniciState extends State<yeniKullanici> {
       });
     } else {
       print(response.errorMessage);
+    }
+  }
+
+  getDistricts(int? id) async {
+    DistrictInformationResponse response =
+        await districtDropdownService.getDistricts(id!);
+    if (response.success == true) {
+      districtInformation.clear();
+      districtInformation.addAll(response.districtInformation);
+
+      setState(() {
+        print(response.districtInformation.length);
+      });
+    } else {
+      print(response.message);
     }
   }
 }

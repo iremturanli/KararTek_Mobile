@@ -1,16 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_application_1/ApiResponse/CommissionDropdownResponse.dart';
 import 'package:flutter_application_1/ApiResponse/CourtDropdownResponse.dart';
-import 'package:flutter_application_1/ApiResponse/SearchTypeDropdownResponse.dart';
-import 'package:flutter_application_1/services/DropDownServices/ISearchTypeDropdownServices.dart';
+import 'package:flutter_application_1/models/CommissionInformation/commissionInformation.dart';
 
+import '../../ApiResponse/DistrictDropdownResponse.dart';
 import '../../ApiResponse/mobileApiResponse.dart';
 import '../ApiClient.dart';
 import 'IDistrictDropdownServices.dart';
 
-class SearchTypeDropdownService implements ISerachTypeDropdownService {
+class DistrictDropdownService implements IDistrictDropdownService {
   ApiClient? _apiClient;
-  SearchTypeDropdownService(ApiClient apiClient) {
+  DistrictDropdownService(ApiClient apiClient) {
     _apiClient = apiClient;
     _apiClient!.onResponseCallback = onResponseCallback;
     _apiClient!.onErrorCallback = onErrorCallback;
@@ -27,12 +27,14 @@ class SearchTypeDropdownService implements ISerachTypeDropdownService {
   }
 
   @override
-  Future<SearchTypeInformationResponse> getSearchTypes() async {
-    Response response = await _apiClient!.getRequest("SearchType/GetAll");
+  Future<DistrictInformationResponse> getDistricts(int id) async {
+    Map<String, dynamic> filterObject = {"id": id};
+    Response response =
+        await _apiClient!.getRequest("District/GetAll", filter: filterObject);
     if (response.statusCode == 401) {
       print("UnAuthorized");
     }
     print(response);
-    return SearchTypeInformationResponse.fromJson(response.data);
+    return DistrictInformationResponse.fromJson(response.data);
   }
 }
