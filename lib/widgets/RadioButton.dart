@@ -1,6 +1,6 @@
-// ignore: file_names
+// ignore_for_file: must_be_immutable, file_names
+
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/ApiResponse/JudgmentTypeRadioButtonResponse.dart';
 import 'package:flutter_application_1/models/EDecisionTypes.dart';
 import 'package:flutter_application_1/models/JudgmentTypeInformation/judgmentTypeInformation.dart';
 import 'package:flutter_application_1/services/DropDownServices/JudgmentTypeRadioButtonService.dart';
@@ -26,7 +26,9 @@ class _RadioButtonState extends State<RadioButton> {
   int? decisionValue;
 
   @override
-  void initState() {}
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

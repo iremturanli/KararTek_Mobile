@@ -68,8 +68,6 @@ class _yeniKullaniciState extends State<yeniKullanici> {
 
   @override
   void initState() {
-    // TODO: implement initState
-
     super.initState();
     getUserTypes();
     getCities();
@@ -77,7 +75,6 @@ class _yeniKullaniciState extends State<yeniKullanici> {
 
   @override
   Widget build(BuildContext context) {
-    String? selectedValue;
     return Scaffold(
         body: Stack(children: <Widget>[
       Container(
@@ -197,7 +194,8 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                               new DropdownButtonFormField<UserTypeInformation>(
                             isExpanded: true,
                             //underline: SizedBox.shrink(),
-                            icon: Icon(Icons.keyboard_arrow_down_outlined),
+                            icon:
+                                const Icon(Icons.keyboard_arrow_down_outlined),
                             dropdownColor: Colors.white,
                             value: selectedOption,
                             onChanged: (UserTypeInformation? newValue) {
@@ -226,7 +224,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                 value: userTypeInformation,
                                 child: Text(
                                   userTypeInformation.TypeName!,
-                                  style: TextStyle(color: Colors.black),
+                                  style: const TextStyle(color: Colors.black),
                                 ),
                               );
                             }).toList(),
@@ -245,7 +243,8 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                           child: DropdownButtonFormField<CityInformation>(
                             isExpanded: true,
                             //underline: SizedBox.shrink(),
-                            icon: Icon(Icons.keyboard_arrow_down_outlined),
+                            icon:
+                                const Icon(Icons.keyboard_arrow_down_outlined),
                             dropdownColor: Colors.white,
                             value: selectedCity,
                             onChanged: (CityInformation? newValue) {
@@ -268,7 +267,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                 value: cityInformation,
                                 child: Text(
                                   cityInformation.CityName!,
-                                  style: TextStyle(color: Colors.black),
+                                  style: const TextStyle(color: Colors.black),
                                 ),
                               );
                             }).toList(),
@@ -389,7 +388,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text('Baro Sicil No'),
+                                const Text('Baro Sicil No'),
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height /
                                         80),
@@ -408,7 +407,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                       return null;
                                     },
                                     autocorrect: false,
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                         helperText: ' ',
                                         filled: true,
                                         fillColor: Colors.white,
@@ -433,7 +432,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text('Üniversite'),
+                                const Text('Üniversite'),
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height /
                                         80),
@@ -452,7 +451,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                       return null;
                                     },
                                     autocorrect: false,
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                         helperText: ' ',
                                         filled: true,
                                         fillColor: Colors.white,
@@ -470,7 +469,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                                 Color.fromARGB(255, 0, 0, 0))),
                                   ),
                                 ),
-                                Text('Fakülte'),
+                                const Text('Fakülte'),
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height /
                                         80),
@@ -489,7 +488,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                       return null;
                                     },
                                     autocorrect: false,
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                         helperText: ' ',
                                         filled: true,
                                         fillColor: Colors.white,
@@ -507,7 +506,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                                 Color.fromARGB(255, 0, 0, 0))),
                                   ),
                                 ),
-                                Text('Sınıf'),
+                                const Text('Sınıf'),
                                 SizedBox(
                                   width:
                                       MediaQuery.of(context).size.width / 1.2,
@@ -523,7 +522,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                       return null;
                                     },
                                     autocorrect: false,
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                         helperText: ' ',
                                         filled: true,
                                         fillColor: Colors.white,
@@ -541,7 +540,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                                 Color.fromARGB(255, 0, 0, 0))),
                                   ),
                                 ),
-                                Text('Okul Numarası'),
+                                const Text('Okul Numarası'),
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height /
                                         80),
@@ -560,7 +559,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                       return null;
                                     },
                                     autocorrect: false,
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                         helperText: ' ',
                                         filled: true,
                                         fillColor: Colors.white,
@@ -635,7 +634,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                             Navigator.pushReplacement(
                                 context, //Color.fromARGB(255, 1, 28, 63),
                                 MaterialPageRoute(
-                                    builder: (context) => Home()));
+                                    builder: (context) => const Home()));
                           },
                           child: const Text(
                             'Vazgeç',
@@ -704,8 +703,8 @@ class _yeniKullaniciState extends State<yeniKullanici> {
           barrierDismissible: false,
           context: context,
           builder: (ctx) => AlertDialog(
-                backgroundColor: Color.fromARGB(255, 221, 226, 241),
-                shape: RoundedRectangleBorder(
+                backgroundColor: const Color.fromARGB(255, 221, 226, 241),
+                shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(30))),
                 title: const Text(
                     "Kayıt işlemi tamamlandı. Şifreniz e-mail adresinize iletilecektir."),
@@ -715,19 +714,19 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                       children: [
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              minimumSize: Size(120, 50),
+                              minimumSize: const Size(120, 50),
                               backgroundColor:
-                                  Color.fromARGB(255, 175, 172, 172),
-                              shape: RoundedRectangleBorder(
+                                  const Color.fromARGB(255, 175, 172, 172),
+                              shape: const RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10)))),
                           onPressed: () {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Login()));
+                                    builder: (context) => const Login()));
                           },
-                          child: Text(
+                          child: const Text(
                             "TAMAM",
                           ),
                         ),
@@ -740,8 +739,8 @@ class _yeniKullaniciState extends State<yeniKullanici> {
           barrierDismissible: false,
           context: context,
           builder: (ctx) => AlertDialog(
-                backgroundColor: Color.fromARGB(255, 221, 226, 241),
-                shape: RoundedRectangleBorder(
+                backgroundColor: const Color.fromARGB(255, 221, 226, 241),
+                shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(30))),
                 title: const Text(
                     "Girdiğiniz bilgiler kayıtlı bir kullanıcının bilgileri ile eşleşmektedir!"),
@@ -751,16 +750,16 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                       children: [
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              minimumSize: Size(120, 50),
+                              minimumSize: const Size(120, 50),
                               backgroundColor:
-                                  Color.fromARGB(255, 175, 172, 172),
-                              shape: RoundedRectangleBorder(
+                                  const Color.fromARGB(255, 175, 172, 172),
+                              shape: const RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10)))),
                           onPressed: () {
                             Navigator.of(ctx).pop();
                           },
-                          child: Text(
+                          child: const Text(
                             "TAMAM",
                           ),
                         ),

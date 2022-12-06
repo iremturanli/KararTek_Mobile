@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
       ],
+      // ignore: prefer_const_literals_to_create_immutables
       supportedLocales: [
         const Locale('tr', 'TR'),
       ],

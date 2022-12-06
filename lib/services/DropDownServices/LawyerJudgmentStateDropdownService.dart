@@ -1,15 +1,17 @@
-// ignore_for_file: file_names
-
 import 'package:dio/dio.dart';
 import 'package:flutter_application_1/ApiResponse/CommissionDropdownResponse.dart';
+import 'package:flutter_application_1/ApiResponse/JudgmentStateDropdownResponse.dart';
+import 'package:flutter_application_1/models/JudgmentStateInformation/judgmentStateInformation.dart';
 
 import '../../ApiResponse/mobileApiResponse.dart';
 import '../ApiClient.dart';
 import 'ICommissionDropdownService.dart';
+import 'ILawyerJudgmentStateDropdownService.dart';
 
-class CommissionDropdownService implements ICommissionDropdownService {
+class LawyerJudgmentStateDropdownService
+    implements ILawyerJudgmentStateDropdownService {
   ApiClient? _apiClient;
-  CommissionDropdownService(ApiClient apiClient) {
+  LawyerJudgmentStateDropdownService(ApiClient apiClient) {
     _apiClient = apiClient;
     _apiClient!.onResponseCallback = onResponseCallback;
     _apiClient!.onErrorCallback = onErrorCallback;
@@ -26,12 +28,13 @@ class CommissionDropdownService implements ICommissionDropdownService {
   }
 
   @override
-  Future<CommissionInformationResponse> getCommissions() async {
-    Response response = await _apiClient!.getRequest("Commission/GetAll");
+  Future<JudgmentStateDropdownResponse> getJudgmentState() async {
+    Response response =
+        await _apiClient!.getRequest("LawyerJudgmentState/GetAll");
     if (response.statusCode == 401) {
       print("UnAuthorized");
     }
     print(response);
-    return CommissionInformationResponse.fromJson(response.data);
+    return JudgmentStateDropdownResponse.fromJson(response.data);
   }
 }

@@ -23,7 +23,6 @@ class OnayBekleyenKararlar extends StatefulWidget {
 class _OnayBekleyenKararlarState extends State<OnayBekleyenKararlar> {
   @override
   void initState() {
-    // TODO: implement initState
     getAllLawyerJudgments();
   }
 

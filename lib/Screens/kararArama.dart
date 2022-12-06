@@ -1,7 +1,6 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ApiResponse/SearchDataLawyerResponse.dart';
-import 'package:flutter_application_1/ApiResponse/SearchDataResponse.dart';
 import 'package:flutter_application_1/ApiResponse/SearchTypeDropdownResponse.dart';
 import 'package:flutter_application_1/Screens/AramaSonuclari.dart';
 import 'package:flutter_application_1/models/JudgmentInformation/judgmentDtoInformation.dart';
@@ -15,7 +14,6 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../AppConfigurations/appConfigurations.dart';
 import '../models/EDecisionTypes.dart';
-import '../models/JudgmentInformation/judgmentListInformation.dart';
 
 class KararArama extends StatefulWidget {
   const KararArama({Key? key}) : super(key: key);
@@ -106,48 +104,53 @@ class _KararAramaState extends State<KararArama> {
                 ),
               ),
               const SizedBox(height: 30),
-              DropdownButtonFormField<SearchTypeInformation>(
-                // ignore: prefer_const_constructors
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(40)),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 15.4,
+                width: MediaQuery.of(context).size.height / 2.3,
+                child: DropdownButtonFormField<SearchTypeInformation>(
+                  // ignore: prefer_const_constructors
+                  decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(40)),
 
-                    // ignore: prefer_const_constructors
-                    focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(width: 1, color: Colors.grey),
-                        borderRadius: BorderRadius.circular(40))),
-                isExpanded: true,
-                icon: const Icon(Icons.keyboard_arrow_down_outlined),
-                dropdownColor: const Color.fromARGB(255, 255, 255, 255),
-                value: selectedOption,
-                onChanged: (SearchTypeInformation? newValue) {
-                  setState(() {
-                    //selectedOption = newValue;
-                    if (newValue!.TypeID == 2) {
-                      isVisible = true;
-                      selectedOption = newValue;
-                    } else {
-                      isVisible = false;
-                      selectedOption = newValue;
-                    }
-                    print(selectedOption!.TypeID.toString());
-                  });
-                },
-                validator: (value) =>
-                    value == null ? "Bu alan boş bırakılamaz" : null,
-                items: searchTypeInformation
-                    .map((SearchTypeInformation searchTypeInformation) {
-                  return DropdownMenuItem<SearchTypeInformation>(
-                    value: searchTypeInformation,
-                    child: Text(
-                      searchTypeInformation.TypeName!,
-                      style: const TextStyle(
-                        color: Colors.black,
+                      // ignore: prefer_const_constructors
+                      focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 1, color: Colors.grey),
+                          borderRadius: BorderRadius.circular(40))),
+                  isExpanded: true,
+                  icon: const Icon(Icons.keyboard_arrow_down_outlined),
+                  dropdownColor: const Color.fromARGB(255, 255, 255, 255),
+                  value: selectedOption,
+                  onChanged: (SearchTypeInformation? newValue) {
+                    setState(() {
+                      //selectedOption = newValue;
+                      if (newValue!.TypeID == 2) {
+                        isVisible = true;
+                        selectedOption = newValue;
+                      } else {
+                        isVisible = false;
+                        selectedOption = newValue;
+                      }
+                      print(selectedOption!.TypeID.toString());
+                    });
+                  },
+                  validator: (value) =>
+                      value == null ? "Bu alan boş bırakılamaz" : null,
+                  items: searchTypeInformation
+                      .map((SearchTypeInformation searchTypeInformation) {
+                    return DropdownMenuItem<SearchTypeInformation>(
+                      value: searchTypeInformation,
+                      child: Text(
+                        searchTypeInformation.TypeName!,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                  );
-                }).toList(),
+                    );
+                  }).toList(),
+                ),
               ),
               Visibility(
                 visible: isVisible,

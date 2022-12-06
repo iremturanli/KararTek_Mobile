@@ -1,9 +1,12 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalSharedPreference {
   static SharedPreferences? _preferences;
   static const SHARED_MEM_KEY_LANGUAGE = "Language";
   static const SHARED_MEM_KEY_DEVICE_TOKEN = "token";
+
   static const SHARED_MEM_KEY_FIREBASE_TOKEN = "FirebaseToken";
 
   static Future init() async =>

@@ -32,13 +32,6 @@ final List<String> _siralama = [
 class _ModalBottomAramaSonuclari extends State<ModalBottomAramaSonuclari> {
   @override
   Widget build(BuildContext context) {
-    final List<String> kararDurumu = [
-      'Hepsi',
-      'Onaya Gönderildi',
-      'Onaylandı',
-      'Reddedildi',
-    ];
-
     final textEditingController = TextEditingController();
     return Stack(
       children: <Widget>[
@@ -92,7 +85,7 @@ class _ModalBottomAramaSonuclari extends State<ModalBottomAramaSonuclari> {
                   ),
                   ComboBox(
                     items: _daire,
-                    color_of_box: Color.fromARGB(255, 255, 255, 255),
+                    color_of_box: const Color.fromARGB(255, 255, 255, 255),
                     color_of_text: Colors.black,
                     height_of_box: 55,
                     size_of_font: 12,
@@ -109,7 +102,7 @@ class _ModalBottomAramaSonuclari extends State<ModalBottomAramaSonuclari> {
                   ),
                   ComboBox(
                       items: _mahkeme,
-                      color_of_box: Color.fromARGB(255, 255, 255, 255),
+                      color_of_box: const Color.fromARGB(255, 255, 255, 255),
                       color_of_text: Colors.black,
                       height_of_box: 55,
                       size_of_font: 12,
@@ -125,7 +118,7 @@ class _ModalBottomAramaSonuclari extends State<ModalBottomAramaSonuclari> {
                   ),
                   ComboBox(
                       items: _siralama,
-                      color_of_box: Color.fromARGB(255, 255, 255, 255),
+                      color_of_box: const Color.fromARGB(255, 255, 255, 255),
                       color_of_text: Colors.black,
                       height_of_box: 55,
                       size_of_font: 12,

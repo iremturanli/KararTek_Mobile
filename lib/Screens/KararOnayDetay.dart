@@ -1,18 +1,37 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/ApiResponse/mobileApiResponse.dart';
+import 'package:flutter_application_1/models/EJudgmentState.dart';
+import 'package:flutter_application_1/models/LawyerJudgmentInformation/judgmentApprovalDto.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentListInformation.dart';
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
 import 'package:flutter_application_1/widgets/KararRedPopUp.dart';
-import 'package:flutter_application_1/widgets/KararListCard.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-class KararDetay extends StatelessWidget {
+import '../AppConfigurations/appConfigurations.dart';
+import '../services/LawyerJudgmentServices/LawyerJudgmentService.dart';
+
+// ignore: must_be_immutable
+class KararDetay extends StatefulWidget {
   List<LawyerJudgmentListInformation> pendingApprovalJudgments = [];
   // ignore: non_constant_identifier_names
   final int ListIndex;
   KararDetay(
       {Key? key,
+      // ignore: non_constant_identifier_names
       required this.ListIndex,
       required this.pendingApprovalJudgments})
       : super(key: key);
+
+  @override
+  State<KararDetay> createState() => _KararDetayState();
+}
+
+class _KararDetayState extends State<KararDetay> {
+  final LawyerJudgmentService lawyerJudgmentService =
+      getIt.get<LawyerJudgmentService>();
+
+  TextEditingController rejectMessage = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +61,7 @@ class KararDetay extends StatelessWidget {
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
             Text(
-              '${pendingApprovalJudgments[ListIndex].meritsNo}/${pendingApprovalJudgments[ListIndex].meritsYear}',
+              '${widget.pendingApprovalJudgments[widget.ListIndex].meritsNo}/${widget.pendingApprovalJudgments[widget.ListIndex].meritsYear}',
             ),
             const CustomDivider(),
             const Text('Kurul Adı',
@@ -50,57 +69,63 @@ class KararDetay extends StatelessWidget {
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
             Text(
-              '${pendingApprovalJudgments[ListIndex].commissionName}',
+              '${widget.pendingApprovalJudgments[widget.ListIndex].commissionName}',
             ),
             const CustomDivider(),
             const Text('Mahkeme',
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
-            Text('${pendingApprovalJudgments[ListIndex].courtName}'),
+            Text(
+                '${widget.pendingApprovalJudgments[widget.ListIndex].courtName}'),
             const CustomDivider(),
             const Text('Hüküm',
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
-            Text('${pendingApprovalJudgments[ListIndex].decree}'),
+            Text('${widget.pendingApprovalJudgments[widget.ListIndex].decree}'),
             const CustomDivider(),
             const Text('Avukat Açıklaması',
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
-            Text('${pendingApprovalJudgments[ListIndex].lawyerAssesment}'),
+            Text(
+                '${widget.pendingApprovalJudgments[widget.ListIndex].lawyerAssesment}'),
             const CustomDivider(),
             const Text('Karar',
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
-            Text('${pendingApprovalJudgments[ListIndex].decision}'),
+            Text(
+                '${widget.pendingApprovalJudgments[widget.ListIndex].decision}'),
             const CustomDivider(),
             const Text('Karar Tarihi',
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
-            Text('${pendingApprovalJudgments[ListIndex].judgmentDate}'),
+            Text(
+                '${widget.pendingApprovalJudgments[widget.ListIndex].judgmentDate}'),
             const CustomDivider(),
             const Text('Kayıt Tarihi',
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
-            Text('${pendingApprovalJudgments[ListIndex].createDate}'),
+            Text(
+                '${widget.pendingApprovalJudgments[widget.ListIndex].createDate}'),
             const CustomDivider(),
             const Text("TBB'ye Gönderilme Tarihi",
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
-            Text('${pendingApprovalJudgments[ListIndex].createDate}'),
+            Text(
+                '${widget.pendingApprovalJudgments[widget.ListIndex].createDate}'),
             const CustomDivider(),
             const Text('Kararı Ekleyen Kişi',
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
             Text(
-                '${pendingApprovalJudgments[ListIndex].userName} ${pendingApprovalJudgments[ListIndex].lastName}'),
+                '${widget.pendingApprovalJudgments[widget.ListIndex].userName} ${widget.pendingApprovalJudgments[widget.ListIndex].lastName}'),
             const CustomDivider(),
             SizedBox(height: MediaQuery.of(context).size.height / 10),
             Padding(
@@ -157,7 +182,10 @@ class KararDetay extends StatelessWidget {
                                                                           30))),
                                                   title: const Text(
                                                       "Kararı reddetme sebebiniz nedir?"),
-                                                  content: const OnayPopUp(),
+                                                  content: OnayPopUp(
+                                                    rejectMessage:
+                                                        rejectMessage,
+                                                  ), // tekrar bak!!
                                                   actions: <Widget>[
                                                     Row(
                                                         mainAxisAlignment:
@@ -207,8 +235,18 @@ class KararDetay extends StatelessWidget {
                                                                         BorderRadius.all(
                                                                             Radius.circular(10)))),
                                                             onPressed: () {
-                                                              Navigator.of(ctx)
-                                                                  .pop();
+                                                              ApproveJudgment(ApproveJudgmentDto(
+                                                                  id: widget
+                                                                      .pendingApprovalJudgments[
+                                                                          widget
+                                                                              .ListIndex]
+                                                                      .id,
+                                                                  stateId:
+                                                                      EJudgmentState
+                                                                          .Reddedildi,
+                                                                  rejectMessage:
+                                                                      rejectMessage
+                                                                          .text));
                                                             },
                                                             child: const Text(
                                                               "REDDET",
@@ -237,7 +275,15 @@ class KararDetay extends StatelessWidget {
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(10)))),
                                       onPressed: () {
-                                        Navigator.of(ctx).pop();
+                                        ApproveJudgment(
+                                          ApproveJudgmentDto(
+                                              id: widget
+                                                  .pendingApprovalJudgments[
+                                                      widget.ListIndex]
+                                                  .id,
+                                              stateId:
+                                                  EJudgmentState.Onaylandi),
+                                        );
                                       },
                                       child: const Text(
                                         "ONAYLA",
@@ -260,5 +306,24 @@ class KararDetay extends StatelessWidget {
         ),
       )),
     );
+  }
+
+  ApproveJudgment(ApproveJudgmentDto approveJudgmentDto) async {
+    MobileApiResponse response =
+        await lawyerJudgmentService.approveJudgment(approveJudgmentDto);
+    if (response.hasError == false) {
+      Fluttertoast.showToast(
+          msg: "İşlem Başarılı!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          textColor: Colors.white,
+          fontSize: 16.0);
+      setState(() {
+        Navigator.pop(context);
+      });
+    } else {
+      print(response.errorMessage);
+    }
   }
 }

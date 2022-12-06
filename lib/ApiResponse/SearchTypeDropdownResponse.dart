@@ -1,5 +1,6 @@
+// ignore_for_file: file_names
+
 import 'package:flutter_application_1/models/SearchTypeInformation/searchTypeInformation.dart';
-import 'package:flutter_application_1/models/UserTypeInformation/userTypeInformation.dart';
 
 import 'mobileApiResponse.dart';
 

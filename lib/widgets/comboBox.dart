@@ -1,8 +1,10 @@
+// ignore_for_file: override_on_non_overriding_member, non_constant_identifier_names, file_names
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
 class ComboBox extends StatelessWidget {
-  ComboBox(
+  const ComboBox(
       {Key? key,
       required this.items,
       required this.height_of_box,

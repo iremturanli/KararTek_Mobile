@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 Card makeDashboardItem(String title, IconData icon, VoidCallback onTap) {
@@ -11,7 +13,7 @@ Card makeDashboardItem(String title, IconData icon, VoidCallback onTap) {
           borderRadius: BorderRadius.circular(42),
           boxShadow: [
             BoxShadow(
-              color: Color.fromARGB(255, 133, 133, 133).withOpacity(0.5),
+              color: const Color.fromARGB(255, 133, 133, 133).withOpacity(0.5),
               spreadRadius: 2,
               blurRadius: 2,
               offset: const Offset(0, 4), // changes position of shadow
@@ -28,11 +30,11 @@ Card makeDashboardItem(String title, IconData icon, VoidCallback onTap) {
                 size: 50.0,
                 color: Colors.black,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Text(title,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 17.5,
                       color: Colors.black,
                       fontWeight: FontWeight.bold))

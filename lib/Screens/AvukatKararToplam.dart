@@ -1,42 +1,45 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/ApiResponse/UserStatisticApiResponse.dart';
+
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
 import 'package:flutter_application_1/widgets/ModalBottomOnay.dart';
-import 'package:flutter_application_1/widgets/KararListCard.dart';
-import 'package:flutter_application_1/widgets/comboBox.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-import 'kararHavuzumDetay.dart';
+import '../AppConfigurations/appConfigurations.dart';
+import '../models/UserStatisticInformation/userStatisticInformation.dart';
+import '../services/LawyerJudgmentServices/LawyerJudgmentService.dart';
 
-final List<Map<String, dynamic>> _avukatKararToplam = [
-  {
-    "id": 1,
-    "Ad": "İrem",
-    "Soyad": "Turanlı",
-    "Şehir": "Ankara",
-    "Eklenen Karar Toplamı": "2",
-  },
-  {
-    "id": 2,
-    "Ad": "Berkay",
-    "Soyad": "Demir",
-    "Şehir": "Ankara",
-    "Eklenen Karar Toplamı": "5",
-  },
-  {
-    "id": 3,
-    "Ad": "Işıl",
-    "Soyad": " Bardakcı",
-    "Şehir": "Ankara",
-    "Eklenen Karar Toplamı": "8",
-  },
-  {
-    "id": 4,
-    "Ad": "Hussain",
-    "Soyad": "Elburki",
-    "Şehir": "Ankara",
-    "Eklenen Karar Toplamı": "3",
-  },
-];
+// final List<Map<String, dynamic>> _avukatKararToplam = [
+//   {
+//     "id": 1,
+//     "Ad": "İrem",
+//     "Soyad": "Turanlı",
+//     "Şehir": "Ankara",
+//     "Eklenen Karar Toplamı": "2",
+//   },
+//   {
+//     "id": 2,
+//     "Ad": "Berkay",
+//     "Soyad": "Demir",
+//     "Şehir": "Ankara",
+//     "Eklenen Karar Toplamı": "5",
+//   },
+//   {
+//     "id": 3,
+//     "Ad": "Işıl",
+//     "Soyad": " Bardakcı",
+//     "Şehir": "Ankara",
+//     "Eklenen Karar Toplamı": "8",
+//   },
+//   {
+//     "id": 4,
+//     "Ad": "Hussain",
+//     "Soyad": "Elburki",
+//     "Şehir": "Ankara",
+//     "Eklenen Karar Toplamı": "3",
+//   },
+// ];
 // final List<String> _sehir = ["Adana", "...", "Düzce"]; //?
 
 class AvukatKararToplam extends StatefulWidget {
@@ -47,6 +50,16 @@ class AvukatKararToplam extends StatefulWidget {
 }
 
 class _AvukatKararToplamState extends State<AvukatKararToplam> {
+  @override
+  void initState() {
+    super.initState();
+    getJudgmentsCount();
+  }
+
+  final LawyerJudgmentService lawyerJudgmentService =
+      getIt.get<LawyerJudgmentService>();
+  List<UserStatisticInformation> userStatistics = [];
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -91,20 +104,20 @@ class _AvukatKararToplamState extends State<AvukatKararToplam> {
                     borderSide: BorderSide(width: 1, color: Colors.grey),
                     borderRadius: BorderRadius.circular(40),
                   ),
-                  suffixIcon: Icon(Icons.search),
+                  suffixIcon: const Icon(Icons.search),
                   suffixIconColor: Colors.grey),
             ),
           ),
           Padding(
             padding: EdgeInsets.only(left: height / 3.2),
             child: ElevatedButton.icon(
-              icon: Icon(Icons.search),
-              label: Text("Sorgula"),
+              icon: const Icon(Icons.search),
+              label: const Text("Sorgula"),
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(40),
                   ),
-                  minimumSize: Size(45, 30),
+                  minimumSize: const Size(45, 30),
                   backgroundColor: const Color.fromARGB(255, 1, 28, 63)),
               onPressed: () => showMaterialModalBottomSheet<void>(
                 expand: true,
@@ -118,20 +131,20 @@ class _AvukatKararToplamState extends State<AvukatKararToplam> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             // ignore: prefer_const_literals_to_create_immutables
             children: [
-              Text("Sıra"),
+              const Text("Sıra"),
               SizedBox(height: MediaQuery.of(context).size.height / 50),
-              Text("Ad Soyad"),
+              const Text("Ad Soyad"),
               SizedBox(height: MediaQuery.of(context).size.height / 50),
-              Text("Şehir"),
-              Text("Eklenen Karar Toplamı"),
+              const Text("Şehir"),
+              const Text("Eklenen Karar Toplamı"),
             ],
           ),
-          CustomDivider(),
+          const CustomDivider(),
           Container(
             height: height / 2,
             width: width,
             child: ListView.builder(
-                itemCount: _avukatKararToplam.length,
+                itemCount: userStatistics.length,
                 itemBuilder: ((context, index) => Card(
                       color: const Color.fromARGB(229, 229, 229, 229),
                       elevation: 4,
@@ -146,19 +159,19 @@ class _AvukatKararToplamState extends State<AvukatKararToplam> {
                               backgroundColor:
                                   const Color.fromARGB(255, 1, 28, 63),
                               radius: 15,
-                              child: Text('${_avukatKararToplam[index]['id']}',
-                                  style: TextStyle(fontSize: 14)),
+                              child: Text('${userStatistics[index].id}',
+                                  style: const TextStyle(fontSize: 14)),
                             ),
                           ),
                           Text(
-                              '${_avukatKararToplam[index]["Ad"]} ${_avukatKararToplam[index]["Soyad"]}'),
-                          Text('${_avukatKararToplam[index]["Şehir"]}'),
+                              '${userStatistics[index].userName} ${userStatistics[index].lastName}'),
+                          Text('${userStatistics[index].cityName}'),
                           SizedBox(
                               height: MediaQuery.of(context).size.height / 20),
                           Padding(
                             padding: EdgeInsets.only(right: height / 8),
-                            child: Text(
-                                '${_avukatKararToplam[index]["Eklenen Karar Toplamı"]}'),
+                            child:
+                                Text('${userStatistics[index].judgmentCount}'),
                           )
                         ],
                       ),
@@ -167,5 +180,24 @@ class _AvukatKararToplamState extends State<AvukatKararToplam> {
         ],
       )),
     );
+  }
+
+  getJudgmentsCount() async {
+    try {
+      UserStatisticApiResponse response =
+          await lawyerJudgmentService.getJudgmentsCount();
+      if (response.success == true) {
+        userStatistics.clear();
+        userStatistics.addAll(response.data!);
+        print(response.success);
+        setState(() {});
+
+        print(response);
+      } else {
+        print(response.message);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/AramaSonuclariDetayDeneme.dart';
-import 'package:flutter_application_1/models/JudgmentInformation/judgmentListInformation.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentListInformation.dart';
 import 'package:flutter_application_1/widgets/ModalBottomAramaSonuclari.dart';
 
+// ignore: must_be_immutable
 class AramaSonuclari extends StatefulWidget {
   // List<JudgmentListInformation> judgments = [];
   List<LawyerJudgmentListInformation> judgments = [];
@@ -55,14 +55,14 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                       context: context,
                       builder: (BuildContext context) =>
                           ModalBottomAramaSonuclari()),
-                  icon: Icon(Icons.filter_alt_outlined))
+                  icon: const Icon(Icons.filter_alt_outlined))
               : const Text('')
         ],
       ),
       body: SingleChildScrollView(
           child: Column(
         children: [
-          Container(
+          SizedBox(
               //sizedBox
               height: height / 2,
               width: width,

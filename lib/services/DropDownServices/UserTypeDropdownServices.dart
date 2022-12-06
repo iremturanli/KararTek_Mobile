@@ -1,11 +1,8 @@
+// ignore: file_names
 import 'package:dio/dio.dart';
 import 'package:flutter_application_1/ApiResponse/userTypeDropdownResponse.dart';
-import 'package:flutter_application_1/models/UserRegisterInformation/userRegisterInformation.dart';
-import 'package:flutter_application_1/services/Registration/IRegistrationService.dart';
 
 import '../../ApiResponse/mobileApiResponse.dart';
-import '../../apiResponse/userLoginInformationResponse.dart';
-import '../../models/UserLoginInformation/userLoginInformation.dart';
 import '../ApiClient.dart';
 import 'IUserTypeDropdownServices.dart';
 

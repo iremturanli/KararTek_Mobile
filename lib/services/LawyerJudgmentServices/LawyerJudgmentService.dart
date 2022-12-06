@@ -1,12 +1,14 @@
-// ignore_for_file: file_names,constant_identifier_names, prefer_const_constructors, prefer_interpolation_to_compose_strings
+// ignore_for_file: file_names,constant_identifier_names, prefer_const_constructors, prefer_interpolation_to_compose_strings, override_on_non_overriding_member, unused_local_variable
 
 import 'package:dio/dio.dart';
 import 'package:flutter_application_1/ApiResponse/BaseApiResponse.dart';
 import 'package:flutter_application_1/ApiResponse/SearchDataLawyerResponse.dart';
+import 'package:flutter_application_1/ApiResponse/UserStatisticApiResponse.dart';
+import 'package:flutter_application_1/models/LawyerJudgmentInformation/judgmentApprovalDto.dart';
 import 'package:flutter_application_1/models/JudgmentInformation/judgmentDtoInformation.dart';
+import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentAddDto.dart';
 
 import '../../ApiResponse/mobileApiResponse.dart';
-import '../../models/LawyerJudgmentInformation/lawyerJudgmentInformation.dart';
 import '../ApiClient.dart';
 import 'ILawyerJudgmentService.dart';
 
@@ -29,20 +31,20 @@ class LawyerJudgmentService implements ILawyerJudgmentService {
   }
 
   @override
-  Future<BaseResponseApi> addLike(int id) async {
-    // ignore: todo
-    // TODO: implement addLike
-    Map<String, dynamic> filterObject = {"id": id};
+  // Future<BaseResponseApi> addLike(int id) async {
+  //   // ignore: todo
+  // ignore: todo
+  //   Map<String, dynamic> filterObject = {"id": id};
 
-    Response response =
-        await _apiClient!.postById("Judgments/JudgmentToLike/" + id.toString());
-    if (response.statusCode == 401) {
-      print("UnAuthorized");
-    }
-    print(response);
+  //   Response response =
+  //       await _apiClient!.postById("Judgments/JudgmentToLike/" + id.toString());
+  //   if (response.statusCode == 401) {
+  //     print("UnAuthorized");
+  //   }
+  //   print(response);
 
-    return BaseResponseApi.fromJson(response.data);
-  }
+  //   return BaseResponseApi.fromJson(response.data);
+  // }
 
   @override
   Future<SearchDataLawyerResponse> getLawyerJudgments(
@@ -81,8 +83,8 @@ class LawyerJudgmentService implements ILawyerJudgmentService {
   @override
   Future<BaseResponseApi> addLawyerJudgmentLike(int id, bool check) async {
     Map<String, dynamic> filterObject = {"id": id.toString(), "check": check};
-    Response response = await _apiClient!
-        .postRequestQueryString("LawyerJudgment/JudgmentToLike", filterObject);
+    Response response = await _apiClient!.postRequestQueryString(
+        "LawyerJudgment/LawyerJudgmentToLike", filterObject);
     if (response.statusCode == 401) {
       print("UnAuthorized");
     }
@@ -93,13 +95,36 @@ class LawyerJudgmentService implements ILawyerJudgmentService {
 
   @override
   Future<MobileApiResponse> addLawyerJudgment(
-      LawyerJudgmentInformation lawyerJudgmentInformation) async {
-    Response response = await _apiClient!.postRequest(
-        "LawyerJudgment/AddLawyerJudgments", lawyerJudgmentInformation);
+      LawyerJudgmentAddDto lawyerJudgmentAddDto) async {
+    Response response = await _apiClient!
+        .postRequest("LawyerJudgment/AddLawyerJudgments", lawyerJudgmentAddDto);
     if (response.statusCode == 401) {
       print("UnAuthorized");
     }
     print(response);
     return MobileApiResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<MobileApiResponse> approveJudgment(
+      ApproveJudgmentDto approveJudgmentDto) async {
+    Response response = await _apiClient!
+        .postRequest("LawyerJudgment/Approval", approveJudgmentDto);
+    if (response.statusCode == 401) {
+      print("UnAuthorized");
+    }
+    print(response);
+    return MobileApiResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<UserStatisticApiResponse> getJudgmentsCount() async {
+    Response response =
+        await _apiClient!.getRequest("LawyerJudgment/GetJudgmentsCount");
+    if (response.statusCode == 401) {
+      print("UnAuthorized");
+    }
+    print(response);
+    return UserStatisticApiResponse.fromJson(response.data);
   }
 }
