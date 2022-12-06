@@ -220,8 +220,9 @@ class _KaydettigimKararlarState extends State<KaydettigimKararlar> {
       return Color.fromARGB(255, 130, 184, 113);
     } else if (savedJudgments[index].stateId == 3) {
       return Color.fromARGB(255, 194, 27, 5);
-    } else
+    } else {
       return const Color.fromARGB(255, 1, 28, 63);
+    }
   }
 
   getLawyerJudgmentsByUserId() async {

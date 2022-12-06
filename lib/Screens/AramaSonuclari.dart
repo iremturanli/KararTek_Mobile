@@ -55,14 +55,14 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                       context: context,
                       builder: (BuildContext context) =>
                           ModalBottomAramaSonuclari()),
-                  icon: Icon(Icons.filter_alt_outlined))
+                  icon: const Icon(Icons.filter_alt_outlined))
               : const Text('')
         ],
       ),
       body: SingleChildScrollView(
           child: Column(
         children: [
-          Container(
+          SizedBox(
               //sizedBox
               height: height / 2,
               width: width,

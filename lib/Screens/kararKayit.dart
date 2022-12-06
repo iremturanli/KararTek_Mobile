@@ -4,7 +4,6 @@ import 'package:flutter_application_1/ApiResponse/CommissionDropdownResponse.dar
 import 'package:flutter_application_1/ApiResponse/mobileApiResponse.dart';
 import 'package:flutter_application_1/Screens/KaydettigimKararlar.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentAddDto.dart';
-import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentInformation.dart';
 
 import 'package:flutter_application_1/services/DropDownServices/CommissionDropdownService.dart';
 import 'package:flutter_application_1/services/DropDownServices/CourtDropdownService.dart';
@@ -16,7 +15,6 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
 import '../ApiResponse/CourtDropdownResponse.dart';
-import '../ApiResponse/SearchDataLawyerResponse.dart';
 import '../AppConfigurations/appConfigurations.dart';
 import '../models/CommissionInformation/commissionInformation.dart';
 import '../models/CourtInformation/CourtInformation.dart';
@@ -31,6 +29,7 @@ class kararKayit extends StatefulWidget {
   State<kararKayit> createState() => _kararKayitState();
 }
 
+// ignore: camel_case_types
 class _kararKayitState extends State<kararKayit> {
   final CommissionDropdownService commissionDropdownService =
       getIt.get<CommissionDropdownService>();
@@ -72,7 +71,7 @@ class _kararKayitState extends State<kararKayit> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Karar Kayıt',
           style: TextStyle(
               color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
@@ -80,7 +79,7 @@ class _kararKayitState extends State<kararKayit> {
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
@@ -88,7 +87,7 @@ class _kararKayitState extends State<kararKayit> {
         child: ListView(
           children: <Widget>[
             const SizedBox(height: 30),
-            Text('Daire/Kurul Adı*'),
+            const Text('Daire/Kurul Adı*'),
             Container(
               height: 45,
               width: 330,
@@ -97,7 +96,7 @@ class _kararKayitState extends State<kararKayit> {
               child: DropdownButtonFormField<CommissionInformation>(
                 isExpanded: true,
                 //underline: SizedBox.shrink(),
-                icon: Icon(Icons.keyboard_arrow_down_outlined),
+                icon: const Icon(Icons.keyboard_arrow_down_outlined),
                 dropdownColor: Colors.white,
                 value: selectedCommission,
                 onChanged: (CommissionInformation? newValue) {
@@ -119,14 +118,14 @@ class _kararKayitState extends State<kararKayit> {
                     value: commissionInformation,
                     child: Text(
                       commissionInformation.CommissionName!,
-                      style: TextStyle(color: Colors.black),
+                      style: const TextStyle(color: Colors.black),
                     ),
                   );
                 }).toList(),
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height / 35),
-            Text('Mahkeme'),
+            const Text('Mahkeme'),
             SizedBox(height: MediaQuery.of(context).size.height / 65),
             Container(
               height: 45,
@@ -136,7 +135,7 @@ class _kararKayitState extends State<kararKayit> {
               child: DropdownButtonFormField<CourtInformation>(
                 isExpanded: true,
                 //underline: SizedBox.shrink(),
-                icon: Icon(Icons.keyboard_arrow_down_outlined),
+                icon: const Icon(Icons.keyboard_arrow_down_outlined),
                 dropdownColor: Colors.white,
                 value: selectedCourt,
                 onChanged: (CourtInformation? newValue) {
@@ -154,14 +153,14 @@ class _kararKayitState extends State<kararKayit> {
                     value: courtInformation,
                     child: Text(
                       courtInformation.CourtName!,
-                      style: TextStyle(color: Colors.black),
+                      style: const TextStyle(color: Colors.black),
                     ),
                   );
                 }).toList(),
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height / 35),
-            Text('Hüküm*'),
+            const Text('Hüküm*'),
             SizedBox(height: MediaQuery.of(context).size.height / 65),
             TextFormField(
               controller: hukumController,
@@ -184,7 +183,7 @@ class _kararKayitState extends State<kararKayit> {
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height / 35),
-            Text('Avukat Değerlendirmesi*'),
+            const Text('Avukat Değerlendirmesi*'),
             SizedBox(height: MediaQuery.of(context).size.height / 65),
             TextFormField(
               controller: assessmentController,
@@ -207,7 +206,7 @@ class _kararKayitState extends State<kararKayit> {
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height / 35),
-            Text('Dava Türü'),
+            const Text('Dava Türü'),
             SizedBox(height: MediaQuery.of(context).size.height / 65),
             TextFormField(
               controller: decreeTypeController,
@@ -227,7 +226,7 @@ class _kararKayitState extends State<kararKayit> {
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height / 50),
-            Text('Esas No'),
+            const Text('Esas No'),
             SizedBox(height: MediaQuery.of(context).size.height / 65),
             Row(children: <Widget>[
               Expanded(
@@ -279,7 +278,7 @@ class _kararKayitState extends State<kararKayit> {
               )
             ]),
             SizedBox(height: MediaQuery.of(context).size.height / 50),
-            Text('Karar No'),
+            const Text('Karar No'),
             SizedBox(height: MediaQuery.of(context).size.height / 65),
             Row(children: <Widget>[
               Expanded(
@@ -331,7 +330,7 @@ class _kararKayitState extends State<kararKayit> {
               )
             ]),
             SizedBox(height: MediaQuery.of(context).size.height / 35),
-            Text('Karar Tarihi'),
+            const Text('Karar Tarihi'),
             SizedBox(height: MediaQuery.of(context).size.height / 65),
             TextFormField(
               controller: dateInputController,
@@ -341,7 +340,7 @@ class _kararKayitState extends State<kararKayit> {
                       color: _isTap ? Colors.grey : Colors.black),
                   prefixIconColor: Colors.grey,
                   filled: true,
-                  fillColor: Color.fromARGB(246, 246, 246, 246),
+                  fillColor: const Color.fromARGB(246, 246, 246, 246),
                   focusedBorder: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(8))),
                   enabledBorder: OutlineInputBorder(
@@ -369,12 +368,12 @@ class _kararKayitState extends State<kararKayit> {
                             primary:
                                 HexColor('#5DB075'), // header background color
                             onPrimary: Colors.white, // header text color
-                            onSurface: Color.fromARGB(
+                            onSurface: const Color.fromARGB(
                                 255, 20, 20, 20), // body text color
                           ),
                           textButtonTheme: TextButtonThemeData(
                             style: TextButton.styleFrom(
-                              foregroundColor: Color.fromARGB(
+                              foregroundColor: const Color.fromARGB(
                                   255, 23, 48, 112), // button text color
                             ),
                           ),
@@ -388,15 +387,6 @@ class _kararKayitState extends State<kararKayit> {
                     //DateTime.now() - not to allow to choose before today.
                     lastDate: DateTime(2100));
 
-                // if (pickedDate != null) {
-                //   print(pickedDate);
-                //   String formattedDate =
-                //       DateFormat('dd-MM-yyyy').format(pickedDate);
-                //   print(formattedDate);
-                //   setState(() {
-                //     dateInputController.text = formattedDate;
-                //   });
-                // } else {}
                 if (pickedDate != null && pickedDate != selectedDate) {
                   setState(() {
                     selectedDate = pickedDate;
@@ -407,7 +397,7 @@ class _kararKayitState extends State<kararKayit> {
               },
             ),
             SizedBox(height: MediaQuery.of(context).size.height / 35),
-            Text('Karar'),
+            const Text('Karar'),
             SizedBox(height: MediaQuery.of(context).size.height / 65),
             TextFormField(
               controller: kararController,
@@ -440,7 +430,7 @@ class _kararKayitState extends State<kararKayit> {
               onPressed: () {
                 pickFiles();
               },
-              icon: Icon(Icons.file_copy),
+              icon: const Icon(Icons.file_copy),
               label: const Text(
                 'Yeni Dosya Yükle',
                 style: TextStyle(fontSize: 17),
@@ -471,7 +461,7 @@ class _kararKayitState extends State<kararKayit> {
                 lawyerJudgmentInformation.judgmentDate = selectedDate;
                 addLawyerJudgment(lawyerJudgmentInformation);
               },
-              icon: Icon(Icons.save),
+              icon: const Icon(Icons.save),
               label: const Text(
                 'Kaydet',
                 style: TextStyle(fontSize: 17),
@@ -506,8 +496,10 @@ class _kararKayitState extends State<kararKayit> {
           await lawyerJudgmentService.addLawyerJudgment(lawyerJudgmentAddDto);
       if (response.hasError == false) {
         setState(() {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => KaydettigimKararlar()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const KaydettigimKararlar()));
         });
 
         print(response);

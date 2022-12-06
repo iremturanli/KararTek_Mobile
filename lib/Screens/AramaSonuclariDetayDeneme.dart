@@ -1,8 +1,11 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ApiResponse/BaseApiResponse.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentListInformation.dart';
 import 'package:flutter_application_1/services/JudgmentServices/judgmentService.dart';
 import 'package:flutter_application_1/services/LawyerJudgmentServices/LawyerJudgmentService.dart';
+import 'package:flutter_application_1/services/LocalSharedPreferences/LocalSharedPreference.dart';
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -11,6 +14,7 @@ import '../models/JudgmentInformation/judgmentListInformation.dart';
 
 class AramaSonuclariDetayDeneme extends StatefulWidget {
   List<LawyerJudgmentListInformation> judgments = [];
+
   final int ListIndex;
   final int? searchTypeId;
   AramaSonuclariDetayDeneme(
