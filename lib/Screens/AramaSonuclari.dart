@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/AramaSonuclariDetayDeneme.dart';
-import 'package:flutter_application_1/models/JudgmentInformation/judgmentListInformation.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentListInformation.dart';
 import 'package:flutter_application_1/widgets/ModalBottomAramaSonuclari.dart';
 
+// ignore: must_be_immutable
 class AramaSonuclari extends StatefulWidget {
   // List<JudgmentListInformation> judgments = [];
   List<LawyerJudgmentListInformation> judgments = [];

@@ -1,4 +1,4 @@
-// ignore_for_file: file_names,constant_identifier_names, prefer_const_constructors, prefer_interpolation_to_compose_strings
+// ignore_for_file: file_names,constant_identifier_names, prefer_const_constructors, prefer_interpolation_to_compose_strings, override_on_non_overriding_member, unused_local_variable
 
 import 'package:dio/dio.dart';
 import 'package:flutter_application_1/ApiResponse/BaseApiResponse.dart';
@@ -31,20 +31,20 @@ class LawyerJudgmentService implements ILawyerJudgmentService {
   }
 
   @override
-  Future<BaseResponseApi> addLike(int id) async {
-    // ignore: todo
-    // TODO: implement addLike
-    Map<String, dynamic> filterObject = {"id": id};
+  // Future<BaseResponseApi> addLike(int id) async {
+  //   // ignore: todo
+  // ignore: todo
+  //   Map<String, dynamic> filterObject = {"id": id};
 
-    Response response =
-        await _apiClient!.postById("Judgments/JudgmentToLike/" + id.toString());
-    if (response.statusCode == 401) {
-      print("UnAuthorized");
-    }
-    print(response);
+  //   Response response =
+  //       await _apiClient!.postById("Judgments/JudgmentToLike/" + id.toString());
+  //   if (response.statusCode == 401) {
+  //     print("UnAuthorized");
+  //   }
+  //   print(response);
 
-    return BaseResponseApi.fromJson(response.data);
-  }
+  //   return BaseResponseApi.fromJson(response.data);
+  // }
 
   @override
   Future<SearchDataLawyerResponse> getLawyerJudgments(

@@ -6,7 +6,6 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
 import '../AppConfigurations/appConfigurations.dart';
-import 'comboBox.dart';
 
 class ModalBottomOnay extends StatefulWidget {
   //final VoidCallback press;
@@ -26,7 +25,8 @@ class ModalBottomOnay extends StatefulWidget {
 class _ModalBottomOnayState extends State<ModalBottomOnay> {
   @override
   void initState() {
-    // TODO: implement initState
+    super.initState();
+
     getJudgmentStates();
   }
 

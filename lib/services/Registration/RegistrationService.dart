@@ -44,7 +44,6 @@ class RegistrationService implements IRegistrationService {
   @override
   Future<MobileApiResponse> userRegistration(
       UserRegisterInformation userRegisterInformation) async {
-    // TODO: implement userRegistration
     Response response =
         await _apiClient!.postRequest("Auth/Register", userRegisterInformation);
     if (response.statusCode == 401) {
@@ -56,7 +55,6 @@ class RegistrationService implements IRegistrationService {
 
   Future<ForgotMyPasswordInformationResponse> forgotMyPassword(
       ForgotMyPasswordInformation forgotMyPasswordInformation) async {
-    // TODO: implement userRegistration
     Response response = await _apiClient!
         .postRequest("Auth/forgotMyPassword", forgotMyPasswordInformation);
     if (response.statusCode == 401) {

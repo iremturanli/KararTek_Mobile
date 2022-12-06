@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/Screens/homePage.dart';
@@ -22,7 +24,7 @@ class _sifremiUnuttumState extends State<sifremiUnuttum> {
   final RegistrationService registrationService =
       getIt.get<RegistrationService>();
   final _formKey = GlobalKey<FormState>();
-  var maskFormatter = new MaskTextInputFormatter(
+  var maskFormatter = MaskTextInputFormatter(
       mask: '(###) ### ## ##',
       filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
@@ -46,10 +48,8 @@ class _sifremiUnuttumState extends State<sifremiUnuttum> {
                   Padding(
                     padding: EdgeInsets.only(
                         top: MediaQuery.of(context).size.height / 10),
-                    child: Container(
-                      child: Image(
-                        image: AssetImage("assets/images/login-logo.png"),
-                      ),
+                    child: const Image(
+                      image: AssetImage("assets/images/login-logo.png"),
                     ),
                   ),
                   SizedBox(
@@ -152,8 +152,10 @@ class _sifremiUnuttumState extends State<sifremiUnuttum> {
                       backgroundColor: const Color.fromARGB(255, 194, 27, 5),
                     ),
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Login()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Login()));
                     },
                     child: const Text(
                       'Geri',
@@ -172,7 +174,7 @@ class _sifremiUnuttumState extends State<sifremiUnuttum> {
               identityNumber: IdentityNo, email: email));
       if (response.hasError == false) {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => Login()));
+            context, MaterialPageRoute(builder: (context) => const Login()));
         // Get result from server
       } else {
         print(response.errorMessage);

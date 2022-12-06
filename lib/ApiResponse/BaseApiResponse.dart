@@ -1,7 +1,4 @@
-// ignore: file_names
-import 'package:flutter_application_1/models/JudgmentInformation/judgmentInformation.dart';
-
-import '../models/JudgmentInformation/judgmentListInformation.dart';
+// ignore_for_file: file_names
 
 class BaseResponseApi {
   BaseResponseApi({

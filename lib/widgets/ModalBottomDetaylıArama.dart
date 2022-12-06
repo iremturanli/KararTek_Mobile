@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 
 import 'comboBox.dart';
@@ -7,7 +9,7 @@ class ModalBottom extends StatefulWidget {
   final TextEditingController searchWord;
   //esasyil
 
-  ModalBottom({
+  const ModalBottom({
     Key? key,
     required this.press,
     required this.searchWord,
@@ -81,7 +83,7 @@ class _ModalBottomState extends State<ModalBottom> {
                   ),
                   ComboBox(
                     items: kararTuru,
-                    color_of_box: Color.fromARGB(255, 255, 255, 255),
+                    color_of_box: const Color.fromARGB(255, 255, 255, 255),
                     color_of_text: Colors.black,
                     height_of_box: 55,
                     size_of_font: 12,
@@ -96,7 +98,7 @@ class _ModalBottomState extends State<ModalBottom> {
                   ),
                   ComboBox(
                     items: mahkeme,
-                    color_of_box: Color.fromARGB(255, 255, 255, 255),
+                    color_of_box: const Color.fromARGB(255, 255, 255, 255),
                     color_of_text: Colors.black,
                     height_of_box: 55,
                     size_of_font: 12,
@@ -111,7 +113,7 @@ class _ModalBottomState extends State<ModalBottom> {
                   ),
                   ComboBox(
                     items: mahkeme,
-                    color_of_box: Color.fromARGB(255, 255, 255, 255),
+                    color_of_box: const Color.fromARGB(255, 255, 255, 255),
                     color_of_text: Colors.black,
                     height_of_box: 55,
                     size_of_font: 12,
@@ -140,8 +142,7 @@ class _ModalBottomState extends State<ModalBottom> {
                             enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   width: 1,
-                                  color:
-                                      const Color.fromARGB(255, 189, 189, 189),
+                                  color: Color.fromARGB(255, 189, 189, 189),
                                 ),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8))),
@@ -161,8 +162,7 @@ class _ModalBottomState extends State<ModalBottom> {
                             enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   width: 1,
-                                  color:
-                                      const Color.fromARGB(255, 189, 189, 189),
+                                  color: Color.fromARGB(255, 189, 189, 189),
                                 ),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8))),
@@ -182,8 +182,7 @@ class _ModalBottomState extends State<ModalBottom> {
                             enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   width: 1,
-                                  color:
-                                      const Color.fromARGB(255, 189, 189, 189),
+                                  color: Color.fromARGB(255, 189, 189, 189),
                                 ),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8))),
@@ -193,7 +192,7 @@ class _ModalBottomState extends State<ModalBottom> {
                     ],
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height / 80),
-                  Text('Karar Numarası'),
+                  const Text('Karar Numarası'),
                   SizedBox(height: MediaQuery.of(context).size.height / 80),
 
                   Row(
@@ -210,8 +209,7 @@ class _ModalBottomState extends State<ModalBottom> {
                             enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   width: 1,
-                                  color:
-                                      const Color.fromARGB(255, 189, 189, 189),
+                                  color: Color.fromARGB(255, 189, 189, 189),
                                 ),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8))),
@@ -231,8 +229,7 @@ class _ModalBottomState extends State<ModalBottom> {
                             enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   width: 1,
-                                  color:
-                                      const Color.fromARGB(255, 189, 189, 189),
+                                  color: Color.fromARGB(255, 189, 189, 189),
                                 ),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8))),
@@ -252,8 +249,7 @@ class _ModalBottomState extends State<ModalBottom> {
                             enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   width: 1,
-                                  color:
-                                      const Color.fromARGB(255, 189, 189, 189),
+                                  color: Color.fromARGB(255, 189, 189, 189),
                                 ),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8))),
@@ -284,8 +280,7 @@ class _ModalBottomState extends State<ModalBottom> {
                             enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   width: 1,
-                                  color:
-                                      const Color.fromARGB(255, 189, 189, 189),
+                                  color: Color.fromARGB(255, 189, 189, 189),
                                 ),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8))),
@@ -305,8 +300,7 @@ class _ModalBottomState extends State<ModalBottom> {
                             enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   width: 1,
-                                  color:
-                                      const Color.fromARGB(255, 189, 189, 189),
+                                  color: Color.fromARGB(255, 189, 189, 189),
                                 ),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8))),

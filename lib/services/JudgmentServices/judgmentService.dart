@@ -3,10 +3,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_application_1/ApiResponse/BaseApiResponse.dart';
 import 'package:flutter_application_1/ApiResponse/SearchDataLawyerResponse.dart';
-import 'package:flutter_application_1/ApiResponse/SearchDataResponse.dart';
 import 'package:flutter_application_1/models/JudgmentInformation/judgmentDtoInformation.dart';
 import 'package:flutter_application_1/services/JudgmentServices/IJudgmentService.dart';
-import 'package:flutter_application_1/services/Registration/IRegistrationService.dart';
 
 import '../../ApiResponse/mobileApiResponse.dart';
 import '../ApiClient.dart';
@@ -43,7 +41,6 @@ class JudgmentService implements IJudgmentService {
 
   @override
   Future<BaseResponseApi> addLike(int id, bool check) async {
-    // TODO: implement addLike
     Map<String, dynamic> filterObject = {"id": id.toString(), "check": check};
     Response response = await _apiClient!
         .postRequestQueryString("Judgments/JudgmentToLike", filterObject);

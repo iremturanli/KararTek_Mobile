@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/Screens/sifremiUnuttum.dart';
@@ -186,8 +188,8 @@ class _LoginState extends State<Login> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50),
                           ),
-                          minimumSize: Size(350, 50),
-                          backgroundColor: Color.fromARGB(255, 1, 28, 63),
+                          minimumSize: const Size(350, 50),
+                          backgroundColor: const Color.fromARGB(255, 1, 28, 63),
                         ),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
@@ -207,7 +209,8 @@ class _LoginState extends State<Login> {
                             borderRadius: BorderRadius.circular(50),
                           ),
                           minimumSize: const Size(350, 50),
-                          backgroundColor: Color.fromARGB(255, 194, 27, 5),
+                          backgroundColor:
+                              const Color.fromARGB(255, 194, 27, 5),
                         ),
                         onPressed: () {
                           Navigator.pushReplacement(
@@ -239,16 +242,16 @@ class _LoginState extends State<Login> {
         LocalSharedPreference.setString(
             LocalSharedPreference.SHARED_MEM_KEY_DEVICE_TOKEN, response.token!);
 
+        // ignore: use_build_context_synchronously
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Dashboard()));
-        // Get result from server
       } else {
         showDialog(
             barrierDismissible: false,
             context: context,
             builder: (ctx) => AlertDialog(
-                  backgroundColor: Color.fromARGB(255, 221, 226, 241),
-                  shape: RoundedRectangleBorder(
+                  backgroundColor: const Color.fromARGB(255, 221, 226, 241),
+                  shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30))),
                   title: const Text(
                       "Bilgiler hatalıdır kontrol ederek tekrar deneyiniz!"),
@@ -258,16 +261,16 @@ class _LoginState extends State<Login> {
                         children: [
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                minimumSize: Size(120, 50),
+                                minimumSize: const Size(120, 50),
                                 backgroundColor:
-                                    Color.fromARGB(255, 175, 172, 172),
-                                shape: RoundedRectangleBorder(
+                                    const Color.fromARGB(255, 175, 172, 172),
+                                shape: const RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)))),
                             onPressed: () {
                               Navigator.of(ctx).pop();
                             },
-                            child: Text(
+                            child: const Text(
                               "TAMAM",
                             ),
                           ),
