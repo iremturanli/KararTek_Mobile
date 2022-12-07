@@ -7,6 +7,7 @@ import 'package:flutter_application_1/widgets/ModalBottomOnay.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../AppConfigurations/appConfigurations.dart';
+import '../main.dart';
 import '../models/UserStatisticInformation/userStatisticInformation.dart';
 import '../services/LawyerJudgmentServices/LawyerJudgmentService.dart';
 
@@ -120,11 +121,11 @@ class _AvukatKararToplamState extends State<AvukatKararToplam> {
                   minimumSize: const Size(45, 30),
                   backgroundColor: const Color.fromARGB(255, 1, 28, 63)),
               onPressed: () => showMaterialModalBottomSheet<void>(
-                expand: true,
-                // backgroundColor: Colors.transparent,
-                context: context,
-                builder: (BuildContext context) => ModalBottomOnay(),
-              ),
+                  expand: true,
+                  // backgroundColor: Colors.transparent,
+                  context: context,
+                  builder: (BuildContext context) => Home() //ModalBottomOnay(),
+                  ),
             ),
           ),
           Row(

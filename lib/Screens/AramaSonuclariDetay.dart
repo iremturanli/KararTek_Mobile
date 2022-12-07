@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
 
@@ -31,11 +33,11 @@ class AramaSonuclariDetay extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.favorite,
                         color: Colors.red,
                       ),
-                      Text(' Beğen'),
+                      const Text(' Beğen'),
                     ],
                   )),
               PopupMenuItem<int>(
@@ -43,11 +45,11 @@ class AramaSonuclariDetay extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.download,
                         color: Colors.black,
                       ),
-                      Text(' İndir'),
+                      const Text(' İndir'),
                     ],
                   )),
               PopupMenuItem<int>(
@@ -55,11 +57,11 @@ class AramaSonuclariDetay extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.add,
                         color: Colors.black,
                       ),
-                      Text(' Hızlı Erişim'),
+                      const Text(' Hızlı Erişim'),
                     ],
                   )),
             ];
