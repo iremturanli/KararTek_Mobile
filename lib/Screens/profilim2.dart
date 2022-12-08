@@ -15,9 +15,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../AppConfigurations/appConfigurations.dart';
 import '../models/UserInformation/UserListInformation.dart';
+import '../services/LocalSharedPreferences/LocalSharedPreference.dart';
 import '../services/UserService/UserService.dart';
 import '../widgets/ModalBottomChangePassword.dart';
 
@@ -308,7 +310,7 @@ class _Profilim2State extends State<Profilim2> {
                                                         BorderRadius.all(
                                                             Radius.circular(
                                                                 10)))),
-                                            onPressed: () {
+                                            onPressed: () async {
                                               Navigator.of(ctx).pop();
                                             },
                                             child: Text(
@@ -331,6 +333,8 @@ class _Profilim2State extends State<Profilim2> {
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           Login()));
+                                              LocalSharedPreference
+                                                  .clearSharedPreferences();
                                             },
                                             child: Text(
                                               "ÇIKIŞ",
