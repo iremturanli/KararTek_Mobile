@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_application_1/ApiResponse/BaseApiResponse.dart';
 import 'package:flutter_application_1/ApiResponse/SearchDataLawyerResponse.dart';
 import 'package:flutter_application_1/ApiResponse/UserStatisticApiResponse.dart';
-import 'package:flutter_application_1/models/LawyerJudgmentInformation/filterDetailDto.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/filterDetailDtoKK.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/judgmentApprovalDto.dart';
 import 'package:flutter_application_1/models/JudgmentInformation/judgmentDtoInformation.dart';

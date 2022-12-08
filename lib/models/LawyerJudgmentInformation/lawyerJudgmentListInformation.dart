@@ -1,28 +1,28 @@
 class LawyerJudgmentListInformation {
-  LawyerJudgmentListInformation({
-    this.id,
-    this.commissionId,
-    this.courtId,
-    this.decree,
-    this.decreeType,
-    this.meritsYear,
-    this.meritsNo,
-    this.decreeYear,
-    this.decreeNo,
-    this.decision,
-    this.tbbComments,
-    this.likes,
-    this.judgmentDate,
-    this.createDate,
-    this.commissionName,
-    this.courtName,
-    this.userId,
-    this.stateName,
-    this.userName,
-    this.lastName,
-    this.lawyerAssesment,
-    this.stateId,
-  });
+  LawyerJudgmentListInformation(
+      {this.id,
+      this.commissionId,
+      this.courtId,
+      this.decree,
+      this.decreeType,
+      this.meritsYear,
+      this.meritsNo,
+      this.decreeYear,
+      this.decreeNo,
+      this.decision,
+      this.tbbComments,
+      this.likes,
+      this.judgmentDate,
+      this.createDate,
+      this.commissionName,
+      this.courtName,
+      this.userId,
+      this.stateName,
+      this.userName,
+      this.lastName,
+      this.lawyerAssesment,
+      this.stateId,
+      this.isLike});
 
   int? id;
   int? commissionId;
@@ -46,6 +46,7 @@ class LawyerJudgmentListInformation {
   String? userName;
   String? lastName;
   String? lawyerAssesment;
+  bool? isLike;
 
   factory LawyerJudgmentListInformation.fromJson(Map<String, dynamic> json) =>
       LawyerJudgmentListInformation(

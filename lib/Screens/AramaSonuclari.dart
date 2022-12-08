@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/AramaSonuclariDetayDeneme.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentListInformation.dart';
@@ -74,7 +75,7 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                             elevation: 1,
                             child: ListTile(
                               leading: CircleAvatar(
-                                  radius: 16,
+                                  radius: 20,
                                   backgroundColor:
                                       const Color.fromARGB(255, 1, 28, 63),
                                   child: Text(

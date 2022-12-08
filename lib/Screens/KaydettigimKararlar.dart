@@ -1,5 +1,5 @@
 // ignore: file_names
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, duplicate_ignore
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
@@ -27,6 +27,14 @@ class KaydettigimKararlar extends StatefulWidget {
 }
 
 class _KaydettigimKararlarState extends State<KaydettigimKararlar> {
+  TextEditingController dateInputController = TextEditingController();
+  TextEditingController dateInputControllerSecond = TextEditingController();
+  TextEditingController assessmentController = TextEditingController();
+  TextEditingController hukumController = TextEditingController();
+  TextEditingController kararNoController = TextEditingController();
+  TextEditingController kararController = TextEditingController();
+  TextEditingController esasNoController = TextEditingController();
+
   List<JudgmentStateInformation> judgmentStateInformation = [];
   final LawyerJudgmentStateDropdownService lawyerJudgmentStateDropdownService =
       getIt.get<LawyerJudgmentStateDropdownService>();
@@ -45,14 +53,6 @@ class _KaydettigimKararlarState extends State<KaydettigimKararlar> {
       getIt.get<LawyerJudgmentService>();
 
   FilterDetailDtoKK filterDetailDtoKK = FilterDetailDtoKK();
-
-  TextEditingController? dateInputController;
-  TextEditingController? dateInputControllerSecond;
-  TextEditingController? assessmentController;
-  TextEditingController? hukumController;
-  TextEditingController? kararNoController;
-  TextEditingController? kararController;
-  TextEditingController? esasNoController;
   JudgmentStateInformation? selectedOption;
   DateTime? selectedDate;
   DateTime? selectedDateSecond;
@@ -60,6 +60,8 @@ class _KaydettigimKararlarState extends State<KaydettigimKararlar> {
   void Function()? onClick;
 
   List<LawyerJudgmentListInformation> savedJudgments = [];
+
+  List<LawyerJudgmentListInformation> filteredJudgments = [];
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -361,16 +363,40 @@ class _KaydettigimKararlarState extends State<KaydettigimKararlar> {
                                               80,
                                         ),
                                         Container(
-                                          height: 45,
-                                          width: 330,
+                                          // height: 54,
+                                          // width: 400,
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(5),
                                               color: Colors.white),
-                                          child:
-                                              // ignore: unnecessary_new
-                                              new DropdownButtonFormField<
-                                                  JudgmentStateInformation>(
+                                          child: DropdownButtonFormField<
+                                              JudgmentStateInformation>(
+                                            decoration: InputDecoration(
+                                                contentPadding: EdgeInsets.all(
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .height /
+                                                        60),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            width: 1,
+                                                            color: Colors.grey),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10)),
+
+                                                // ignore: prefer_const_constructors
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                        borderSide:
+                                                            const BorderSide(
+                                                                width: 1,
+                                                                color: Colors
+                                                                    .grey),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10))),
                                             isExpanded: true,
                                             //underline: SizedBox.shrink(),
                                             icon: const Icon(Icons
@@ -401,7 +427,8 @@ class _KaydettigimKararlarState extends State<KaydettigimKararlar> {
                                                   judgmentStateInformation
                                                       .StateName!,
                                                   style: const TextStyle(
-                                                      color: Colors.black),
+                                                      color: Colors.black,
+                                                      fontSize: 14),
                                                 ),
                                               );
                                             }).toList(),
@@ -537,7 +564,7 @@ class _KaydettigimKararlarState extends State<KaydettigimKararlar> {
                                                         selectedDate =
                                                             pickedDate;
                                                         dateInputController
-                                                            ?.text = DateFormat(
+                                                            .text = DateFormat(
                                                                 "dd-MM-yyyy")
                                                             .format(pickedDate);
                                                       });
@@ -666,7 +693,7 @@ class _KaydettigimKararlarState extends State<KaydettigimKararlar> {
                                                         selectedDateSecond =
                                                             pickedDateSecond;
                                                         dateInputControllerSecond
-                                                            ?.text = DateFormat(
+                                                            .text = DateFormat(
                                                                 "dd-MM-yyyy")
                                                             .format(
                                                                 pickedDateSecond);
@@ -721,11 +748,11 @@ class _KaydettigimKararlarState extends State<KaydettigimKararlar> {
                                                           255, 1, 28, 63)),
                                               onPressed: (() {
                                                 filterDetailDtoKK.decision =
-                                                    kararController?.text;
+                                                    kararController.text;
                                                 filterDetailDtoKK.decree =
-                                                    hukumController?.text;
+                                                    hukumController.text;
                                                 filterDetailDtoKK.decreeNo =
-                                                    kararNoController?.text;
+                                                    kararNoController.text;
                                                 filterDetailDtoKK.finishDate =
                                                     selectedDateSecond;
                                                 filterDetailDtoKK.startDate =
@@ -735,9 +762,9 @@ class _KaydettigimKararlarState extends State<KaydettigimKararlar> {
                                                     selectedOption?.StateId;
                                                 filterDetailDtoKK
                                                         .lawyerAssesment =
-                                                    assessmentController?.text;
+                                                    assessmentController.text;
                                                 filterDetailDtoKK.meritsNo =
-                                                    esasNoController?.text;
+                                                    esasNoController.text;
                                                 getJudgmentsByFilter(
                                                     filterDetailDtoKK);
                                               }),

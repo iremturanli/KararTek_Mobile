@@ -9,38 +9,14 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
 import '../AppConfigurations/appConfigurations.dart';
+import '../Screens/KaydettigimKararlar.dart';
 
 import '../models/LawyerJudgmentInformation/lawyerJudgmentListInformation.dart';
 import '../services/LawyerJudgmentServices/LawyerJudgmentService.dart';
 
 class ModalBottomOnay extends StatefulWidget {
-  final JudgmentStateInformation? selectedOption;
-  final TextEditingController? dateInputController;
-  final TextEditingController? dateInputControllerSecond;
-  final TextEditingController? assessmentController;
-  final TextEditingController? hukumController;
-  final TextEditingController? kararNoController;
-  final TextEditingController? kararController;
-  final TextEditingController? esasNoController;
-
-  DateTime? selectedDate;
-  DateTime? selectedDateSecond;
-
-  final void Function()? onClick;
-  ModalBottomOnay(
-      {Key? key,
-      required this.dateInputController,
-      required this.dateInputControllerSecond,
-      required this.assessmentController,
-      required this.hukumController,
-      required this.kararNoController,
-      required this.kararController,
-      required this.esasNoController,
-      this.onClick,
-      this.selectedOption,
-      this.selectedDate,
-      this.selectedDateSecond})
-      : super(key: key);
+  List<LawyerJudgmentListInformation> savedJudgments = [];
+  ModalBottomOnay({Key? key, required this.savedJudgments}) : super(key: key);
 
   @override
   State<ModalBottomOnay> createState() => _ModalBottomOnayState();
@@ -60,6 +36,20 @@ class _ModalBottomOnayState extends State<ModalBottomOnay> {
 
   FilterDetailDtoKK filterDetailDtoKK = FilterDetailDtoKK();
 
+  TextEditingController? dateInputController = TextEditingController();
+  TextEditingController? dateInputControllerSecond = TextEditingController();
+  TextEditingController? assessmentController = TextEditingController();
+  TextEditingController? hukumController = TextEditingController();
+  TextEditingController? esasNoControllerFirst = TextEditingController();
+  TextEditingController? esasNoControllerSecond = TextEditingController();
+  TextEditingController? esasYearController = TextEditingController();
+  TextEditingController? kararNoControllerFirst = TextEditingController();
+  TextEditingController? kararNoControllerSecond = TextEditingController();
+  TextEditingController? kararYearController = TextEditingController();
+  TextEditingController? kararController = TextEditingController();
+
+  DateTime? selectedDate;
+  DateTime? selectedDateSecond;
   final bool _isTap = false;
   final bool _isTapSecond = false;
   List<JudgmentStateInformation> judgmentStateInformation = [];
@@ -101,7 +91,7 @@ class _ModalBottomOnayState extends State<ModalBottomOnay> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 20,
                     child: TextFormField(
-                      controller: widget.esasNoController,
+                      controller: esasNoControllerFirst,
                       // ignore: prefer_const_constructors
                       decoration: InputDecoration(
                         filled: true,
@@ -130,7 +120,7 @@ class _ModalBottomOnayState extends State<ModalBottomOnay> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 20,
                     child: TextFormField(
-                      controller: widget.kararNoController,
+                      controller: kararNoControllerFirst,
                       // ignore: prefer_const_constructors
                       decoration: InputDecoration(
                         filled: true,
@@ -158,7 +148,7 @@ class _ModalBottomOnayState extends State<ModalBottomOnay> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 20,
                     child: TextFormField(
-                      controller: widget.kararController,
+                      controller: kararController,
                       // ignore: prefer_const_constructors
                       decoration: InputDecoration(
                         filled: true,
@@ -186,7 +176,7 @@ class _ModalBottomOnayState extends State<ModalBottomOnay> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 20,
                     child: TextFormField(
-                      controller: widget.hukumController,
+                      controller: hukumController,
                       // ignore: prefer_const_constructors
                       decoration: InputDecoration(
                         filled: true,
@@ -215,7 +205,7 @@ class _ModalBottomOnayState extends State<ModalBottomOnay> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 20,
                     child: TextFormField(
-                      controller: widget.assessmentController,
+                      controller: assessmentController,
                       // ignore: prefer_const_constructors
                       decoration: InputDecoration(
                         filled: true,
@@ -290,7 +280,7 @@ class _ModalBottomOnayState extends State<ModalBottomOnay> {
                         child: SizedBox(
                           height: MediaQuery.of(context).size.height / 20,
                           child: TextFormField(
-                            controller: widget.dateInputController,
+                            controller: dateInputController,
                             //editing controller of this TextField
                             decoration: InputDecoration(
                                 prefixIcon: Icon(Icons.calendar_today,
@@ -353,10 +343,10 @@ class _ModalBottomOnayState extends State<ModalBottomOnay> {
                                   lastDate: DateTime(2100));
 
                               if (pickedDate != null &&
-                                  pickedDate != widget.selectedDate) {
+                                  pickedDate != selectedDate) {
                                 setState(() {
-                                  widget.selectedDate = pickedDate;
-                                  widget.dateInputController?.text =
+                                  selectedDate = pickedDate;
+                                  dateInputController?.text =
                                       DateFormat("dd-MM-yyyy")
                                           .format(pickedDate);
                                 });
@@ -370,7 +360,7 @@ class _ModalBottomOnayState extends State<ModalBottomOnay> {
                         child: SizedBox(
                           height: MediaQuery.of(context).size.height / 20,
                           child: TextFormField(
-                            controller: widget.dateInputControllerSecond,
+                            controller: dateInputControllerSecond,
                             //editing controller of this TextField
                             decoration: InputDecoration(
                                 prefixIcon: Icon(Icons.calendar_today,
@@ -435,11 +425,10 @@ class _ModalBottomOnayState extends State<ModalBottomOnay> {
                                   lastDate: DateTime(2100));
 
                               if (pickedDateSecond != null &&
-                                  pickedDateSecond !=
-                                      widget.selectedDateSecond) {
+                                  pickedDateSecond != selectedDateSecond) {
                                 setState(() {
-                                  widget.selectedDateSecond = pickedDateSecond;
-                                  widget.dateInputControllerSecond?.text =
+                                  selectedDateSecond = pickedDateSecond;
+                                  dateInputControllerSecond?.text =
                                       DateFormat("dd-MM-yyyy")
                                           .format(pickedDateSecond);
                                 });
@@ -478,7 +467,22 @@ class _ModalBottomOnayState extends State<ModalBottomOnay> {
                             minimumSize: const Size(150, 45),
                             backgroundColor:
                                 const Color.fromARGB(255, 1, 28, 63)),
-                        onPressed: (() {}),
+                        onPressed: () {
+                          filterDetailDtoKK.decreeNo =
+                              kararNoControllerFirst?.text;
+                          filterDetailDtoKK.decision = kararController?.text;
+                          filterDetailDtoKK.meritsNo =
+                              esasNoControllerFirst?.text;
+                          filterDetailDtoKK.decree = hukumController?.text;
+                          filterDetailDtoKK.lawyerAssesment =
+                              assessmentController?.text;
+                          filterDetailDtoKK.startDate = selectedDate;
+                          filterDetailDtoKK.finishDate = selectedDateSecond;
+                          filterDetailDtoKK.judgmentStateId =
+                              selectedOption?.StateId;
+
+                          getJudgmentsByFilter(filterDetailDtoKK);
+                        },
                         child: const Text(
                           'Sorgula',
                           style: TextStyle(fontSize: 17),
@@ -515,11 +519,10 @@ class _ModalBottomOnayState extends State<ModalBottomOnay> {
         savedJudgments.clear();
         savedJudgments.addAll(response.data!);
         setState(() {
-          Navigator.of(context).pop();
-          // Navigator.push(
-          //     context,
-          //     MaterialPageRoute(
-          //         builder: (context) => const KaydettigimKararlar()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const KaydettigimKararlar()));
         });
 
         print(response);

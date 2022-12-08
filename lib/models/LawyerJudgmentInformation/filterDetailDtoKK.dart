@@ -13,11 +13,8 @@ class FilterDetailDtoKK {
   });
 
   String? decree;
-
   String? meritsNo;
-
   String? decreeNo;
-
   String? decision;
   int? judgmentStateId;
   String? lawyerAssesment;
@@ -31,7 +28,10 @@ class FilterDetailDtoKK {
           judgmentStateId: json["judgmentStateId"],
           lawyerAssesment: json["lawyerAssesment"],
           startDate: DateTime.parse(json["startDate"]),
-          finishDate: DateTime.parse(json["finishDate"]));
+          finishDate: DateTime.parse(json["finishDate"]),
+          meritsNo: json["meritsNo"],
+          decreeNo: json["decreeNo"]);
+
   Map<String, dynamic> toJson() => {
         "decree": decree,
         "decision": decision,
@@ -39,5 +39,7 @@ class FilterDetailDtoKK {
         "lawyerAssesment": lawyerAssesment,
         "startDate": startDate?.toIso8601String(),
         "finishDate": finishDate?.toIso8601String(),
+        "meritsNo": meritsNo,
+        "decreeNo": decreeNo
       };
 }
