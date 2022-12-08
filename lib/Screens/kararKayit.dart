@@ -8,7 +8,6 @@ import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJud
 import 'package:flutter_application_1/services/DropDownServices/CommissionDropdownService.dart';
 import 'package:flutter_application_1/services/DropDownServices/CourtDropdownService.dart';
 import 'package:flutter_application_1/services/LawyerJudgmentServices/LawyerJudgmentService.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -474,9 +473,6 @@ class _kararKayitState extends State<kararKayit> {
     );
   }
 
-  void _showToast() => Fluttertoast.showToast(
-        msg: 'Button Tapped',
-      );
   void pickFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result == null) return;

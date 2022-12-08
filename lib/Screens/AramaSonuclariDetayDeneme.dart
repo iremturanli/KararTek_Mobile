@@ -218,7 +218,8 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
   }
 
   addLawyerJudgmentLike(int id, bool isLiked) async {
-    BaseResponseApi response = await judgmentService.addLike(id, isLiked);
+    BaseResponseApi response =
+        await lawyerJudgmentService.addLawyerJudgmentLike(id, isLiked);
     if (response.success == true) {
     } else {
       print(response.message);

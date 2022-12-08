@@ -1,92 +1,23 @@
-// ignore_for_file: prefer_const_constructors
+// ignore: file_names
+// ignore_for_file: prefer_const_constructors, duplicate_ignore
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
-import 'package:flutter_application_1/widgets/ModalBottomOnay.dart';
 import 'package:flutter_application_1/widgets/KararListCard.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import '../ApiResponse/JudgmentStateDropdownResponse.dart';
 import '../ApiResponse/SearchDataLawyerResponse.dart';
 import '../AppConfigurations/appConfigurations.dart';
 
+import '../models/JudgmentStateInformation/judgmentStateInformation.dart';
+import '../models/LawyerJudgmentInformation/filterDetailDtoKK.dart';
 import '../models/LawyerJudgmentInformation/lawyerJudgmentListInformation.dart';
+import '../services/DropDownServices/LawyerJudgmentStateDropdownService.dart';
 import '../services/LawyerJudgmentServices/LawyerJudgmentService.dart';
 import 'kaydettigimKararlarDetay.dart';
-
-// final List<Map<String, dynamic>> _kaydettigimKararlar = [
-//   {
-//     "esasSıraNo": "1234",
-//     "esasYılı": "2022",
-//     "karaSıraNo": "221",
-//     "kararYılı": "2022",
-//     "durum": "Onaya Gönderildi",
-//     "Kurul Adı": "1.Ceza Dairesi",
-//     "Mahkeme": "Bölge Adliye Mahkemesi 18. Hukuk Dairesi",
-//     "Hüküm":
-//         "Taraflar arasındaki davanın yapılan muhakemesi sonunda bölge adliye mahkemesi hukuk dairesince verilen, yukarıda tarihi ve numarası gösterilen hüküm davacı erkek tarafından, manevî tazminat talebinin reddi, maddî tazminatın miktarı ve kadın yararına tedbir nafakasına hükmolunması yönünden temyiz edilmekle, evrak okunup gereği görüşülüp düşünüldü:Dosyadaki yazılara, kararın dayandığı delillerle kanuna uygun sebeplere ve özellikle delillerin takdirinde bir yanlışlık görülmemesine göre, yerinde bulunmayan temyiz itirazlarının reddiyle usul ve kanuna uygun olan hükmün ONANMASINA, aşağıda yazılı onama harcının temyiz edene yükletilmesine, peşin alınan harcın mahsubuna ve 292.10 TL. temyiz başvuru harcı peşin alındığından başkaca harç alınmasına yer olmadığına, dosyanın ilk derece mahkemesine, karardan bir örneğinin ilgili bölge adliye mahkemesi hukuk dairesine gönderilmesine kesin olarak oy birliğiyle karar verildi. ",
-//     "Avukat Açıklaması": "bu kararı kesinlikle kabul etmiyorum.",
-//     "TBB Açıklaması": "",
-//     "Karar":
-//         "Taraflar arasındaki davanın yapılan muhakemesi sonunda bölge adliye mahkemesi hukuk dairesince verilen, yukarıda tarihi ve numarası gösterilen hüküm davacı erkek tarafından, manevî tazminat talebinin reddi, maddî tazminatın miktarı ve kadın yararına tedbir nafakasına hükmolunması yönünden temyiz edilmekle, evrak okunup gereği görüşülüp düşünüldü:Dosyadaki yazılara, kararın dayandığı delillerle kanuna uygun sebeplere ve özellikle delillerin takdirinde bir yanlışlık görülmemesine göre, yerinde bulunmayan temyiz itirazlarının reddiyle usul ve kanuna uygun olan hükmün ONANMASINA, aşağıda yazılı onama harcının temyiz edene yükletilmesine, peşin alınan harcın mahsubuna ve 292.10 TL. temyiz başvuru harcı peşin alındığından başkaca harç alınmasına yer olmadığına, dosyanın ilk derece mahkemesine, karardan bir örneğinin ilgili bölge adliye mahkemesi hukuk dairesine gönderilmesine kesin olarak oy birliğiyle karar verildi. ",
-//     "Karar Tarihi": "2022-10-20 11:13:21.341844+00",
-//     "Kayıt Tarihi": "2022-11-01 11:13:21.341844+00",
-//     "TBB'ye Gönderilme Tarihi": "2022-11-01 11:13:21.341844+00"
-//   },
-//   {
-//     "esasSıraNo": "1235",
-//     "esasYılı": "2022",
-//     "karaSıraNo": "222",
-//     "kararYılı": "2022",
-//     "durum": "Onaya Gönderildi",
-//     "Kurul Adı": "1.Ceza Dairesi",
-//     "Mahkeme": "Ankara Bölge Adliye Mahkemesi",
-//     "Hüküm":
-//         "5271 sayılı CMK'nın 288. ve 294. maddelerinde yer alan düzenlemeler ile 289. maddesinde sayılan kesin hukuka aykırılık halleri dikkate alınarak sanık müdafiinin dilekçesindeki temyiz sebeplerinin hükmün hukuki yönüne ilişkin olduğu belirlenerek anılan sebeplere bağlı olarak yapılan incelemede,Yargılama sürecindeki işlemlerin kanuna uygun olarak yapıldığı, aşamalarda ileri sürülen iddia ve savunmaların toplanan tüm delillerle birlikte gerekçeli kararda gösterilip tartışıldığı, eylemin sanık tarafından gerçekleştirildiğinin saptandığı, vicdanî kanının dosya içindeki belge ve bilgilerle uyumlu olarak kesin verilere dayandırıldığı, eyleme uyan suç tipi ile yaptırımların aşağıda belirtilen dışında doğru biçimde belirlendiği anlaşıldığından, yerinde görülmeyen diğer temyiz itirazlarının reddine, ancak;Yargıtay Ceza Genel Kurulunun 21/04/2015 tarih ve 2014/10-623 esas, 2015/117 sayılı kararında yabancı uyruklu olup, yakalandığında üzerinde herhangi bir kimlik belgesi çıkmayan sanığın nüfus ve adli sicil kayıtları ile ilgili hiçbir araştırma yapılmadan sadece beyan edilen kimlik bilgilerine dayanılarak hüküm kurulması usul ve kanuna aykırıdır, denilmiştir.6458 sayılı Yabancılar ve Uluslararası Koruma Kanununun 91. maddesinde geçici koruma Ülkesinden ayrılmaya zorlanmış, ayrıldığı ülkeye geri dönemeyen, acil ve geçici koruma bulmak amacıyla kitlesel olarak sınırlarımıza gelen veya sınırlarımızı geçen yabancılara geçici koruma sağlanabilir. şeklinde hüküm altına alınmış, bu kişilerin Türkiye'ye kabulü, Türkiye'de kalışı, hak ve yükümlülüklerinin Bakanlar Kurulu tarafından çıkarılacak yönetmelikle düzenleneceği belirtilmiştir. 6458 sayılı Kanun'un 91. Maddesi uyarınca çıkartılan Geçici Koruma Yönetmeliğinin (Bakanlar Kurulu Kararının Tarihi",
-//     "Avukat Açıklaması": "bu kararı kesinlikle kabul etmiyorum.",
-//     "TBB Açıklaması": "",
-//     "Karar":
-//         "6458 Yayımlandığı Resmi Gazete'nin Tarihi: 22/10/2014 No: 29153) 21. maddesinde; bu Yönetmelik kapsamındaki yabancıların kayıtları sırasında kimliğine ilişkin belge sunamayan yabancının, aksi ispat edilinceye kadar beyanının esas alınacağı, fotoğraf, parmak izi ya da kimlik tespitine elverişli diğer biometrik verilerin esas alınıp merkezi veri tabanına kaydedileceği, mevcut biometrik verilerle eşleştirileceği, kayıt altına alınan yabancıların bilgilerinin derhal Göç İdaresi Genel Müdürlüğüne bildirileceği, yabancıların kayıt bilgilerinin doğum, ölüm, evlilik, boşanma, gönüllü geri dönüş gibi hallerde güncelleneceği, adres kayıt sistemine kaydedilecekleri düzenlemeleri getirilmiş, 22. maddesinde ise; kayıt işlemleri tamamlananlara, valilikler tarafından geçici koruma kimlik belgesi düzenleneceği, geçici koruma kimlik belgesi verilenlere, 25/04/2006 tarihli ve 5490 sayılı Nüfus Hizmetleri Kanunu kapsamında yabancı kimlik numarası verileceği belirtilmiştir.6458 sayılı Kanun'un 121. maddesine dayanılarak çıkartılan Yabancılar ve Uluslararası Koruma Kanununun Uygulanmasına İlişkin Yönetmelik 17 Mart 2016 tarih ve 29656 sayılı Resmi Gazete'de yayımlanarak yürürlüğe girmiştir. Somut olayımızda ise; sanığın kendi beyanlarına göre Afganistan vatandaşı olduğunun ve kimlik bilgilerinin tespit edildiğinin anlaşılması karşısında; yabancı uyruklu sanığa ait nüfus ve adli sicil kayıtlarının, sanığın vatandaşı olduğu ülke ve gerektiğinde uluslararası kurum ve kuruluşlardan genelgeler doğrultusunda temin edilmesi gerektiği; eğer sanığın resmi kimlik bilgilerinin diplomatik yazışmalarla belirlenemediği takdirde soruşturma makamınca sanığın beyanı üzerine tespit edilen kimlik bilgileri, dosya içerisindeki parmak izi ve fotoğraf kayıt formu ile sanığın temin edilen fotoğraflarının Göç İdaresi Genel Müdürlüğüne gönderilerek Geçici Koruma Yönetmeliğinin 21 ve 22. maddeleri uyarınca sanığın Türkiye'ye kabul edilen yabancılardan olup olmadığının ve varsa yabancı kimlik numarası ile adres kayıt sistemindeki kayıtlarının tespit edilmesi, şayet kimlikleri bu şekilde belirlenmiyorsa 6458 sayılı Kanun'un 91. maddesi uyarınca çıkartılan Geçici Koruma Yönetmeliğinin 21. ve 22. maddeleri gereğince gerekli kayıtlarının yapılıp geçici koruma belgesi çıkarılıp gönderilmesi istenilerek belirlenen kimliği esas alınıp hükümlülüğüne karar verilmesi gerektiğinin gözetilmemesi,Kanuna aykırı, sanık müdafiinin temyiz itirazları bu nedenle yerinde olup, Kayseri Bölge Adliye Mahkemesi 3. Ceza Dairesinin, 18/10/2019 tarih 2019/33 esas ve 2019/22 sayılı kararı hukuka aykırı bulunduğundan, 5271 sayılı CMK'nın 302/2. maddesi uyarınca BOZULMASINA,28/02/2019 tarihli Resmi Gazete'de yayımlanarak yürürlüğe giren 7165 sayılı Kanun'un 8. maddesi ile değişik 5271 sayılı CMK'nın 304/1. maddesi uyarınca dosyanın... Ağır Ceza Mahkemesine; kararın bir örneğinin... Bölge Adliye Mahkemesi ... Ceza Dairesine gönderilmesine, 27/12/2021 tarihinde oy birliği ile karar verildi.",
-//     "Karar Tarihi": "2022-10-20 11:13:21.341844+00",
-//     "Kayıt Tarihi": "2022-11-01 11:13:21.341844+00",
-//     "TBB'ye Gönderilme Tarihi": "2022-11-01 11:13:21.341844+00"
-//   },
-//   {
-//     "esasSıraNo": "1236",
-//     "esasYılı": "2022",
-//     "karaSıraNo": "223",
-//     "kararYılı": "2022",
-//     "durum": "Onaylandı",
-//     "Kurul Adı": "1.Ceza Dairesi",
-//     "Mahkeme": "Ankara Bölge Adliye Mahkemesi",
-//     "Hüküm":
-//         "Taraflar arasındaki davanın yapılan muhakemesi sonunda bölge adliye mahkemesi hukuk dairesince verilen, yukarıda tarihi ve numarası gösterilen hüküm davacı kadın tarafından yoksulluk nafakası yönünden temyiz edilmekle, evrak okunup gereği görüşülüp düşünüldü:Dosyadaki yazılara, kararın dayandığı delillerle kanuna uygun sebeplere ve özellikle delillerin takdirinde bir yanlışlık görülmemesine göre, yerinde bulunmayan temyiz itirazlarının reddiyle usul ve kanuna uygun olan hükmün ONANMASINA, aşağıda yazılı onama harcının temyiz edene yükletilmesine, peşin alınan harcın mahsubuna ve 292.10 TL. temyiz başvuru harcı peşin alındığından başkaca harç alınmasına yer olmadığına, dosyanın ilk derece mahkemesine, karardan bir örneğinin ilgili bölge adliye mahkemesi hukuk dairesine gönderilmesine kesin olarak oy birliğiyle karar verildi. 23.12.2021 (Prş.)",
-//     "Avukat Açıklaması": "kabul edilmiştir.",
-//     "TBB Açıklaması": "",
-//     "Karar":
-//         "Taraflar arasındaki davanın yapılan muhakemesi sonunda bölge adliye mahkemesi hukuk dairesince verilen, yukarıda tarihi ve numarası gösterilen hüküm davacı kadın tarafından yoksulluk nafakası yönünden temyiz edilmekle, evrak okunup gereği görüşülüp düşünüldü:Dosyadaki yazılara, kararın dayandığı delillerle kanuna uygun sebeplere ve özellikle delillerin takdirinde bir yanlışlık görülmemesine göre, yerinde bulunmayan temyiz itirazlarının reddiyle usul ve kanuna uygun olan hükmün ONANMASINA, aşağıda yazılı onama harcının temyiz edene yükletilmesine, peşin alınan harcın mahsubuna ve 292.10 TL. temyiz başvuru harcı peşin alındığından başkaca harç alınmasına yer olmadığına, dosyanın ilk derece mahkemesine, karardan bir örneğinin ilgili bölge adliye mahkemesi hukuk dairesine gönderilmesine kesin olarak oy birliğiyle karar verildi. 23.12.2021 (Prş.)",
-//     "Karar Tarihi": "2022-10-20 11:13:21.341844+00",
-//     "Kayıt Tarihi": "2022-11-01 11:13:21.341844+00",
-//     "TBB'ye Gönderilme Tarihi": "2022-11-01 11:13:21.341844+00"
-//   },
-//   {
-//     "esasSıraNo": "1237",
-//     "esasYılı": "2022",
-//     "karaSıraNo": "224",
-//     "kararYılı": "2022",
-//     "durum": "Reddedildi",
-//     "Kurul Adı": "1.Ceza Dairesi",
-//     "Mahkeme": "Ankara Bölge Adliye Mahkemesi",
-//     "Hüküm":
-//         "Boşanma ilamı ekinde verilen yoksulluk nafakası, maddi ve manevi tazminatın icra takibine konu edilebilmesi için HUMK'nun 443. maddesi gereğince (boşanma) ilamının kesinleşmesine bağlıdır. Somut olayda takibe konu Sincan 1. Aile Mahkemesinin 20.9.2005 tarih ve 2005/276-642 sayılı tarafların boşanmasına ilişkin verdiği karar kesinleşmemiştir. Bu durumda takibe dayanak ilamda hükmolunan yukarıda belirtilen alacaklar ile yargılama gideri ve ücreti vekalet takip konusu yapılamaz. Mahkemece şikayetin kabulüne karar vermek gerekirken reddine karar vermesi isabetsizdir.SONUÇ  : Borçlu vekilinin temyiz itirazlarının kabulü ile mahkeme kararının yukarıda yazılı nedenlerle İ.İ.K. 366 ve H.U.M.K.’nun 428. maddeleri uyarınca (BOZULMASINA), 21.9.06006 gününde oybirliğiyle karar verildi.",
-//     "Avukat Açıklaması": "bu kararı kesinlikle kabul etmiyorum.",
-//     "TBB Açıklaması": "Reddedildi",
-//     "Karar":
-//         "Boşanma ilamı ekinde verilen yoksulluk nafakası, maddi ve manevi tazminatın icra takibine konu edilebilmesi için HUMK'nun 443. maddesi gereğince (boşanma) ilamının kesinleşmesine bağlıdır. Somut olayda takibe konu Sincan 1. Aile Mahkemesinin 20.9.2005 tarih ve 2005/276-642 sayılı tarafların boşanmasına ilişkin verdiği karar kesinleşmemiştir. Bu durumda takibe dayanak ilamda hükmolunan yukarıda belirtilen alacaklar ile yargılama gideri ve ücreti vekalet takip konusu yapılamaz. Mahkemece şikayetin kabulüne karar vermek gerekirken reddine karar vermesi isabetsizdir.SONUÇ  : Borçlu vekilinin temyiz itirazlarının kabulü ile mahkeme kararının yukarıda yazılı nedenlerle İ.İ.K. 366 ve H.U.M.K.’nun 428. maddeleri uyarınca (BOZULMASINA), 21.9.06006 gününde oybirliğiyle karar verildi. ",
-//     "Karar Tarihi": "2022-10-20 11:13:21.341844+00",
-//     "Kayıt Tarihi": "2022-11-01 11:13:21.341844+00",
-//     "TBB'ye Gönderilme Tarihi": "2022-11-01 11:13:21.341844+00"
-//   },
-// ];
 
 class KaydettigimKararlar extends StatefulWidget {
   const KaydettigimKararlar({Key? key}) : super(key: key);
@@ -96,16 +27,41 @@ class KaydettigimKararlar extends StatefulWidget {
 }
 
 class _KaydettigimKararlarState extends State<KaydettigimKararlar> {
+  TextEditingController dateInputController = TextEditingController();
+  TextEditingController dateInputControllerSecond = TextEditingController();
+  TextEditingController assessmentController = TextEditingController();
+  TextEditingController hukumController = TextEditingController();
+  TextEditingController kararNoController = TextEditingController();
+  TextEditingController kararController = TextEditingController();
+  TextEditingController esasNoController = TextEditingController();
+
+  List<JudgmentStateInformation> judgmentStateInformation = [];
+  final LawyerJudgmentStateDropdownService lawyerJudgmentStateDropdownService =
+      getIt.get<LawyerJudgmentStateDropdownService>();
+
+  final bool _isTap = false;
+  final bool _isTapSecond = false;
   @override
   void initState() {
-    // TODO: implement initState
+    super.initState();
+
     getLawyerJudgmentsByUserId();
+    getJudgmentStates();
   }
 
   final LawyerJudgmentService lawyerJudgmentService =
       getIt.get<LawyerJudgmentService>();
 
+  FilterDetailDtoKK filterDetailDtoKK = FilterDetailDtoKK();
+  JudgmentStateInformation? selectedOption;
+  DateTime? selectedDate;
+  DateTime? selectedDateSecond;
+
+  void Function()? onClick;
+
   List<LawyerJudgmentListInformation> savedJudgments = [];
+
+  List<LawyerJudgmentListInformation> filteredJudgments = [];
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -141,11 +97,689 @@ class _KaydettigimKararlarState extends State<KaydettigimKararlar> {
                       minimumSize: Size(45, 30),
                       backgroundColor: const Color.fromARGB(255, 1, 28, 63)),
                   onPressed: () => showMaterialModalBottomSheet<void>(
-                    expand: true,
-                    // backgroundColor: Colors.transparent,
-                    context: context,
-                    builder: (BuildContext context) => ModalBottomOnay(),
-                  ),
+                      expand: true,
+                      // backgroundColor: Colors.transparent,
+
+                      context: context,
+                      builder: (BuildContext context) => Stack(
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: (MediaQuery.of(context).size.height /
+                                        15)),
+                                child: Container(
+                                  alignment: Alignment.topCenter,
+                                  child: const Text('Kullanıcı Karar Sorgulama',
+                                      style: TextStyle(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                              ),
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                    top: MediaQuery.of(context).size.height / 8,
+                                    right:
+                                        MediaQuery.of(context).size.width / 25,
+                                    left:
+                                        MediaQuery.of(context).size.width / 25,
+                                  ),
+                                  child: Form(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        const Text(
+                                          'Esas Numarası',
+                                        ),
+
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              80,
+                                        ),
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              20,
+                                          child: TextFormField(
+                                            controller: esasNoController,
+                                            // ignore: prefer_const_constructors
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: const Color.fromARGB(
+                                                  255, 255, 255, 255),
+                                              focusedBorder:
+                                                  const OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  8))),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                // ignore: prefer_const_constructors
+                                                borderSide: BorderSide(
+                                                  width: 1,
+                                                  color: const Color.fromARGB(
+                                                      255, 189, 189, 189),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        // ignore: prefer_const_constructors
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              50,
+                                        ),
+                                        const Text('Karar Numarası'),
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              80,
+                                        ),
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              20,
+                                          child: TextFormField(
+                                            controller: kararNoController,
+                                            // ignore: prefer_const_constructors
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: const Color.fromARGB(
+                                                  255, 255, 255, 255),
+                                              focusedBorder:
+                                                  const OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  8))),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                // ignore: prefer_const_constructors
+                                                borderSide: BorderSide(
+                                                  width: 1,
+                                                  color: const Color.fromARGB(
+                                                      255, 189, 189, 189),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              50,
+                                        ),
+                                        const Text('Karar'),
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              80,
+                                        ),
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              20,
+                                          child: TextFormField(
+                                            controller: kararController,
+                                            // ignore: prefer_const_constructors
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: const Color.fromARGB(
+                                                  255, 255, 255, 255),
+                                              focusedBorder:
+                                                  const OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  8))),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                // ignore: prefer_const_constructors
+                                                borderSide: BorderSide(
+                                                  width: 1,
+                                                  color: const Color.fromARGB(
+                                                      255, 189, 189, 189),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              50,
+                                        ),
+                                        const Text('Hüküm'),
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              80,
+                                        ),
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              20,
+                                          child: TextFormField(
+                                            controller: hukumController,
+                                            // ignore: prefer_const_constructors
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: const Color.fromARGB(
+                                                  255, 255, 255, 255),
+                                              focusedBorder:
+                                                  const OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  8))),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                // ignore: prefer_const_constructors
+                                                borderSide: BorderSide(
+                                                  width: 1,
+                                                  color: const Color.fromARGB(
+                                                      255, 189, 189, 189),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              50,
+                                        ),
+                                        const Text('Avukat Değerlendirmesi'),
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              80,
+                                        ),
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              20,
+                                          child: TextFormField(
+                                            controller: assessmentController,
+                                            // ignore: prefer_const_constructors
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: const Color.fromARGB(
+                                                  255, 255, 255, 255),
+                                              focusedBorder:
+                                                  const OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  8))),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                // ignore: prefer_const_constructors
+                                                borderSide: BorderSide(
+                                                  width: 1,
+                                                  color: const Color.fromARGB(
+                                                      255, 189, 189, 189),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              50,
+                                        ),
+                                        const Text('Karar Durumu'),
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              80,
+                                        ),
+                                        Container(
+                                          // height: 54,
+                                          // width: 400,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: Colors.white),
+                                          child: DropdownButtonFormField<
+                                              JudgmentStateInformation>(
+                                            decoration: InputDecoration(
+                                                contentPadding: EdgeInsets.all(
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .height /
+                                                        60),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            width: 1,
+                                                            color: Colors.grey),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10)),
+
+                                                // ignore: prefer_const_constructors
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                        borderSide:
+                                                            const BorderSide(
+                                                                width: 1,
+                                                                color: Colors
+                                                                    .grey),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10))),
+                                            isExpanded: true,
+                                            //underline: SizedBox.shrink(),
+                                            icon: const Icon(Icons
+                                                .keyboard_arrow_down_outlined),
+                                            dropdownColor: Colors.white,
+                                            value: selectedOption,
+                                            onChanged:
+                                                (JudgmentStateInformation?
+                                                    newValue) {
+                                              setState(() {
+                                                selectedOption = newValue;
+
+                                                print(selectedOption!.StateId
+                                                    .toString());
+                                              });
+                                            },
+
+                                            validator: (value) => value == null
+                                                ? "Bu alan boş bırakılamaz"
+                                                : null,
+                                            items: judgmentStateInformation.map(
+                                                (JudgmentStateInformation
+                                                    judgmentStateInformation) {
+                                              return DropdownMenuItem<
+                                                  JudgmentStateInformation>(
+                                                value: judgmentStateInformation,
+                                                child: Text(
+                                                  judgmentStateInformation
+                                                      .StateName!,
+                                                  style: const TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 14),
+                                                ),
+                                              );
+                                            }).toList(),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              50,
+                                        ),
+                                        const Text('Karar Aralığı'),
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              80,
+                                        ),
+
+                                        Row(
+                                          children: <Widget>[
+                                            Expanded(
+                                              child: SizedBox(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height /
+                                                    20,
+                                                child: TextFormField(
+                                                  controller:
+                                                      dateInputController,
+                                                  //editing controller of this TextField
+                                                  decoration: InputDecoration(
+                                                      prefixIcon: Icon(
+                                                          Icons.calendar_today,
+                                                          color: _isTap
+                                                              ? Colors.grey
+                                                              : Colors.black),
+                                                      prefixIconColor: Colors
+                                                          .grey,
+                                                      filled: true,
+                                                      fillColor:
+                                                          const Color.fromARGB(
+                                                              246,
+                                                              246,
+                                                              246,
+                                                              246),
+                                                      focusedBorder:
+                                                          const OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius.all(
+                                                                      Radius.circular(
+                                                                          8))),
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        // ignore: prefer_const_constructors
+                                                        borderSide: BorderSide(
+                                                          width: 1,
+                                                          color: const Color
+                                                                  .fromARGB(255,
+                                                              189, 189, 189),
+                                                        ),
+                                                      ),
+                                                      hintText: '__/__/____',
+                                                      hintStyle: const TextStyle(
+                                                          color: Colors
+                                                              .grey) //icon of text field
+                                                      //labelText: "" //label text of field
+                                                      ),
+
+                                                  //set it true, so that user will not able to edit text
+                                                  onTap: () async {
+                                                    DateTime? pickedDate =
+                                                        await showDatePicker(
+                                                            locale:
+                                                                const Locale(
+                                                                    "tr", "TR"),
+                                                            builder:
+                                                                (BuildContext
+                                                                        context,
+                                                                    child) {
+                                                              return Theme(
+                                                                data: Theme.of(
+                                                                        context)
+                                                                    .copyWith(
+                                                                  colorScheme:
+                                                                      ColorScheme
+                                                                          .light(
+                                                                    primary:
+                                                                        HexColor(
+                                                                            '#5DB075'), // header background color
+                                                                    onPrimary:
+                                                                        Colors
+                                                                            .white, // header text color
+                                                                    onSurface: const Color
+                                                                            .fromARGB(
+                                                                        255,
+                                                                        20,
+                                                                        20,
+                                                                        20), // body text color
+                                                                  ),
+                                                                  textButtonTheme:
+                                                                      TextButtonThemeData(
+                                                                    style: TextButton
+                                                                        .styleFrom(
+                                                                      foregroundColor: const Color
+                                                                              .fromARGB(
+                                                                          255,
+                                                                          23,
+                                                                          48,
+                                                                          112), // button text color
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                child: child!,
+                                                              );
+                                                            },
+                                                            context: context,
+                                                            initialDate:
+                                                                DateTime.now(),
+                                                            firstDate:
+                                                                DateTime(1881),
+                                                            //DateTime.now() - not to allow to choose before today.
+                                                            lastDate:
+                                                                DateTime(2100));
+
+                                                    if (pickedDate != null &&
+                                                        pickedDate !=
+                                                            selectedDate) {
+                                                      setState(() {
+                                                        selectedDate =
+                                                            pickedDate;
+                                                        dateInputController
+                                                            .text = DateFormat(
+                                                                "dd-MM-yyyy")
+                                                            .format(pickedDate);
+                                                      });
+                                                    }
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .height /
+                                                    50),
+                                            Expanded(
+                                              child: SizedBox(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height /
+                                                    20,
+                                                child: TextFormField(
+                                                  controller:
+                                                      dateInputControllerSecond,
+                                                  //editing controller of this TextField
+                                                  decoration: InputDecoration(
+                                                      prefixIcon: Icon(
+                                                          Icons.calendar_today,
+                                                          color: _isTapSecond
+                                                              ? Colors.grey
+                                                              : Colors.black),
+                                                      prefixIconColor: Colors
+                                                          .grey,
+                                                      filled: true,
+                                                      fillColor:
+                                                          const Color.fromARGB(
+                                                              246,
+                                                              246,
+                                                              246,
+                                                              246),
+                                                      focusedBorder:
+                                                          const OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius.all(
+                                                                      Radius.circular(
+                                                                          8))),
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        // ignore: prefer_const_constructors
+                                                        borderSide: BorderSide(
+                                                          width: 1,
+                                                          color: const Color
+                                                                  .fromARGB(255,
+                                                              189, 189, 189),
+                                                        ),
+                                                      ),
+                                                      hintText: '__/__/____',
+                                                      hintStyle: const TextStyle(
+                                                          color: Colors
+                                                              .grey) //icon of text field
+                                                      //labelText: "" //label text of field
+                                                      ),
+
+                                                  //set it true, so that user will not able to edit text
+                                                  onTap: () async {
+                                                    DateTime? pickedDateSecond =
+                                                        await showDatePicker(
+                                                            locale:
+                                                                const Locale(
+                                                                    "tr", "TR"),
+                                                            builder:
+                                                                (BuildContext
+                                                                        context,
+                                                                    child) {
+                                                              return Theme(
+                                                                data: Theme.of(
+                                                                        context)
+                                                                    .copyWith(
+                                                                  colorScheme:
+                                                                      ColorScheme
+                                                                          .light(
+                                                                    primary:
+                                                                        HexColor(
+                                                                            '#5DB075'), // header background color
+                                                                    onPrimary:
+                                                                        Colors
+                                                                            .white, // header text color
+                                                                    onSurface: const Color
+                                                                            .fromARGB(
+                                                                        255,
+                                                                        20,
+                                                                        20,
+                                                                        20), // body text color
+                                                                  ),
+                                                                  textButtonTheme:
+                                                                      TextButtonThemeData(
+                                                                    style: TextButton
+                                                                        .styleFrom(
+                                                                      foregroundColor: const Color
+                                                                              .fromARGB(
+                                                                          255,
+                                                                          23,
+                                                                          48,
+                                                                          112), // button text color
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                child: child!,
+                                                              );
+                                                            },
+                                                            context: context,
+                                                            initialDate:
+                                                                DateTime.now(),
+                                                            firstDate:
+                                                                DateTime(1881),
+                                                            //DateTime.now() - not to allow to choose before today.
+                                                            lastDate:
+                                                                DateTime(2100));
+
+                                                    if (pickedDateSecond !=
+                                                            null &&
+                                                        pickedDateSecond !=
+                                                            selectedDateSecond) {
+                                                      setState(() {
+                                                        selectedDateSecond =
+                                                            pickedDateSecond;
+                                                        dateInputControllerSecond
+                                                            .text = DateFormat(
+                                                                "dd-MM-yyyy")
+                                                            .format(
+                                                                pickedDateSecond);
+                                                      });
+                                                    }
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                20),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                  ),
+                                                  minimumSize:
+                                                      const Size(150, 45),
+                                                  backgroundColor:
+                                                      const Color.fromARGB(
+                                                          255, 194, 27, 5)),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: const Text(
+                                                'Vazgeç',
+                                                style: TextStyle(fontSize: 17),
+                                              ),
+                                            ),
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                  ),
+                                                  minimumSize:
+                                                      const Size(150, 45),
+                                                  backgroundColor:
+                                                      const Color.fromARGB(
+                                                          255, 1, 28, 63)),
+                                              onPressed: (() {
+                                                filterDetailDtoKK.decision =
+                                                    kararController.text;
+                                                filterDetailDtoKK.decree =
+                                                    hukumController.text;
+                                                filterDetailDtoKK.decreeNo =
+                                                    kararNoController.text;
+                                                filterDetailDtoKK.finishDate =
+                                                    selectedDateSecond;
+                                                filterDetailDtoKK.startDate =
+                                                    selectedDate;
+                                                filterDetailDtoKK
+                                                        .judgmentStateId =
+                                                    selectedOption?.StateId;
+                                                filterDetailDtoKK
+                                                        .lawyerAssesment =
+                                                    assessmentController.text;
+                                                filterDetailDtoKK.meritsNo =
+                                                    esasNoController.text;
+                                                getJudgmentsByFilter(
+                                                    filterDetailDtoKK);
+                                              }),
+                                              child: const Text(
+                                                'Sorgula',
+                                                style: TextStyle(fontSize: 17),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  )),
+                            ],
+                          )),
                 ),
               ),
               Row(
@@ -243,6 +877,494 @@ class _KaydettigimKararlarState extends State<KaydettigimKararlar> {
       print(e);
     }
   }
-}
+
+  getJudgmentsByFilter(FilterDetailDtoKK filterDetailDtoKK) async {
+    try {
+      SearchDataLawyerResponse response = await lawyerJudgmentService
+          .getLawyerJudgmentsByFilter(filterDetailDtoKK);
+      if (response.success == true) {
+        savedJudgments.clear();
+        savedJudgments.addAll(response.data!);
+        setState(() {
+          Navigator.of(context).pop();
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (context) => const KaydettigimKararlar()));
+        });
+
+        print(response);
+      } else {
+        print(response.data);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  getJudgmentStates() async {
+    JudgmentStateDropdownResponse response =
+        await lawyerJudgmentStateDropdownService.getJudgmentState();
+    if (response.hasError == false) {
+      judgmentStateInformation.addAll(response.judgmentStateInformation);
+
+      setState(() {
+        print("success");
+      });
+    } else {
+      print(response.errorMessage);
+    }
+  }
+
+  // ignore: non_constant_identifier_names
+//   ModalBottomOnayWidget() {
+//     @override
+//     Widget build(BuildContext context) {
+//       return Stack(
+//         children: <Widget>[
+//           Padding(
+//             padding:
+//                 EdgeInsets.only(top: (MediaQuery.of(context).size.height / 15)),
+//             child: Container(
+//               alignment: Alignment.topCenter,
+//               child: const Text('Kullanıcı Karar Sorgulama',
+//                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+//             ),
+//           ),
+//           Padding(
+//               padding: EdgeInsets.only(
+//                 top: MediaQuery.of(context).size.height / 8,
+//                 right: MediaQuery.of(context).size.width / 25,
+//                 left: MediaQuery.of(context).size.width / 25,
+//               ),
+//               child: Form(
+//                 child: Column(
+//                   mainAxisAlignment: MainAxisAlignment.start,
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: <Widget>[
+//                     const Text(
+//                       'Esas Numarası',
+//                     ),
+
+//                     SizedBox(
+//                       height: MediaQuery.of(context).size.height / 80,
+//                     ),
+//                     SizedBox(
+//                       height: MediaQuery.of(context).size.height / 20,
+//                       child: TextFormField(
+//                         controller: esasNoController,
+//                         // ignore: prefer_const_constructors
+//                         decoration: InputDecoration(
+//                           filled: true,
+//                           fillColor: const Color.fromARGB(255, 255, 255, 255),
+//                           focusedBorder: const OutlineInputBorder(
+//                               borderRadius:
+//                                   BorderRadius.all(Radius.circular(8))),
+//                           enabledBorder: OutlineInputBorder(
+//                             borderRadius: BorderRadius.circular(10),
+//                             // ignore: prefer_const_constructors
+//                             borderSide: BorderSide(
+//                               width: 1,
+//                               color: const Color.fromARGB(255, 189, 189, 189),
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                     // ignore: prefer_const_constructors
+//                     SizedBox(
+//                       height: MediaQuery.of(context).size.height / 50,
+//                     ),
+//                     const Text('Karar Numarası'),
+//                     SizedBox(
+//                       height: MediaQuery.of(context).size.height / 80,
+//                     ),
+//                     SizedBox(
+//                       height: MediaQuery.of(context).size.height / 20,
+//                       child: TextFormField(
+//                         controller: kararNoController,
+//                         // ignore: prefer_const_constructors
+//                         decoration: InputDecoration(
+//                           filled: true,
+//                           fillColor: const Color.fromARGB(255, 255, 255, 255),
+//                           focusedBorder: const OutlineInputBorder(
+//                               borderRadius:
+//                                   BorderRadius.all(Radius.circular(8))),
+//                           enabledBorder: OutlineInputBorder(
+//                             borderRadius: BorderRadius.circular(10),
+//                             // ignore: prefer_const_constructors
+//                             borderSide: BorderSide(
+//                               width: 1,
+//                               color: const Color.fromARGB(255, 189, 189, 189),
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                     SizedBox(
+//                       height: MediaQuery.of(context).size.height / 50,
+//                     ),
+//                     const Text('Karar'),
+//                     SizedBox(
+//                       height: MediaQuery.of(context).size.height / 80,
+//                     ),
+//                     SizedBox(
+//                       height: MediaQuery.of(context).size.height / 20,
+//                       child: TextFormField(
+//                         controller: kararController,
+//                         // ignore: prefer_const_constructors
+//                         decoration: InputDecoration(
+//                           filled: true,
+//                           fillColor: const Color.fromARGB(255, 255, 255, 255),
+//                           focusedBorder: const OutlineInputBorder(
+//                               borderRadius:
+//                                   BorderRadius.all(Radius.circular(8))),
+//                           enabledBorder: OutlineInputBorder(
+//                             borderRadius: BorderRadius.circular(10),
+//                             // ignore: prefer_const_constructors
+//                             borderSide: BorderSide(
+//                               width: 1,
+//                               color: const Color.fromARGB(255, 189, 189, 189),
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                     SizedBox(
+//                       height: MediaQuery.of(context).size.height / 50,
+//                     ),
+//                     const Text('Hüküm'),
+//                     SizedBox(
+//                       height: MediaQuery.of(context).size.height / 80,
+//                     ),
+//                     SizedBox(
+//                       height: MediaQuery.of(context).size.height / 20,
+//                       child: TextFormField(
+//                         controller: hukumController,
+//                         // ignore: prefer_const_constructors
+//                         decoration: InputDecoration(
+//                           filled: true,
+//                           fillColor: const Color.fromARGB(255, 255, 255, 255),
+//                           focusedBorder: const OutlineInputBorder(
+//                               borderRadius:
+//                                   BorderRadius.all(Radius.circular(8))),
+//                           enabledBorder: OutlineInputBorder(
+//                             borderRadius: BorderRadius.circular(10),
+//                             // ignore: prefer_const_constructors
+//                             borderSide: BorderSide(
+//                               width: 1,
+//                               color: const Color.fromARGB(255, 189, 189, 189),
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+
+//                     SizedBox(
+//                       height: MediaQuery.of(context).size.height / 50,
+//                     ),
+//                     const Text('Avukat Değerlendirmesi'),
+//                     SizedBox(
+//                       height: MediaQuery.of(context).size.height / 80,
+//                     ),
+//                     SizedBox(
+//                       height: MediaQuery.of(context).size.height / 20,
+//                       child: TextFormField(
+//                         controller: assessmentController,
+//                         // ignore: prefer_const_constructors
+//                         decoration: InputDecoration(
+//                           filled: true,
+//                           fillColor: const Color.fromARGB(255, 255, 255, 255),
+//                           focusedBorder: const OutlineInputBorder(
+//                               borderRadius:
+//                                   BorderRadius.all(Radius.circular(8))),
+//                           enabledBorder: OutlineInputBorder(
+//                             borderRadius: BorderRadius.circular(10),
+//                             // ignore: prefer_const_constructors
+//                             borderSide: BorderSide(
+//                               width: 1,
+//                               color: const Color.fromARGB(255, 189, 189, 189),
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                     SizedBox(
+//                       height: MediaQuery.of(context).size.height / 50,
+//                     ),
+//                     const Text('Karar Durumu'),
+//                     SizedBox(
+//                       height: MediaQuery.of(context).size.height / 80,
+//                     ),
+//                     Container(
+//                       height: 45,
+//                       width: 330,
+//                       decoration: BoxDecoration(
+//                           borderRadius: BorderRadius.circular(5),
+//                           color: Colors.white),
+//                       child:
+//                           // ignore: unnecessary_new
+//                           new DropdownButtonFormField<JudgmentStateInformation>(
+//                         isExpanded: true,
+//                         //underline: SizedBox.shrink(),
+//                         icon: const Icon(Icons.keyboard_arrow_down_outlined),
+//                         dropdownColor: Colors.white,
+//                         value: selectedOption,
+//                         onChanged: (JudgmentStateInformation? newValue) {
+//                           setState(() {
+//                             selectedOption = newValue;
+
+//                             print(selectedOption!.StateId.toString());
+//                           });
+//                         },
+
+//                         validator: (value) =>
+//                             value == null ? "Bu alan boş bırakılamaz" : null,
+//                         items: judgmentStateInformation.map(
+//                             (JudgmentStateInformation
+//                                 judgmentStateInformation) {
+//                           return DropdownMenuItem<JudgmentStateInformation>(
+//                             value: judgmentStateInformation,
+//                             child: Text(
+//                               judgmentStateInformation.StateName!,
+//                               style: const TextStyle(color: Colors.black),
+//                             ),
+//                           );
+//                         }).toList(),
+//                       ),
+//                     ),
+//                     SizedBox(
+//                       height: MediaQuery.of(context).size.height / 50,
+//                     ),
+//                     const Text('Karar Aralığı'),
+//                     SizedBox(
+//                       height: MediaQuery.of(context).size.height / 80,
+//                     ),
+
+//                     Row(
+//                       children: <Widget>[
+//                         Expanded(
+//                           child: SizedBox(
+//                             height: MediaQuery.of(context).size.height / 20,
+//                             child: TextFormField(
+//                               controller: dateInputController,
+//                               //editing controller of this TextField
+//                               decoration: InputDecoration(
+//                                   prefixIcon: Icon(Icons.calendar_today,
+//                                       color:
+//                                           _isTap ? Colors.grey : Colors.black),
+//                                   prefixIconColor: Colors.grey,
+//                                   filled: true,
+//                                   fillColor:
+//                                       const Color.fromARGB(246, 246, 246, 246),
+//                                   focusedBorder: const OutlineInputBorder(
+//                                       borderRadius:
+//                                           BorderRadius.all(Radius.circular(8))),
+//                                   enabledBorder: OutlineInputBorder(
+//                                     borderRadius: BorderRadius.circular(10),
+//                                     // ignore: prefer_const_constructors
+//                                     borderSide: BorderSide(
+//                                       width: 1,
+//                                       color: const Color.fromARGB(
+//                                           255, 189, 189, 189),
+//                                     ),
+//                                   ),
+//                                   hintText: '__/__/____',
+//                                   hintStyle: const TextStyle(
+//                                       color: Colors.grey) //icon of text field
+//                                   //labelText: "" //label text of field
+//                                   ),
+
+//                               //set it true, so that user will not able to edit text
+//                               onTap: () async {
+//                                 DateTime? pickedDate = await showDatePicker(
+//                                     locale: const Locale("tr", "TR"),
+//                                     builder: (BuildContext context, child) {
+//                                       return Theme(
+//                                         data: Theme.of(context).copyWith(
+//                                           colorScheme: ColorScheme.light(
+//                                             primary: HexColor(
+//                                                 '#5DB075'), // header background color
+//                                             onPrimary: Colors
+//                                                 .white, // header text color
+//                                             onSurface: const Color.fromARGB(255,
+//                                                 20, 20, 20), // body text color
+//                                           ),
+//                                           textButtonTheme: TextButtonThemeData(
+//                                             style: TextButton.styleFrom(
+//                                               foregroundColor:
+//                                                   const Color.fromARGB(
+//                                                       255,
+//                                                       23,
+//                                                       48,
+//                                                       112), // button text color
+//                                             ),
+//                                           ),
+//                                         ),
+//                                         child: child!,
+//                                       );
+//                                     },
+//                                     context: context,
+//                                     initialDate: DateTime.now(),
+//                                     firstDate: DateTime(1881),
+//                                     //DateTime.now() - not to allow to choose before today.
+//                                     lastDate: DateTime(2100));
+
+//                                 if (pickedDate != null &&
+//                                     pickedDate != selectedDate) {
+//                                   setState(() {
+//                                     selectedDate = pickedDate;
+//                                     dateInputController?.text =
+//                                         DateFormat("dd-MM-yyyy")
+//                                             .format(pickedDate);
+//                                   });
+//                                 }
+//                               },
+//                             ),
+//                           ),
+//                         ),
+//                         SizedBox(
+//                             width: MediaQuery.of(context).size.height / 50),
+//                         Expanded(
+//                           child: SizedBox(
+//                             height: MediaQuery.of(context).size.height / 20,
+//                             child: TextFormField(
+//                               controller: dateInputControllerSecond,
+//                               //editing controller of this TextField
+//                               decoration: InputDecoration(
+//                                   prefixIcon: Icon(Icons.calendar_today,
+//                                       color: _isTapSecond
+//                                           ? Colors.grey
+//                                           : Colors.black),
+//                                   prefixIconColor: Colors.grey,
+//                                   filled: true,
+//                                   fillColor:
+//                                       const Color.fromARGB(246, 246, 246, 246),
+//                                   focusedBorder: const OutlineInputBorder(
+//                                       borderRadius:
+//                                           BorderRadius.all(Radius.circular(8))),
+//                                   enabledBorder: OutlineInputBorder(
+//                                     borderRadius: BorderRadius.circular(10),
+//                                     // ignore: prefer_const_constructors
+//                                     borderSide: BorderSide(
+//                                       width: 1,
+//                                       color: const Color.fromARGB(
+//                                           255, 189, 189, 189),
+//                                     ),
+//                                   ),
+//                                   hintText: '__/__/____',
+//                                   hintStyle: const TextStyle(
+//                                       color: Colors.grey) //icon of text field
+//                                   //labelText: "" //label text of field
+//                                   ),
+
+//                               //set it true, so that user will not able to edit text
+//                               onTap: () async {
+//                                 DateTime? pickedDateSecond = await showDatePicker(
+//                                     locale: const Locale("tr", "TR"),
+//                                     builder: (BuildContext context, child) {
+//                                       return Theme(
+//                                         data: Theme.of(context).copyWith(
+//                                           colorScheme: ColorScheme.light(
+//                                             primary: HexColor(
+//                                                 '#5DB075'), // header background color
+//                                             onPrimary: Colors
+//                                                 .white, // header text color
+//                                             onSurface: const Color.fromARGB(255,
+//                                                 20, 20, 20), // body text color
+//                                           ),
+//                                           textButtonTheme: TextButtonThemeData(
+//                                             style: TextButton.styleFrom(
+//                                               foregroundColor:
+//                                                   const Color.fromARGB(
+//                                                       255,
+//                                                       23,
+//                                                       48,
+//                                                       112), // button text color
+//                                             ),
+//                                           ),
+//                                         ),
+//                                         child: child!,
+//                                       );
+//                                     },
+//                                     context: context,
+//                                     initialDate: DateTime.now(),
+//                                     firstDate: DateTime(1881),
+//                                     //DateTime.now() - not to allow to choose before today.
+//                                     lastDate: DateTime(2100));
+
+//                                 if (pickedDateSecond != null &&
+//                                     pickedDateSecond != selectedDateSecond) {
+//                                   setState(() {
+//                                     selectedDateSecond = pickedDateSecond;
+//                                     dateInputControllerSecond?.text =
+//                                         DateFormat("dd-MM-yyyy")
+//                                             .format(pickedDateSecond);
+//                                   });
+//                                 }
+//                               },
+//                             ),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                     SizedBox(height: MediaQuery.of(context).size.height / 20),
+//                     Row(
+//                       mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                       children: [
+//                         ElevatedButton(
+//                           style: ElevatedButton.styleFrom(
+//                               shape: RoundedRectangleBorder(
+//                                 borderRadius: BorderRadius.circular(20),
+//                               ),
+//                               minimumSize: const Size(150, 45),
+//                               backgroundColor:
+//                                   const Color.fromARGB(255, 194, 27, 5)),
+//                           onPressed: () {
+//                             Navigator.pop(context);
+//                           },
+//                           child: const Text(
+//                             'Vazgeç',
+//                             style: TextStyle(fontSize: 17),
+//                           ),
+//                         ),
+//                         ElevatedButton(
+//                           style: ElevatedButton.styleFrom(
+//                               shape: RoundedRectangleBorder(
+//                                 borderRadius: BorderRadius.circular(20),
+//                               ),
+//                               minimumSize: const Size(150, 45),
+//                               backgroundColor:
+//                                   const Color.fromARGB(255, 1, 28, 63)),
+//                           onPressed: (() {
+//                             filterDetailDtoKK.decision = kararController?.text;
+//                             filterDetailDtoKK.decree = hukumController?.text;
+//                             filterDetailDtoKK.decreeNo =
+//                                 kararNoController?.text;
+//                             filterDetailDtoKK.finishDate = selectedDateSecond;
+//                             filterDetailDtoKK.startDate = selectedDate;
+//                             filterDetailDtoKK.judgmentStateId =
+//                                 selectedOption?.StateId;
+//                             filterDetailDtoKK.lawyerAssesment =
+//                                 assessmentController?.text;
+//                             filterDetailDtoKK.meritsNo = esasNoController?.text;
+//                             getJudgmentsByFilter(filterDetailDtoKK);
+//                           }),
+//                           child: const Text(
+//                             'Sorgula',
+//                             style: TextStyle(fontSize: 17),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                   ],
+//                 ),
+//               )),
+//         ],
+//       );
+//     }
+//   }
+// }
 //Color.fromARGB(255, 194, 27, 5)
 // Color.fromARGB(255, 130, 184, 113)
+}

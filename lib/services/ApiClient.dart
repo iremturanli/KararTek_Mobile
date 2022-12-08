@@ -10,7 +10,7 @@ import 'LocalSharedPreferences/LocalSharedPreference.dart';
 class ApiClient {
   Dio? _dio;
 
-  //final _baseUrl = "https://192.168.10.111:45458/api/"; //baseurl; 10.0.2.2
+  // final _baseUrl = "https://192.168.1.20:/api/5207"; //baseurl; 10.0.2.2
 
   final _baseUrl = "https://192.168.10.83:45456/api/"; //baseurl; 10.0.2.2
 

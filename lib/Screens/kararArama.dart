@@ -110,7 +110,11 @@ class _KararAramaState extends State<KararArama> {
                 child: DropdownButtonFormField<SearchTypeInformation>(
                   // ignore: prefer_const_constructors
                   decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(
+                          MediaQuery.of(context).size.height / 60),
                       enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 1, color: Colors.grey),
                           borderRadius: BorderRadius.circular(40)),
 
                       // ignore: prefer_const_constructors
@@ -303,6 +307,10 @@ class _KararAramaState extends State<KararArama> {
       if (response.success == true) {
         judgments.clear();
         judgments.addAll(response.data!);
+
+        //TODO:foreach loop
+        //idler aynı mı
+
         print(response.success);
         setState(() {
           Navigator.push(

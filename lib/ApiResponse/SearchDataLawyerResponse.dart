@@ -1,6 +1,5 @@
+// ignore: file_names
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentListInformation.dart';
-
-import '../models/JudgmentInformation/judgmentListInformation.dart';
 
 class SearchDataLawyerResponse {
   SearchDataLawyerResponse({

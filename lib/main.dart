@@ -71,8 +71,15 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const Home()));
+      String token = LocalSharedPreference.getString(
+          LocalSharedPreference.SHARED_MEM_KEY_DEVICE_TOKEN);
+      if (token != "") {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Dashboard()));
+      } else {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => const Home()));
+      }
     });
   }
 

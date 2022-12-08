@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ApiResponse/SearchDataLawyerResponse.dart';
+import 'package:flutter_application_1/main.dart';
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
 import 'package:flutter_application_1/widgets/ModalBottomOnay.dart';
 import 'package:flutter_application_1/widgets/KararListCard.dart';
@@ -65,11 +66,12 @@ class _OnayBekleyenKararlarState extends State<OnayBekleyenKararlar> {
                       minimumSize: Size(45, 30),
                       backgroundColor: const Color.fromARGB(255, 1, 28, 63)),
                   onPressed: () => showMaterialModalBottomSheet<void>(
-                    expand: true,
-                    // backgroundColor: Colors.transparent,
-                    context: context,
-                    builder: (BuildContext context) => ModalBottomOnay(),
-                  ),
+                      expand: true,
+                      // backgroundColor: Colors.transparent,
+                      context: context,
+                      builder: (BuildContext context) =>
+                          Home() //ModalBottomOnay(),
+                      ),
                 ),
               ),
               Row(
