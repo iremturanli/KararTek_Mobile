@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_application_1/ApiResponse/UserChangePasswordInformationResponse.dart';
 import 'package:flutter_application_1/ApiResponse/UserInformationResponse.dart';
 import 'package:flutter_application_1/ApiResponse/mobileApiResponse.dart';
 
@@ -31,5 +32,21 @@ class UserService implements IUserService {
     }
     print(response);
     return UserInformationResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<UserChangePasswordInformationResponse> changePassword(
+      String? currentPassword, String? newPassword) async {
+    Map<String, dynamic> filterObject = {
+      "currentPassword": currentPassword,
+      "newPassword": newPassword
+    };
+    Response response =
+        await _apiClient!.postRequest("User/ChangePassword", filterObject);
+    if (response.statusCode == 401) {
+      print("UnAuthorized");
+    }
+    print(response);
+    return UserChangePasswordInformationResponse.fromJson(response.data);
   }
 }

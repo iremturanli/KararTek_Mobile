@@ -141,7 +141,10 @@ class _ModalBottomAramaSonuclari extends State<ModalBottomAramaSonuclari> {
                             minimumSize: const Size(100, 40),
                             backgroundColor:
                                 const Color.fromARGB(255, 1, 28, 63))),
-                  )
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 70,
+                  ),
                 ],
               ),
             )),

@@ -256,15 +256,18 @@ class _KararAramaState extends State<KararArama> {
                         minimumSize: const Size(350, 55),
                         backgroundColor:
                             const Color.fromARGB(255, 126, 126, 126)),
-                    onPressed: () => showMaterialModalBottomSheet<void>(
-                      expand: true,
+                    onPressed: () => showModalBottomSheet<void>(
+                      isScrollControlled: true,
+                      useRootNavigator: false,
                       // backgroundColor: Colors.transparent,
                       context: context,
-                      builder: (BuildContext context) => ModalBottom(
-                        press: () {
-                          //_runFilter(textEditingController.text);
-                        },
-                        searchWord: textEditingController,
+                      builder: (BuildContext context) => SingleChildScrollView(
+                        child: ModalBottom(
+                          press: () {
+                            //_runFilter(textEditingController.text);
+                          },
+                          searchWord: textEditingController,
+                        ),
                       ),
                     ),
                     child: const Text(

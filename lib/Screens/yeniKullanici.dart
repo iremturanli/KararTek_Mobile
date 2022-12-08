@@ -662,6 +662,8 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                     selectedOption!.TypeID;
                                 userRegisterInformation.cityId =
                                     selectedCity!.CityID;
+                                userRegisterInformation.districtId =
+                                    selectedDistrict!.DistrictID;
                                 userRegisterInformation.identityNumber =
                                     tcController.text;
                                 userRegisterInformation.phoneNumber =

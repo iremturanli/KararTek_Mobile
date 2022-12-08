@@ -36,6 +36,7 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
         bottomOpacity: 0.0,
         elevation: 0.0,
         iconTheme: const IconThemeData(color: Colors.black),
+        centerTitle: true,
         title: const Text('Arama Sonuçları',
             style: TextStyle(
                 fontSize: 30,

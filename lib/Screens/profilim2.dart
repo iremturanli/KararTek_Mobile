@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/ApiResponse/UserInformationResponse.dart';
+import 'package:flutter_application_1/widgets/ChangePasswordPopUp.dart';
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
 import 'package:flutter_application_1/widgets/comboBox.dart';
 import 'package:flutter_application_1/Screens/homePage.dart';
@@ -18,6 +19,7 @@ import 'package:intl/intl.dart';
 import '../AppConfigurations/appConfigurations.dart';
 import '../models/UserInformation/UserListInformation.dart';
 import '../services/UserService/UserService.dart';
+import '../widgets/ModalBottomChangePassword.dart';
 
 enum GenderCharacter { erkek, kadin }
 
@@ -42,7 +44,9 @@ class _Profilim2State extends State<Profilim2> {
   // getImageFromGallery() async {
   //   _imageFileSelected = await _picker.pickImage(source: ImageSource.gallery);
   // }
-
+  TextEditingController currentPasswordController = TextEditingController();
+  TextEditingController newPasswordController = TextEditingController();
+  TextEditingController againPasswordController = TextEditingController();
   TextEditingController dateInput = TextEditingController();
   TextEditingController nameController = TextEditingController();
 
@@ -92,238 +96,263 @@ class _Profilim2State extends State<Profilim2> {
           elevation: 0.0,
           iconTheme: IconThemeData(color: Colors.black),
         ),
-        body: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width / 30),
-          child: ListView(
-            children: <Widget>[
-              SizedBox(height: MediaQuery.of(context).size.height / 150),
-              Row(
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    backgroundImage: _imageFileSelected == null
-                        ? null
-                        : FileImage(File(_imageFileSelected!.path)),
-                    radius: 50,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: MediaQuery.of(context).size.height / 120),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        IconButton(
-                            iconSize: 30,
-                            onPressed: () {
-                              _imgFromGallery();
-                            },
-                            icon: Icon(Icons.image)),
-                        IconButton(
-                            iconSize: 30,
-                            onPressed: () {
-                              _imgFromCamera();
-                            },
-                            icon: Icon(Icons.camera_alt_outlined))
-                      ],
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width / 30),
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: MediaQuery.of(context).size.height / 150),
+                Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      backgroundImage: _imageFileSelected == null
+                          ? null
+                          : FileImage(File(_imageFileSelected!.path)),
+                      radius: 50,
                     ),
-                  )
-                ],
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height / 35),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text('Kullanıcı Adı:'),
-                  usersInformations.isEmpty
-                      ? SizedBox(
-                          height: MediaQuery.of(context).size.height / 35)
-                      : Text(usersInformations[0].firstName!),
-                ],
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height / 75),
-              CustomDivider(),
-              SizedBox(height: MediaQuery.of(context).size.height / 75),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text('Kullanıcı Soyadı: '),
-                  SizedBox(height: MediaQuery.of(context).size.height / 120),
-                  usersInformations.isEmpty
-                      ? SizedBox(
-                          height: MediaQuery.of(context).size.height / 35)
-                      : Text(usersInformations[0].lastName!),
-                ],
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height / 75),
-              CustomDivider(),
-              SizedBox(height: MediaQuery.of(context).size.height / 75),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text('Kullanıcı TC Kimlik No: '),
-                  SizedBox(height: MediaQuery.of(context).size.height / 120),
-                  usersInformations.isEmpty
-                      ? SizedBox(
-                          height: MediaQuery.of(context).size.height / 35)
-                      : Text(usersInformations[0].identityNumber!),
-                ],
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height / 75),
-              CustomDivider(),
-              SizedBox(height: MediaQuery.of(context).size.height / 75),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text('Kullanıcı Cep Telefonu: '),
-                  SizedBox(height: MediaQuery.of(context).size.height / 120),
-                  usersInformations.isEmpty
-                      ? SizedBox(
-                          height: MediaQuery.of(context).size.height / 35)
-                      : Text(usersInformations[0].phoneNumber!),
-                ],
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height / 75),
-              CustomDivider(),
-              SizedBox(height: MediaQuery.of(context).size.height / 75),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text('Kullanıcı E-Posta: '),
-                  SizedBox(height: MediaQuery.of(context).size.height / 120),
-                  usersInformations.isEmpty
-                      ? SizedBox(
-                          height: MediaQuery.of(context).size.height / 35)
-                      : Text(usersInformations[0].email!),
-                ],
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height / 75),
-              CustomDivider(),
-              SizedBox(height: MediaQuery.of(context).size.height / 75),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text('İl: '),
-                  SizedBox(height: MediaQuery.of(context).size.height / 120),
-                  usersInformations.isEmpty
-                      ? SizedBox(
-                          height: MediaQuery.of(context).size.height / 35)
-                      : Text(usersInformations[0].cityName!),
-                ],
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height / 75),
-              CustomDivider(),
-              SizedBox(height: MediaQuery.of(context).size.height / 75),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text('İlçe: '),
-                  SizedBox(height: MediaQuery.of(context).size.height / 120),
-                  usersInformations.isEmpty
-                      ? SizedBox(
-                          height: MediaQuery.of(context).size.height / 35)
-                      : Text(usersInformations[0].districtName!),
-                ],
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height / 75),
-              CustomDivider(),
-              SizedBox(height: MediaQuery.of(context).size.height / 75),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text('Şifre Değiştir: '),
-                  SizedBox(height: MediaQuery.of(context).size.height / 120),
-                  usersInformations.isEmpty
-                      ? SizedBox(
-                          height: MediaQuery.of(context).size.height / 35)
-                      : IconButton(onPressed: () {}, icon: Icon(Icons.refresh)),
-                ],
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height / 6),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        minimumSize: Size(
-                            MediaQuery.of(context).size.height / 5,
-                            MediaQuery.of(context).size.width / 9),
-                        backgroundColor: Color.fromARGB(255, 175, 0, 0)),
-                    onPressed: () {
-                      Navigator.of(context);
-                      showDialog(
-                          barrierDismissible: false,
-                          context: context,
-                          builder: (ctx) => AlertDialog(
-                                backgroundColor:
-                                    Color.fromARGB(255, 221, 226, 241),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: MediaQuery.of(context).size.height / 120),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          IconButton(
+                              iconSize: 30,
+                              onPressed: () {
+                                _imgFromGallery();
+                              },
+                              icon: Icon(Icons.image)),
+                          IconButton(
+                              iconSize: 30,
+                              onPressed: () {
+                                _imgFromCamera();
+                              },
+                              icon: Icon(Icons.camera_alt_outlined))
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height / 35),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text('Kullanıcı Adı:'),
+                    usersInformations.isEmpty
+                        ? SizedBox(
+                            height: MediaQuery.of(context).size.height / 35)
+                        : Text(usersInformations[0].firstName!),
+                  ],
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height / 75),
+                CustomDivider(),
+                SizedBox(height: MediaQuery.of(context).size.height / 75),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text('Kullanıcı Soyadı: '),
+                    SizedBox(height: MediaQuery.of(context).size.height / 120),
+                    usersInformations.isEmpty
+                        ? SizedBox(
+                            height: MediaQuery.of(context).size.height / 35)
+                        : Text(usersInformations[0].lastName!),
+                  ],
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height / 75),
+                CustomDivider(),
+                SizedBox(height: MediaQuery.of(context).size.height / 75),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text('Kullanıcı TC Kimlik No: '),
+                    SizedBox(height: MediaQuery.of(context).size.height / 120),
+                    usersInformations.isEmpty
+                        ? SizedBox(
+                            height: MediaQuery.of(context).size.height / 35)
+                        : Text(usersInformations[0].identityNumber!),
+                  ],
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height / 75),
+                CustomDivider(),
+                SizedBox(height: MediaQuery.of(context).size.height / 75),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text('Kullanıcı Cep Telefonu: '),
+                    SizedBox(height: MediaQuery.of(context).size.height / 120),
+                    usersInformations.isEmpty
+                        ? SizedBox(
+                            height: MediaQuery.of(context).size.height / 35)
+                        : Text(usersInformations[0].phoneNumber!),
+                  ],
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height / 75),
+                CustomDivider(),
+                SizedBox(height: MediaQuery.of(context).size.height / 75),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text('Kullanıcı E-Posta: '),
+                    SizedBox(height: MediaQuery.of(context).size.height / 120),
+                    usersInformations.isEmpty
+                        ? SizedBox(
+                            height: MediaQuery.of(context).size.height / 35)
+                        : Text(usersInformations[0].email!),
+                  ],
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height / 75),
+                CustomDivider(),
+                SizedBox(height: MediaQuery.of(context).size.height / 75),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text('İl: '),
+                    SizedBox(height: MediaQuery.of(context).size.height / 120),
+                    usersInformations.isEmpty
+                        ? SizedBox(
+                            height: MediaQuery.of(context).size.height / 35)
+                        : Text(usersInformations[0].cityName!),
+                  ],
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height / 75),
+                CustomDivider(),
+                SizedBox(height: MediaQuery.of(context).size.height / 75),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text('İlçe: '),
+                    SizedBox(height: MediaQuery.of(context).size.height / 120),
+                    usersInformations.isEmpty
+                        ? SizedBox(
+                            height: MediaQuery.of(context).size.height / 35)
+                        : Text(usersInformations[0].districtName!),
+                  ],
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height / 75),
+                CustomDivider(),
+                SizedBox(height: MediaQuery.of(context).size.height / 75),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text('Şifre Değiştir: '),
+                    SizedBox(height: MediaQuery.of(context).size.height / 120),
+                    usersInformations.isEmpty
+                        ? SizedBox(
+                            height: MediaQuery.of(context).size.height / 35)
+                        : IconButton(
+                            onPressed: () => showModalBottomSheet<void>(
+                                isScrollControlled: true,
+                                useRootNavigator: false,
+                                isDismissible: false,
                                 shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(30))),
-                                title: const Text(
-                                    "Çıkış Yapmak İstediğinize Emin Misiniz?"),
-                                actions: <Widget>[
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                              minimumSize: Size(120, 50),
-                                              backgroundColor: Color.fromARGB(
-                                                  255, 175, 172, 172),
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(
-                                                              10)))),
-                                          onPressed: () {
-                                            Navigator.of(ctx).pop();
-                                          },
-                                          child: Text(
-                                            "İPTAL",
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                backgroundColor:
+                                    const Color.fromARGB(229, 229, 229, 229),
+                                // expand: true,
+
+                                context: context,
+                                builder: (BuildContext context) => Padding(
+                                      padding: EdgeInsets.only(
+                                          bottom: MediaQuery.of(context)
+                                              .viewInsets
+                                              .bottom),
+                                      child: SingleChildScrollView(
+                                          child: ModalBottomChangePassword()),
+                                    )),
+                            icon: Icon(
+                              Icons.refresh,
+                            )),
+                  ],
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height / 6),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          minimumSize: Size(
+                              MediaQuery.of(context).size.height / 5,
+                              MediaQuery.of(context).size.width / 9),
+                          backgroundColor: Color.fromARGB(255, 175, 0, 0)),
+                      onPressed: () {
+                        Navigator.of(context);
+                        showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                                  backgroundColor:
+                                      Color.fromARGB(255, 221, 226, 241),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(30))),
+                                  title: const Text(
+                                      "Çıkış Yapmak İstediğinize Emin Misiniz?"),
+                                  actions: <Widget>[
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                minimumSize: Size(120, 50),
+                                                backgroundColor: Color.fromARGB(
+                                                    255, 175, 172, 172),
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)))),
+                                            onPressed: () {
+                                              Navigator.of(ctx).pop();
+                                            },
+                                            child: Text(
+                                              "İPTAL",
+                                            ),
                                           ),
-                                        ),
-                                        ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                              minimumSize: Size(120, 50),
-                                              backgroundColor: Color.fromARGB(
-                                                  255, 194, 27, 5),
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(
-                                                              10)))),
-                                          onPressed: () {
-                                            Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        Login()));
-                                          },
-                                          child: Text(
-                                            "ÇIKIŞ",
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                minimumSize: Size(120, 50),
+                                                backgroundColor: Color.fromARGB(
+                                                    255, 194, 27, 5),
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)))),
+                                            onPressed: () {
+                                              Navigator.pushReplacement(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Login()));
+                                            },
+                                            child: Text(
+                                              "ÇIKIŞ",
+                                            ),
                                           ),
-                                        ),
-                                      ]),
-                                  SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              40),
-                                ],
-                              ));
-                    },
-                    child: const Text(
-                      'Çıkış Yap',
-                      style: TextStyle(fontSize: 17),
+                                        ]),
+                                    SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                40),
+                                  ],
+                                ));
+                      },
+                      child: const Text(
+                        'Çıkış Yap',
+                        style: TextStyle(fontSize: 17),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ));
   }
