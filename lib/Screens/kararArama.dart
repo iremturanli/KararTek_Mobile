@@ -2,13 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ApiResponse/SearchDataLawyerResponse.dart';
 import 'package:flutter_application_1/ApiResponse/SearchTypeDropdownResponse.dart';
+import 'package:flutter_application_1/ApiResponse/UserLikeResponse.dart';
 import 'package:flutter_application_1/Screens/AramaSonuclari.dart';
+import 'package:flutter_application_1/models/ForLikeInformation/forLikeList.dart';
 import 'package:flutter_application_1/models/JudgmentInformation/judgmentDtoInformation.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentListInformation.dart';
 import 'package:flutter_application_1/models/SearchTypeInformation/searchTypeInformation.dart';
 import 'package:flutter_application_1/services/DropDownServices/SearchTypeDropdownService.dart';
 import 'package:flutter_application_1/services/JudgmentServices/judgmentService.dart';
 import 'package:flutter_application_1/services/LawyerJudgmentServices/LawyerJudgmentService.dart';
+import 'package:flutter_application_1/services/UserLikeServices/UserLikeService.dart';
 import 'package:flutter_application_1/widgets/ModalBottomDetayl%C4%B1Arama.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
@@ -37,15 +40,16 @@ class _KararAramaState extends State<KararArama> {
   final LawyerJudgmentService lawyerJudgmentService =
       getIt.get<LawyerJudgmentService>();
 
+  final UserLikeService userLikeService = getIt.get<UserLikeService>();
+
   List<SearchTypeInformation> searchTypeInformation = [];
   List<LawyerJudgmentListInformation> judgments = [];
+  List<ForLikeList> userLikes = [];
   SearchTypeInformation? selectedOption;
   int? decisionValue;
 
   @override
   void initState() {
-    // TODO: implement initState
-
     super.initState();
     getSearchTypes();
   }
@@ -308,9 +312,18 @@ class _KararAramaState extends State<KararArama> {
         judgments.clear();
         judgments.addAll(response.data!);
 
+        for (var item in judgments) {
+          int i = 0;
+          if (item.id == userLikes[i].judgmentId &&
+              userLikes[i].judgmentId == 2) {
+            item.isLike = userLikes[i].isLike;
+          }
+
+          i++;
+        }
+
         //TODO:foreach loop
         //idler aynı mı
-
         print(response.success);
         setState(() {
           Navigator.push(
@@ -338,6 +351,16 @@ class _KararAramaState extends State<KararArama> {
       if (response.success == true) {
         judgments.clear();
         judgments.addAll(response.data!);
+
+        for (var item in judgments) {
+          int i = 0;
+          if (item.id == userLikes[i].judgmentId &&
+              userLikes[i].judgmentId == 1) {
+            item.isLike = userLikes[i].isLike;
+          }
+
+          i++;
+        }
         print(response.success);
         setState(() {
           Navigator.push(
@@ -348,6 +371,25 @@ class _KararAramaState extends State<KararArama> {
                         judgments: judgments,
                       )));
         });
+
+        print(response);
+      } else {
+        print(response.message);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  userLike(int id, int searchTypeId) async {
+    try {
+      UserLikeResponse response =
+          await userLikeService.userLike(id, searchTypeId);
+      if (response.success == true) {
+        userLikes.clear();
+        userLikes.addAll(response.data!);
+        print(response.success);
+        setState(() {});
 
         print(response);
       } else {
