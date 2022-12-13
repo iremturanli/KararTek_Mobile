@@ -1,19 +1,21 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, must_be_immutable, file_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ApiResponse/BaseApiResponse.dart';
+import 'package:flutter_application_1/ApiResponse/SearchDataLawyerResponse.dart';
+import 'package:flutter_application_1/models/ForLikeInformation/forLikeDto.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentListInformation.dart';
 import 'package:flutter_application_1/services/JudgmentServices/judgmentService.dart';
 import 'package:flutter_application_1/services/LawyerJudgmentServices/LawyerJudgmentService.dart';
-import 'package:flutter_application_1/services/LocalSharedPreferences/LocalSharedPreference.dart';
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../AppConfigurations/appConfigurations.dart';
-import '../models/JudgmentInformation/judgmentListInformation.dart';
+import '../services/UserLikeServices/UserLikeService.dart';
 
 class AramaSonuclariDetayDeneme extends StatefulWidget {
   List<LawyerJudgmentListInformation> judgments = [];
+  List<LawyerJudgmentListInformation> likes = [];
 
   final int ListIndex;
   final int? searchTypeId;
@@ -33,6 +35,7 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
   final JudgmentService judgmentService = getIt.get<JudgmentService>();
   final LawyerJudgmentService lawyerJudgmentService =
       getIt.get<LawyerJudgmentService>();
+  final UserLikeService userLikeService = getIt.get<UserLikeService>();
 
   bool isVisible = false;
   bool isLiked = false;
@@ -61,7 +64,7 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
             children: [
               IconButton(
                 tooltip: 'Beğen',
-                icon: !isLiked
+                icon: widget.judgments[widget.ListIndex].isLike!
                     ? const Icon(
                         Icons.favorite_border,
                         color: Colors.red,
@@ -74,7 +77,7 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
                       ),
                 onPressed: () {
                   setState(() {
-                    isLiked = !isLiked;
+                    isLiked = !widget.judgments[widget.ListIndex].isLike!;
                   });
                   widget.searchTypeId == 1
                       ? addLike(widget.judgments[widget.ListIndex].id!, isLiked)

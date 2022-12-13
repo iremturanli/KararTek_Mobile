@@ -5,10 +5,13 @@ import 'package:flutter_application_1/services/DropDownServices/LawyerJudgmentSt
 import 'package:flutter_application_1/services/DropDownServices/SearchTypeDropdownService.dart';
 import 'package:flutter_application_1/services/DropDownServices/UserTypeDropdownServices.dart';
 import 'package:flutter_application_1/services/JudgmentServices/judgmentService.dart';
+
 import 'package:flutter_application_1/services/UserService/UserService.dart';
+
+import 'package:flutter_application_1/services/UserLikeServices/UserLikeService.dart';
+
 import 'package:get_it/get_it.dart';
 import '../services/ApiClient.dart';
-import '../services/DropDownServices/CityDropdownService.dart';
 import '../services/DropDownServices/CommissionDropdownService.dart';
 import '../services/DropDownServices/CourtDropdownService.dart';
 import '../services/DropDownServices/DistrictDropdownService.dart';
@@ -43,6 +46,8 @@ void configureInjection() {
       () => LawyerJudgmentStateDropdownService(getIt<ApiClient>()));
   getIt.registerLazySingleton<UserService>(
       () => UserService(getIt<ApiClient>()));
+  getIt.registerLazySingleton<UserLikeService>(
+      () => UserLikeService(getIt<ApiClient>()));
 
 /*  getIt.registerLazySingleton<SchoolService>(
       () => SchoolService(getIt<ApiClient>()));
