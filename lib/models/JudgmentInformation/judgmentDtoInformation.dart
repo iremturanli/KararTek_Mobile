@@ -4,8 +4,8 @@ import 'package:flutter_application_1/models/SearchTypeInformation/searchTypeInf
 
 class JudgmentDtoInformation {
   JudgmentDtoInformation({
-    required this.keyword,
-    required this.searchTypeID,
+    this.keyword,
+    this.searchTypeID,
     this.judgmentTypeID,
   });
 

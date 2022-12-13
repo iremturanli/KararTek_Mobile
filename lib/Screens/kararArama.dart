@@ -33,7 +33,7 @@ YuksekYargi? _yuksekYargi = YuksekYargi.yargitay;
 class _KararAramaState extends State<KararArama> {
   final textEditingController = TextEditingController();
   bool isVisible = false;
-
+  JudgmentDtoInformation judgmentDtoInformation = JudgmentDtoInformation();
   final SearchTypeDropdownService searchTypeDropdownService =
       getIt.get<SearchTypeDropdownService>();
   final JudgmentService judgmentService = getIt.get<JudgmentService>();
@@ -239,15 +239,14 @@ class _KararAramaState extends State<KararArama> {
                         minimumSize: const Size(350, 55),
                         backgroundColor: const Color.fromARGB(255, 1, 28, 63)),
                     onPressed: () {
-                      JudgmentDtoInformation judgmentDtoInformation =
-                          JudgmentDtoInformation(
-                              keyword: textEditingController.text,
-                              searchTypeID: selectedOption!.TypeID,
-                              judgmentTypeID: decisionValue);
+                      judgmentDtoInformation = JudgmentDtoInformation(
+                          keyword: textEditingController.text,
+                          searchTypeID: selectedOption!.TypeID,
+                          judgmentTypeID: decisionValue);
                       if (selectedOption!.TypeID == 1) {
-                        getLawyerJudgments(judgmentDtoInformation);
+                        userLike(selectedOption!.TypeID!);
                       } else {
-                        getJudgments(judgmentDtoInformation);
+                        userLike(selectedOption!.TypeID!);
                       }
                     },
                     child: const Text(
@@ -316,7 +315,7 @@ class _KararAramaState extends State<KararArama> {
           int i = 0;
           if (item.id == userLikes[i].judgmentId &&
               userLikes[i].judgmentId == 2) {
-            item.isLike = userLikes[i].isLike;
+            item.isLike = userLikes[i].isLike!;
           }
 
           i++;
@@ -352,15 +351,17 @@ class _KararAramaState extends State<KararArama> {
         judgments.clear();
         judgments.addAll(response.data!);
 
-        for (var item in judgments) {
-          int i = 0;
-          if (item.id == userLikes[i].judgmentId &&
-              userLikes[i].judgmentId == 1) {
-            item.isLike = userLikes[i].isLike;
-          }
+        if (userLikes.length != 0) {
+          for (var item in judgments) {
+            int i = 0;
+            if (item.id == userLikes[i].judgmentId) {
+              item.isLike = userLikes[i].isLike!;
+            }
 
-          i++;
+            i++;
+          }
         }
+
         print(response.success);
         setState(() {
           Navigator.push(
@@ -381,15 +382,19 @@ class _KararAramaState extends State<KararArama> {
     }
   }
 
-  userLike(int id, int searchTypeId) async {
+  userLike(int searchTypeId) async {
     try {
-      UserLikeResponse response =
-          await userLikeService.userLike(id, searchTypeId);
+      UserLikeResponse response = await userLikeService.userLike(searchTypeId);
       if (response.success == true) {
         userLikes.clear();
         userLikes.addAll(response.data!);
         print(response.success);
-        setState(() {});
+//        setState(() {});
+        if (selectedOption?.TypeID == 1) {
+          getLawyerJudgments(judgmentDtoInformation);
+        } else {
+          getJudgments(judgmentDtoInformation);
+        }
 
         print(response);
       } else {

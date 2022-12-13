@@ -2,14 +2,14 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter_application_1/ApiResponse/UserLikeResponse.dart';
+import 'package:flutter_application_1/services/FavouriteJudgmentServices/IFavouriteJudgmentService.dart';
 
 import '../../ApiResponse/mobileApiResponse.dart';
 import '../ApiClient.dart';
-import 'IUserLikeService.dart';
 
-class UserLikeService implements IUserLikeService {
+class FavouriteJudgmentService implements IFavouriteJudgmentService {
   ApiClient? _apiClient;
-  UserLikeService(ApiClient apiClient) {
+  FavouriteJudgmentService(ApiClient apiClient) {
     _apiClient = apiClient;
     _apiClient!.onResponseCallback = onResponseCallback;
     _apiClient!.onErrorCallback = onErrorCallback;
@@ -26,14 +26,18 @@ class UserLikeService implements IUserLikeService {
   }
 
   @override
-  Future<UserLikeResponse> userLike(int searchTypeId) async {
-    Map<String, dynamic>? filterObject = {"searchTypeId": searchTypeId};
+  Future<MobileApiResponse> addJudgmentPool(
+      int judgmentId, int searchTypeId) async {
+    Map<String, dynamic>? filterObject = {
+      "judgmentId": judgmentId,
+      "searchTypeId": searchTypeId
+    };
     Response response = await _apiClient!
-        .postRequestQueryString("UserLike/GetAll", filterObject);
+        .postRequestQueryString("JudgmentPool/AddJudgmentPool", filterObject);
     if (response.statusCode == 401) {
       print("UnAuthorized");
     }
     print(response);
-    return UserLikeResponse.fromJson(response.data);
+    return MobileApiResponse.fromJson(response.data);
   }
 }

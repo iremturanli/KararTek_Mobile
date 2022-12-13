@@ -95,6 +95,7 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                                 overflow: TextOverflow.ellipsis,
                               ),
                               onTap: (() {
+                                //TODOdto ysp
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -102,8 +103,8 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                                             AramaSonuclariDetayDeneme(
                                                 searchTypeId:
                                                     widget.searchTypeId,
-                                                judgments: widget.judgments,
-                                                ListIndex: index)));
+                                                judgments:
+                                                    widget.judgments[index])));
                               }),
                             ),
                           )))

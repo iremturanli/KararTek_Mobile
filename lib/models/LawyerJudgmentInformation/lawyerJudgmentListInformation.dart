@@ -22,7 +22,7 @@ class LawyerJudgmentListInformation {
       this.lastName,
       this.lawyerAssesment,
       this.stateId,
-      this.isLike});
+      this.isLike = false});
 
   int? id;
   int? commissionId;
@@ -46,7 +46,7 @@ class LawyerJudgmentListInformation {
   String? userName;
   String? lastName;
   String? lawyerAssesment;
-  bool? isLike;
+  bool isLike;
 
   factory LawyerJudgmentListInformation.fromJson(Map<String, dynamic> json) =>
       LawyerJudgmentListInformation(
