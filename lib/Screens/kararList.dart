@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/AvukatKararToplam.dart';
 import 'package:flutter_application_1/Screens/KararHavuzum.dart';
@@ -7,6 +9,10 @@ import 'package:flutter_application_1/Screens/iletisimBilgileri.dart';
 import 'package:flutter_application_1/Screens/kararKayit.dart';
 import 'package:flutter_application_1/Screens/s_Sorular.dart';
 
+import '../ApiResponse/UserInformationResponse.dart';
+import '../AppConfigurations/appConfigurations.dart';
+import '../models/UserInformation/UserListInformation.dart';
+import '../services/UserService/UserService.dart';
 import '../widgets/menu.dart';
 
 final List<Map<String, dynamic>> _kararIslemleri = [
@@ -37,8 +43,28 @@ final List<Map<String, dynamic>> _kararIslemleri = [
   }
 ];
 
-class kararList extends StatelessWidget {
+final UserService userService = getIt.get<UserService>();
+bool? control = false;
+List<UserListInformation> usersInformations = [];
+
+class kararList extends StatefulWidget {
   const kararList({Key? key}) : super(key: key);
+
+  @override
+  State<kararList> createState() => _kararListState();
+}
+
+class _kararListState extends State<kararList> {
+  @override
+  void initState() {
+    getUserById();
+
+    super.initState();
+    if (usersInformations.isEmpty) {
+      getUserById();
+    } else {}
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +84,11 @@ class kararList extends StatelessWidget {
           padding:
               EdgeInsets.only(top: MediaQuery.of(context).size.height / 40),
           child: ListView.builder(
-              itemCount: _kararIslemleri.length,
+              itemCount: usersInformations.isEmpty
+                  ? 0
+                  : usersInformations[0].userTypeId == 3
+                      ? 5
+                      : 3,
               itemBuilder: ((context, index) => Menu(
                   press: (() {
                     switch (index) {
@@ -108,5 +138,20 @@ class kararList extends StatelessWidget {
                   iconTrailing: _kararIslemleri[index]["trailing"],
                   iconLeading: _kararIslemleri[index]["leading"]))),
         ));
+  }
+
+  getUserById() async {
+    UserInformationResponse response = await userService.getUserById();
+    if (response.success == true) {
+      usersInformations.clear();
+      usersInformations.addAll(response.data!);
+
+      print(response.success);
+      setState(() {});
+
+      print(response);
+    } else {
+      print(response.message);
+    }
   }
 }

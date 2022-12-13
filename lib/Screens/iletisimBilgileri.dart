@@ -101,7 +101,7 @@ class iletisimBilgileri extends StatelessWidget {
           SizedBox(height: MediaQuery.of(context).size.height / 55),
           Row(
             children: const [
-              Text('Bilgi Almak İçin:', style: TextStyle(fontSize: 16)),
+              Text('Bilgi Almak İçin:', style: TextStyle(fontSize: 15)),
               TextButton(
                   onPressed: _launchEmail,
                   child: Text('bilgi@karartek.com.tr',
@@ -115,14 +115,14 @@ class iletisimBilgileri extends StatelessWidget {
             // ignore: prefer_const_literals_to_create_immutables
             children: [
               Text('Sorularınız ve Sorunlarınız:',
-                  style: TextStyle(fontSize: 16)),
+                  style: TextStyle(fontSize: 15)),
               TextButton(
                 onPressed: _launchEmail, //??
                 child: Text('destek@karartek.com.tr',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 14.3,
                         color: Colors.black,
                         fontWeight: FontWeight.bold)),
               ),

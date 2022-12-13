@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Screens/kararAramaDeneme.dart';
+import 'package:flutter_application_1/Screens/kararAramaDenemeBottom.dart';
 import 'package:flutter_application_1/Screens/profilim2.dart';
 import 'package:flutter_application_1/widgets/menu.dart';
 import 'package:flutter_application_1/Screens/iletisimList.dart';
@@ -46,8 +48,10 @@ class _DashboardState extends State<Dashboard> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 makeDashboardItem("Karar Arama", Icons.search, (() {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => KararArama()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => KararAramaDenemeBottom()));
                 })),
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 12,

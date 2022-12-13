@@ -66,7 +66,7 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
         children: [
           SizedBox(
               //sizedBox
-              height: height / 2,
+              height: height,
               width: width,
               child: widget.judgments.isNotEmpty
                   ? ListView.builder(
@@ -80,7 +80,7 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                                   backgroundColor:
                                       const Color.fromARGB(255, 1, 28, 63),
                                   child: Text(
-                                    widget.judgments[index].id.toString(),
+                                    (index + 1).toString(),
                                     style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 15,

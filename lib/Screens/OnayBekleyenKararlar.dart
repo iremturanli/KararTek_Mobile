@@ -13,6 +13,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../AppConfigurations/appConfigurations.dart';
 
 import '../models/LawyerJudgmentInformation/filterDetailDtoKK.dart';
+import '../models/LawyerJudgmentInformation/filterDetailDtoOB.dart';
 import '../models/LawyerJudgmentInformation/lawyerJudgmentListInformation.dart';
 import '../services/LawyerJudgmentServices/LawyerJudgmentService.dart';
 import 'KararOnayDetay.dart';
@@ -39,7 +40,7 @@ class _OnayBekleyenKararlarState extends State<OnayBekleyenKararlar> {
     getAllLawyerJudgments();
   }
 
-  FilterDetailDtoKK filterDetailDtoKK = FilterDetailDtoKK();
+  FilterDetailDtoOb filterDetailDtoOb = FilterDetailDtoOb();
 
   DateTime? selectedDate;
   DateTime? selectedDateSecond;
@@ -48,6 +49,7 @@ class _OnayBekleyenKararlarState extends State<OnayBekleyenKararlar> {
       getIt.get<LawyerJudgmentService>();
 
   List<LawyerJudgmentListInformation> pendingApprovalJudgments = [];
+  List<LawyerJudgmentListInformation> filteredJudgments = [];
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -658,24 +660,23 @@ class _OnayBekleyenKararlarState extends State<OnayBekleyenKararlar> {
                                                       const Color.fromARGB(
                                                           255, 1, 28, 63)),
                                               onPressed: (() {
-                                                filterDetailDtoKK.decision =
+                                                filterDetailDtoOb.decision =
                                                     kararController.text;
-                                                filterDetailDtoKK.decree =
+                                                filterDetailDtoOb.decree =
                                                     hukumController.text;
-                                                filterDetailDtoKK.decreeNo =
+                                                filterDetailDtoOb.decreeNo =
                                                     kararNoController.text;
-                                                filterDetailDtoKK.finishDate =
+                                                filterDetailDtoOb.finishDate =
                                                     selectedDateSecond;
-                                                filterDetailDtoKK.startDate =
+                                                filterDetailDtoOb.startDate =
                                                     selectedDate;
-
-                                                filterDetailDtoKK
+                                                filterDetailDtoOb
                                                         .lawyerAssesment =
                                                     assessmentController.text;
-                                                filterDetailDtoKK.meritsNo =
+                                                filterDetailDtoOb.meritsNo =
                                                     esasNoController.text;
-                                                //  getJudgmentsByFilter(
-                                                //    filterDetailDtoKK);
+                                                getJudgmentsByFilterOb(
+                                                    filterDetailDtoOb);
                                               }),
                                               child: const Text(
                                                 'Sorgula',
@@ -705,7 +706,7 @@ class _OnayBekleyenKararlarState extends State<OnayBekleyenKararlar> {
               CustomDivider(),
               SizedBox(
                 //container
-                height: height / 2,
+                height: height,
                 width: width,
                 child: ListView.builder(
                   //<-- SEE HERE
@@ -760,6 +761,30 @@ class _OnayBekleyenKararlarState extends State<OnayBekleyenKararlar> {
             ],
           ),
         ));
+  }
+
+  getJudgmentsByFilterOb(FilterDetailDtoOb filterDetailDtoOb) async {
+    try {
+      SearchDataLawyerResponse response = await lawyerJudgmentService
+          .getLawyerJudgmentsByFilterOB(filterDetailDtoOb);
+      if (response.success == true) {
+        pendingApprovalJudgments.clear();
+        pendingApprovalJudgments.addAll(response.data!);
+        setState(() {
+          Navigator.of(context).pop();
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (context) => const KaydettigimKararlar()));
+        });
+
+        print(response);
+      } else {
+        print(response.data);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   getAllLawyerJudgments() async {

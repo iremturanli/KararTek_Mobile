@@ -794,7 +794,7 @@ class _KaydettigimKararlarState extends State<KaydettigimKararlar> {
               CustomDivider(),
               SizedBox(
                 //container
-                height: height / 2,
+                height: height / 1,
                 width: width,
                 child: ListView.builder(
                   //<-- SEE HERE

@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: [
         const Locale('tr', 'TR'),
       ],
-      title: 'Flutter Demo',
+      title: 'kararTek',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
