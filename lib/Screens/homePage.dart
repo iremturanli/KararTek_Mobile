@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/kararAramaDeneme.dart';
-import 'package:flutter_application_1/Screens/kararAramaDenemeBottom.dart';
-import 'package:flutter_application_1/Screens/profilim2.dart';
+import 'package:flutter_application_1/Screens/kararArama.dart';
+import 'package:flutter_application_1/Screens/profilim.dart';
 import 'package:flutter_application_1/widgets/menu.dart';
 import 'package:flutter_application_1/Screens/iletisimList.dart';
-import 'package:flutter_application_1/Screens/kararArama.dart';
+import 'package:flutter_application_1/Screens/kararAramaDenemeBottom1.dart';
 import 'package:flutter_application_1/Screens/kararList.dart';
 import 'package:flutter_application_1/Screens/profilim.dart';
 
@@ -48,10 +48,8 @@ class _DashboardState extends State<Dashboard> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 makeDashboardItem("Karar Arama", Icons.search, (() {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => KararAramaDenemeBottom()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => KararArama()));
                 })),
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 12,
@@ -78,7 +76,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
                 makeDashboardItem("Profilim", Icons.person, (() {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Profilim2()));
+                      MaterialPageRoute(builder: (context) => Profilim()));
                 })),
               ],
             ),
