@@ -1,4 +1,6 @@
 // ignore: file_names
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/ApiResponse/SearchDataLawyerResponse.dart';
@@ -15,6 +17,7 @@ import 'package:flutter_application_1/services/JudgmentServices/judgmentService.
 import 'package:flutter_application_1/services/LawyerJudgmentServices/LawyerJudgmentService.dart';
 import 'package:flutter_application_1/services/UserLikeServices/UserLikeService.dart';
 import 'package:flutter_application_1/widgets/ModalBottomDetayl%C4%B1Arama.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -44,6 +47,7 @@ YuksekYargi? _yuksekYargi = YuksekYargi.yargitay;
 class _KararAramaState extends State<KararArama> {
   final searchController = TextEditingController();
   bool isVisible = false;
+  JudgmentDtoInformation judgmentDtoInformation = JudgmentDtoInformation();
   TextEditingController meritsYearController = TextEditingController();
   TextEditingController firstMeritsNoController = TextEditingController();
   TextEditingController lastMeritsNoController = TextEditingController();
@@ -284,15 +288,15 @@ class _KararAramaState extends State<KararArama> {
                         minimumSize: const Size(350, 55),
                         backgroundColor: const Color.fromARGB(255, 1, 28, 63)),
                     onPressed: () {
-                      JudgmentDtoInformation judgmentDtoInformation =
-                          JudgmentDtoInformation(
-                              keyword: searchController.text,
-                              searchTypeID: selectedOption!.TypeID,
-                              judgmentTypeID: decisionValue);
+                      judgmentDtoInformation = JudgmentDtoInformation(
+                          keyword: searchController.text,
+                          searchTypeID:
+                              selectedOption!.TypeID, //boş olunca hata veriyo
+                          judgmentTypeID: decisionValue);
                       if (selectedOption!.TypeID == 1) {
-                        getLawyerJudgments(judgmentDtoInformation);
+                        userLike(selectedOption!.TypeID!);
                       } else {
-                        getJudgments(judgmentDtoInformation);
+                        userLike(selectedOption!.TypeID!);
                       }
                     },
                     child: const Text(
@@ -1301,18 +1305,16 @@ class _KararAramaState extends State<KararArama> {
         judgments.clear();
         judgments.addAll(response.data!);
 
-        for (var item in judgments) {
-          int i = 0;
-          if (item.id == userLikes[i].judgmentId &&
-              userLikes[i].judgmentId == 2) {
-            item.isLike = userLikes[i].isLike;
+        if (userLikes.length != 0) {
+          for (var item in judgments) {
+            int i = 0;
+            if (item.id == userLikes[i].judgmentId) {
+              item.isLike = userLikes[i].isLike!;
+            }
+
+            i++;
           }
-
-          i++;
         }
-
-        //TODO:foreach loop
-        //idler aynı mı
         print(response.success);
         setState(() {
           Navigator.push(
@@ -1340,6 +1342,17 @@ class _KararAramaState extends State<KararArama> {
       if (response.success == true) {
         judgments.clear();
         judgments.addAll(response.data!);
+
+        if (userLikes.length != 0) {
+          for (var item in judgments) {
+            int i = 0;
+            if (item.id == userLikes[i].judgmentId) {
+              item.isLike = userLikes[i].isLike!;
+            }
+
+            i++;
+          }
+        }
 
         // for (var item in judgments) {
         //   int i = 0;
@@ -1446,15 +1459,21 @@ class _KararAramaState extends State<KararArama> {
     }
   }
 
-  userLike(int id, int searchTypeId) async {
+  userLike(int searchTypeId) async {
+    //geriyebasıncabozuluyop
     try {
-      UserLikeResponse response =
-          await userLikeService.userLike(id, searchTypeId);
+      print(searchTypeId);
+      UserLikeResponse response = await userLikeService.userLike(searchTypeId);
       if (response.success == true) {
         userLikes.clear();
         userLikes.addAll(response.data!);
         print(response.success);
-        setState(() {});
+//        setState(() {});
+        if (selectedOption?.TypeID == 1) {
+          getLawyerJudgments(judgmentDtoInformation);
+        } else {
+          getJudgments(judgmentDtoInformation);
+        }
 
         print(response);
       } else {

@@ -4,7 +4,7 @@ import 'package:flutter_application_1/Screens/kararArama.dart';
 import 'package:flutter_application_1/Screens/profilim.dart';
 import 'package:flutter_application_1/widgets/menu.dart';
 import 'package:flutter_application_1/Screens/iletisimList.dart';
-import 'package:flutter_application_1/Screens/kararAramaDenemeBottom1.dart';
+
 import 'package:flutter_application_1/Screens/kararList.dart';
 import 'package:flutter_application_1/Screens/profilim.dart';
 

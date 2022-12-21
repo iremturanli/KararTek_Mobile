@@ -15,38 +15,6 @@ import '../main.dart';
 import '../models/UserStatisticInformation/userStatisticInformation.dart';
 import '../services/LawyerJudgmentServices/LawyerJudgmentService.dart';
 
-// final List<Map<String, dynamic>> _avukatKararToplam = [
-//   {
-//     "id": 1,
-//     "Ad": "İrem",
-//     "Soyad": "Turanlı",
-//     "Şehir": "Ankara",
-//     "Eklenen Karar Toplamı": "2",
-//   },
-//   {
-//     "id": 2,
-//     "Ad": "Berkay",
-//     "Soyad": "Demir",
-//     "Şehir": "Ankara",
-//     "Eklenen Karar Toplamı": "5",
-//   },
-//   {
-//     "id": 3,
-//     "Ad": "Işıl",
-//     "Soyad": " Bardakcı",
-//     "Şehir": "Ankara",
-//     "Eklenen Karar Toplamı": "8",
-//   },
-//   {
-//     "id": 4,
-//     "Ad": "Hussain",
-//     "Soyad": "Elburki",
-//     "Şehir": "Ankara",
-//     "Eklenen Karar Toplamı": "3",
-//   },
-// ];
-// final List<String> _sehir = ["Adana", "...", "Düzce"]; //?
-
 class AvukatKararToplam extends StatefulWidget {
   const AvukatKararToplam({Key? key}) : super(key: key);
 
@@ -162,7 +130,8 @@ class _AvukatKararToplamState extends State<AvukatKararToplam> {
                                   const Color.fromARGB(255, 1, 28, 63),
                               radius: 15,
                               child: Text('${index + 1}',
-                                  style: const TextStyle(fontSize: 14)),
+                                  style: const TextStyle(
+                                      fontSize: 14, color: Colors.white)),
                             ),
                           ),
                           Text(

@@ -3,16 +3,14 @@ import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJud
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
 
 class KaydettigimKararDetay extends StatelessWidget {
-  List<LawyerJudgmentListInformation> savedJudgments = [];
+  LawyerJudgmentListInformation? savedJudgments;
 
   // ignore: non_constant_identifier_names
-  final int ListIndex;
 
   KaydettigimKararDetay({
     Key? key,
     required this.savedJudgments,
     // ignore: non_constant_identifier_names
-    required this.ListIndex,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -40,7 +38,7 @@ class KaydettigimKararDetay extends StatelessWidget {
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
               Text(
-                '${savedJudgments[ListIndex].meritsNo}/${savedJudgments[ListIndex].meritsNo}',
+                '${savedJudgments!.meritsNo}/${savedJudgments!.meritsNo}',
               ),
               const CustomDivider(),
               const Text('Mahkeme',
@@ -48,7 +46,7 @@ class KaydettigimKararDetay extends StatelessWidget {
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
               Text(
-                '${savedJudgments[ListIndex].courtName}',
+                '${savedJudgments!.courtName}',
               ),
               const CustomDivider(),
               const Text('Hüküm',
@@ -56,16 +54,16 @@ class KaydettigimKararDetay extends StatelessWidget {
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
               Text(
-                '${savedJudgments[ListIndex].decree}',
+                '${savedJudgments!.decree}',
               ),
               const CustomDivider(),
               const Text('Avukat Açıklaması',
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
-              Text('${savedJudgments[ListIndex].lawyerAssesment}'),
+              Text('${savedJudgments!.lawyerAssesment}'),
               const CustomDivider(),
-              savedJudgments[ListIndex].tbbComments != ""
+              savedJudgments!.tbbComments != ""
                   ? Visibility(
                       visible: isVisible,
                       child: Column(
@@ -77,7 +75,7 @@ class KaydettigimKararDetay extends StatelessWidget {
                                   fontSize: 17)),
                           SizedBox(
                               height: MediaQuery.of(context).size.height / 100),
-                          Text('${savedJudgments[ListIndex].tbbComments}'),
+                          Text('${savedJudgments!.tbbComments}'),
                           const CustomDivider()
                         ],
                       ))
@@ -87,26 +85,26 @@ class KaydettigimKararDetay extends StatelessWidget {
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
               Text(
-                '${savedJudgments[ListIndex].decision}',
+                '${savedJudgments!.decision}',
               ),
               const CustomDivider(),
               const Text('Karar Tarihi',
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
-              Text('${savedJudgments[ListIndex].judgmentDate}'),
+              Text('${savedJudgments!.judgmentDate}'),
               const CustomDivider(),
               const Text('Kayıt Tarihi',
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
-              Text('${savedJudgments[ListIndex].createDate}'),
+              Text('${savedJudgments!.createDate}'),
               const CustomDivider(),
               const Text("TBB'ye Gönderilme Tarihi",
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
-              Text('${savedJudgments[ListIndex].createDate}'),
+              Text('${savedJudgments!.createDate}'),
               const CustomDivider(),
             ])),
       ),

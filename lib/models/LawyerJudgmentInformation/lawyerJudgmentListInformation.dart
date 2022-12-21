@@ -22,7 +22,7 @@ class LawyerJudgmentListInformation {
       this.lastName,
       this.lawyerAssesment,
       this.stateId,
-      this.isLike});
+      this.isLike = false});
 
   int? id;
   int? commissionId;

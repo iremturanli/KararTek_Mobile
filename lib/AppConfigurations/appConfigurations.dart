@@ -4,6 +4,7 @@ import 'package:flutter_application_1/services/DropDownServices/JudgmentTypeRadi
 import 'package:flutter_application_1/services/DropDownServices/LawyerJudgmentStateDropdownService.dart';
 import 'package:flutter_application_1/services/DropDownServices/SearchTypeDropdownService.dart';
 import 'package:flutter_application_1/services/DropDownServices/UserTypeDropdownServices.dart';
+import 'package:flutter_application_1/services/FavouriteJudgmentService/favouriteJudgmentService.dart';
 import 'package:flutter_application_1/services/JudgmentServices/judgmentService.dart';
 
 import 'package:flutter_application_1/services/UserService/UserService.dart';
@@ -48,6 +49,8 @@ void configureInjection() {
       () => UserService(getIt<ApiClient>()));
   getIt.registerLazySingleton<UserLikeService>(
       () => UserLikeService(getIt<ApiClient>()));
+  getIt.registerLazySingleton<FavouriteJudgmentService>(
+      () => FavouriteJudgmentService(getIt<ApiClient>()));
 
 /*  getIt.registerLazySingleton<SchoolService>(
       () => SchoolService(getIt<ApiClient>()));

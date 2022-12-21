@@ -1,8 +1,9 @@
-// ignore_for_file: non_constant_identifier_names, must_be_immutable, file_names
+// ignore_for_file: non_constant_identifier_names, must_be_immutable, file_names, unused_import
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ApiResponse/BaseApiResponse.dart';
 import 'package:flutter_application_1/ApiResponse/SearchDataLawyerResponse.dart';
+import 'package:flutter_application_1/ApiResponse/mobileApiResponse.dart';
 import 'package:flutter_application_1/models/ForLikeInformation/forLikeDto.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentListInformation.dart';
 import 'package:flutter_application_1/services/JudgmentServices/judgmentService.dart';
@@ -11,19 +12,15 @@ import 'package:flutter_application_1/widgets/CustomDivider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../AppConfigurations/appConfigurations.dart';
+import '../services/FavouriteJudgmentService/favouriteJudgmentService.dart';
 import '../services/UserLikeServices/UserLikeService.dart';
 
 class AramaSonuclariDetayDeneme extends StatefulWidget {
-  List<LawyerJudgmentListInformation> judgments = [];
-  List<LawyerJudgmentListInformation> likes = [];
+  LawyerJudgmentListInformation judgments;
 
-  final int ListIndex;
   final int? searchTypeId;
   AramaSonuclariDetayDeneme(
-      {Key? key,
-      required this.judgments,
-      required this.ListIndex,
-      required this.searchTypeId})
+      {Key? key, required this.judgments, required this.searchTypeId})
       : super(key: key);
 
   @override
@@ -36,9 +33,10 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
   final LawyerJudgmentService lawyerJudgmentService =
       getIt.get<LawyerJudgmentService>();
   final UserLikeService userLikeService = getIt.get<UserLikeService>();
+  final FavouriteJudgmentService favouriteJudgmentService =
+      getIt.get<FavouriteJudgmentService>();
 
   bool isVisible = false;
-  bool isLiked = false;
   bool isSaved = false;
   int likeCounter = 0;
   @override
@@ -64,7 +62,7 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
             children: [
               IconButton(
                 tooltip: 'Beğen',
-                icon: widget.judgments[widget.ListIndex].isLike!
+                icon: widget.judgments.isLike == false
                     ? const Icon(
                         Icons.favorite_border,
                         color: Colors.red,
@@ -77,59 +75,37 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
                       ),
                 onPressed: () {
                   setState(() {
-                    isLiked = !widget.judgments[widget.ListIndex].isLike!;
+                    widget.judgments.isLike = !widget.judgments.isLike!;
                   });
-                  widget.searchTypeId == 1
-                      ? addLike(widget.judgments[widget.ListIndex].id!, isLiked)
+                  widget.searchTypeId == 2
+                      ? addLike(widget.judgments.id!, widget.judgments.isLike!)
                       : addLawyerJudgmentLike(
-                          widget.judgments[widget.ListIndex].id!, isLiked);
+                          widget.judgments.id!, widget.judgments.isLike!);
 
-                  if (isLiked) {
-                    likeCounter++;
-                    Fluttertoast.showToast(msg: "$likeCounter beğeni");
+                  if (widget.judgments.isLike!) {
+                    Fluttertoast.showToast(msg: " Karar Beğenildi");
                   } else {
-                    likeCounter--;
                     //
                     Fluttertoast.showToast(msg: 'Beğeni geri çekildi.');
                   }
                 },
               ),
               IconButton(
-                tooltip: 'İndir',
-                // ignore: prefer_const_constructors
-                icon: Icon(
-                  Icons.download,
-                  color: Colors.black,
+                tooltip: 'Hızlı Erişime Ekle',
+                icon:
+                    // ignore: prefer_const_constructors
+
+                    // ignore: prefer_const_constructors
+                    Icon(
+                  Icons.bookmark_outlined,
+                  color: const Color.fromARGB(255, 21, 145, 28),
                   size: 30,
                 ),
-                onPressed: () {
-                  Fluttertoast.showToast(msg: "Belge indiriliyor.");
-                },
-              ),
-              IconButton(
-                tooltip: 'Hızlı Erişime Ekle',
-                icon: !isSaved
-                    // ignore: prefer_const_constructors
-                    ? Icon(
-                        Icons.bookmark_outline_sharp,
-                        color: const Color.fromARGB(255, 21, 145, 28),
-                        size: 30,
-                      )
-                    // ignore: prefer_const_constructors
-                    : Icon(
-                        Icons.bookmark_outlined,
-                        color: const Color.fromARGB(255, 21, 145, 28),
-                        size: 30,
-                      ),
                 onPressed: () {
                   setState(() {
                     isSaved = !isSaved;
                   });
-                  if (isSaved) {
-                    Fluttertoast.showToast(msg: "Karar Havuzuna Kaydedildi.");
-                  } else {
-                    Fluttertoast.showToast(msg: 'Kaydetmen geri çekildi.');
-                  }
+                  addJudgmentPool(widget.judgments.id!, widget.searchTypeId!);
                 },
               ),
             ],
@@ -143,7 +119,7 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               Text(
-                '${widget.judgments[widget.ListIndex].meritsNo}/${widget.judgments[widget.ListIndex].meritsYear}',
+                '${widget.judgments.meritsNo}/${widget.judgments.meritsYear}',
               ),
               const CustomDivider(),
               const Text('Mahkeme',
@@ -151,7 +127,7 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
               Text(
-                '${widget.judgments[widget.ListIndex].courtName}',
+                '${widget.judgments.courtName}',
               ),
               const CustomDivider(),
               const Text('Hüküm',
@@ -159,14 +135,14 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
               Text(
-                '${widget.judgments[widget.ListIndex].decree}',
+                '${widget.judgments.decree}',
               ),
               const CustomDivider(),
               const Text('Karar',
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
-              Text('${widget.judgments[widget.ListIndex].decision}'),
+              Text('${widget.judgments.decision}'),
               const CustomDivider(),
               widget.searchTypeId == 1
                   ? Visibility(
@@ -180,8 +156,7 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
                                   fontSize: 17)),
                           SizedBox(
                               height: MediaQuery.of(context).size.height / 100),
-                          Text(
-                              '${widget.judgments[widget.ListIndex].lawyerAssesment}'),
+                          Text('${widget.judgments.lawyerAssesment}'),
                           const CustomDivider(),
                           const Text('Kararı Ekleyen Kişi',
                               style: TextStyle(
@@ -190,7 +165,7 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
                           SizedBox(
                               height: MediaQuery.of(context).size.height / 100),
                           Text(
-                              '${widget.judgments[widget.ListIndex].userName}  ${widget.judgments[widget.ListIndex].lastName} '),
+                              '${widget.judgments.userName}  ${widget.judgments.lastName} '),
                           const CustomDivider(),
                         ],
                       ))
@@ -199,13 +174,13 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
-              Text('${widget.judgments[widget.ListIndex].judgmentDate}'),
+              Text('${widget.judgments.judgmentDate}'),
               const CustomDivider(),
               const Text('Kayıt Tarihi',
                   style: TextStyle(
                       color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
-              Text('${widget.judgments[widget.ListIndex].createDate}'),
+              Text('${widget.judgments.createDate}'),
               const CustomDivider()
             ])),
       ),
@@ -226,6 +201,16 @@ class _AramaSonuclariDetayDenemeState extends State<AramaSonuclariDetayDeneme> {
     if (response.success == true) {
     } else {
       print(response.message);
+    }
+  }
+
+  addJudgmentPool(int judgmentId, int searchTypeId) async {
+    MobileApiResponse response = await favouriteJudgmentService.addJudgmentPool(
+        judgmentId, searchTypeId);
+    if (response.hasError == true) {
+      Fluttertoast.showToast(msg: "Karar Havuzunda zaten kayıtlı!");
+    } else {
+      Fluttertoast.showToast(msg: "Karar Havuzuna başarıyla kaydedildi.");
     }
   }
 }

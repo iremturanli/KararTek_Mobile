@@ -7,5 +7,5 @@ import '../../ApiResponse/SearchDataLawyerResponse.dart';
 import '../IBaseService.dart';
 
 abstract class IUserLikeService implements IBaseService {
-  Future<UserLikeResponse> userLike(int id, int searchTypeId);
+  Future<UserLikeResponse> userLike(int searchTypeId);
 }
