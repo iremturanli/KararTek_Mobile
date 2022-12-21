@@ -36,4 +36,14 @@ class CourtDropdownService implements ICourtDropdownService {
     print(response);
     return CourtInformationResponse.fromJson(response.data);
   }
+
+  @override
+  Future<CourtInformationResponse> getAllCourts() async {
+    Response response = await _apiClient!.getRequest("Court/GetAllCourts");
+    if (response.statusCode == 401) {
+      print("UnAuthorized");
+    }
+    print(response);
+    return CourtInformationResponse.fromJson(response.data);
+  }
 }

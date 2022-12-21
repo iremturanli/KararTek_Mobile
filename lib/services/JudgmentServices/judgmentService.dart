@@ -3,6 +3,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_application_1/ApiResponse/BaseApiResponse.dart';
 import 'package:flutter_application_1/ApiResponse/SearchDataLawyerResponse.dart';
+import 'package:flutter_application_1/models/JudgmentInformation/judgmentDetailSearchDtoInformation.dart';
 import 'package:flutter_application_1/models/JudgmentInformation/judgmentDtoInformation.dart';
 import 'package:flutter_application_1/services/JudgmentServices/IJudgmentService.dart';
 
@@ -50,5 +51,17 @@ class JudgmentService implements IJudgmentService {
     print(response);
 
     return BaseResponseApi.fromJson(response.data);
+  }
+
+  @override
+  Future<SearchDataLawyerResponse> getJudgmentsbyDetailSearch(
+      JudgmentDetailSearchDto judgmentDetailSearchDto) async {
+    Response response = await _apiClient!.postRequest(
+        "Judgments/GetJudgmentByDetailSearch", judgmentDetailSearchDto);
+    if (response.statusCode == 401) {
+      print("UnAuthorized");
+    }
+    print(response);
+    return SearchDataLawyerResponse.fromJson(response.data);
   }
 }

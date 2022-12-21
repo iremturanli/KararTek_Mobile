@@ -1,10 +1,12 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_application_1/ApiResponse/SearchDataLawyerResponse.dart';
 import 'package:flutter_application_1/ApiResponse/SearchTypeDropdownResponse.dart';
 import 'package:flutter_application_1/ApiResponse/UserLikeResponse.dart';
 import 'package:flutter_application_1/Screens/AramaSonuclari.dart';
 import 'package:flutter_application_1/models/ForLikeInformation/forLikeList.dart';
+import 'package:flutter_application_1/models/JudgmentInformation/judgmentDetailSearchDtoInformation.dart';
 import 'package:flutter_application_1/models/JudgmentInformation/judgmentDtoInformation.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentListInformation.dart';
 import 'package:flutter_application_1/models/SearchTypeInformation/searchTypeInformation.dart';
@@ -13,6 +15,9 @@ import 'package:flutter_application_1/services/JudgmentServices/judgmentService.
 import 'package:flutter_application_1/services/LawyerJudgmentServices/LawyerJudgmentService.dart';
 import 'package:flutter_application_1/services/UserLikeServices/UserLikeService.dart';
 import 'package:flutter_application_1/widgets/ModalBottomDetayl%C4%B1Arama.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../ApiResponse/CommissionDropdownResponse.dart';
@@ -39,10 +44,21 @@ YuksekYargi? _yuksekYargi = YuksekYargi.yargitay;
 class _KararAramaState extends State<KararArama> {
   final searchController = TextEditingController();
   bool isVisible = false;
-  TextEditingController esasYearController = TextEditingController();
-  TextEditingController firstEsasNoController = TextEditingController();
-  TextEditingController lastEsasNoController = TextEditingController();
+  TextEditingController meritsYearController = TextEditingController();
+  TextEditingController firstMeritsNoController = TextEditingController();
+  TextEditingController lastMeritsNoController = TextEditingController();
+  TextEditingController decreeYearController = TextEditingController();
+  TextEditingController firstDecreeNoController = TextEditingController();
+  TextEditingController lastDecreeNoController = TextEditingController();
+  TextEditingController firstDateController = TextEditingController();
+  TextEditingController lastDateController = TextEditingController();
 
+  var maskFormatter = MaskTextInputFormatter(
+      mask: '##-##-####',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
+
+  final bool _isTap = false;
   final SearchTypeDropdownService searchTypeDropdownService =
       getIt.get<SearchTypeDropdownService>();
   final JudgmentService judgmentService = getIt.get<JudgmentService>();
@@ -56,7 +72,8 @@ class _KararAramaState extends State<KararArama> {
   CommissionInformation? selectedCommission;
   List<CommissionInformation> commissionInformation = [];
   CourtInformation? selectedCourt;
-  DateTime? selectedDate;
+  DateTime? selectedFirstDate;
+  DateTime? selectedLastDate;
   List<CourtInformation> courtInformation = [];
 
   final UserLikeService userLikeService = getIt.get<UserLikeService>();
@@ -71,6 +88,7 @@ class _KararAramaState extends State<KararArama> {
   void initState() {
     // TODO: implement initState
     getCommissions();
+    getAllCourts();
     super.initState();
     getSearchTypes();
   }
@@ -150,20 +168,26 @@ class _KararAramaState extends State<KararArama> {
                   isExpanded: true,
                   icon: const Icon(Icons.keyboard_arrow_down_outlined),
                   dropdownColor: const Color.fromARGB(255, 255, 255, 255),
-                  value: selectedOption,
+                  value: selectedOption == null
+                      ? (searchTypeInformation.isEmpty
+                          ? null
+                          : selectedOption = searchTypeInformation.first)
+                      : selectedOption,
+
                   onChanged: (SearchTypeInformation? newValue) {
                     setState(() {
                       //selectedOption = newValue;
                       if (newValue!.TypeID == 2) {
                         isVisible = true;
                         selectedOption = newValue;
-                      } else {
+                      } else if (newValue.TypeID == 1) {
                         isVisible = false;
                         selectedOption = newValue;
                       }
                       print(selectedOption!.TypeID.toString());
                     });
                   },
+
                   validator: (value) =>
                       value == null ? "Bu alan boş bırakılamaz" : null,
                   items: searchTypeInformation
@@ -293,628 +317,952 @@ class _KararAramaState extends State<KararArama> {
                         builder: (context) {
                           return StatefulBuilder(builder:
                               ((BuildContext context, StateSetter setState) {
-                            return Stack(
-                              children: <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      top: (MediaQuery.of(context).size.height /
-                                          15)),
-                                  child: Container(
-                                    alignment: Alignment.topCenter,
-                                    child: const Text('Detaylı Arama',
-                                        style: TextStyle(
-                                            fontSize: 30,
-                                            fontWeight: FontWeight.bold)),
-                                  ),
-                                ),
-                                Padding(
+                            return SingleChildScrollView(
+                              child: Stack(
+                                children: <Widget>[
+                                  Padding(
                                     padding: EdgeInsets.only(
-                                      top: MediaQuery.of(context).size.height /
-                                          8,
-                                      right: MediaQuery.of(context).size.width /
-                                          25,
-                                      left: MediaQuery.of(context).size.width /
-                                          25,
+                                        top: (MediaQuery.of(context)
+                                                .size
+                                                .height /
+                                            30)),
+                                    child: Container(
+                                      alignment: Alignment.topCenter,
+                                      child: const Text('Detaylı Arama',
+                                          style: TextStyle(
+                                              fontSize: 30,
+                                              fontWeight: FontWeight.bold)),
                                     ),
-                                    child: SingleChildScrollView(
-                                      child: Form(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            const Text('Kelime ile Arama'),
-                                            SizedBox(
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height /
-                                                    80),
-                                            TextFormField(
-                                              controller: searchController,
-                                              // ignore: prefer_const_constructors
-                                              decoration: InputDecoration(
-                                                filled: true,
-                                                fillColor: const Color.fromARGB(
-                                                    255, 255, 255, 255),
-                                                focusedBorder:
-                                                    const OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    8))),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  // ignore: prefer_const_constructors
-                                                  borderSide: BorderSide(
-                                                    width: 1,
-                                                    color: const Color.fromARGB(
-                                                        255, 189, 189, 189),
+                                  ),
+                                  Padding(
+                                      padding: EdgeInsets.only(
+                                        top:
+                                            MediaQuery.of(context).size.height /
+                                                8,
+                                        right:
+                                            MediaQuery.of(context).size.width /
+                                                25,
+                                        left:
+                                            MediaQuery.of(context).size.width /
+                                                25,
+                                      ),
+                                      child: SingleChildScrollView(
+                                        child: Form(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              const Text('Kelime ile Arama'),
+                                              SizedBox(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height /
+                                                      80),
+                                              TextFormField(
+                                                controller: searchController,
+
+                                                // ignore: prefer_const_constructors
+                                                decoration: InputDecoration(
+                                                  filled: true,
+                                                  fillColor:
+                                                      const Color.fromARGB(
+                                                          255, 255, 255, 255),
+                                                  focusedBorder:
+                                                      const OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          8))),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    // ignore: prefer_const_constructors
+                                                    borderSide: BorderSide(
+                                                      width: 1,
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              255,
+                                                              189,
+                                                              189,
+                                                              189),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                            // ignore: prefer_const_constructors
+                                              // ignore: prefer_const_constructors
 
-                                            SizedBox(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  80,
-                                            ),
-
-                                            const Text('Daire/Kurul Adı*'),
-                                            Container(
-                                              height: 45,
-                                              width: 330,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  color: Colors.white),
-                                              child: DropdownButtonFormField<
-                                                  CommissionInformation>(
-                                                isExpanded: true,
-                                                //underline: SizedBox.shrink(),
-                                                icon: const Icon(Icons
-                                                    .keyboard_arrow_down_outlined),
-                                                dropdownColor: Colors.white,
-                                                value: selectedCommission,
-                                                onChanged:
-                                                    (CommissionInformation?
-                                                        newValue) {
-                                                  setState(() {
-                                                    selectedCommission =
-                                                        newValue;
-                                                    lookCourt =
-                                                        selectedCommission!
-                                                            .CommissionID;
-                                                    print("Daire");
-                                                    print(selectedCommission!
-                                                        .CommissionID
-                                                        .toString());
-                                                    selectedCourt = null;
-                                                    getCourts(lookCourt);
-
-                                                    //selectedCourt = null;
-                                                  });
-
-                                                  //selectedCommission = null;
-                                                },
-
-                                                validator: (value) => value ==
-                                                        null
-                                                    ? "Bu alan boş bırakılamaz"
-                                                    : null,
-                                                items: commissionInformation
-                                                    .map((CommissionInformation
-                                                        commissionInformation) {
-                                                  return DropdownMenuItem<
-                                                      CommissionInformation>(
-                                                    value:
-                                                        commissionInformation,
-                                                    child: Text(
-                                                      commissionInformation
-                                                          .CommissionName!,
-                                                      style: const TextStyle(
-                                                          color: Colors.black),
-                                                    ),
-                                                  );
-                                                }).toList(),
-                                              ),
-                                            ),
-                                            SizedBox(
+                                              SizedBox(
                                                 height: MediaQuery.of(context)
                                                         .size
                                                         .height /
-                                                    35),
-                                            const Text('Mahkeme'),
-                                            SizedBox(
+                                                    80,
+                                              ),
+
+                                              const Text('Daire/Kurul Adı*'),
+                                              Container(
+                                                height: 45,
+                                                width: 330,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    color: Colors.white),
+                                                child: DropdownButtonFormField<
+                                                    CommissionInformation>(
+                                                  isExpanded: true,
+                                                  //underline: SizedBox.shrink(),
+                                                  icon: const Icon(Icons
+                                                      .keyboard_arrow_down_outlined),
+                                                  dropdownColor: Colors.white,
+                                                  value: selectedCommission,
+                                                  onChanged:
+                                                      (CommissionInformation?
+                                                          newValue) {
+                                                    setState(() {
+                                                      selectedCommission =
+                                                          newValue;
+                                                      lookCourt =
+                                                          selectedCommission!
+                                                              .CommissionID;
+                                                      print("Daire");
+                                                      print(selectedCommission!
+                                                          .CommissionID
+                                                          .toString());
+                                                      // selectedCourt = null;
+                                                      // getCourts(lookCourt);
+
+                                                      //selectedCourt = null;
+                                                    });
+
+                                                    //selectedCommission = null;
+                                                  },
+
+                                                  // validator: (value) => value ==
+                                                  //         null
+                                                  //     ? "Bu alan boş bırakılamaz"
+                                                  //     : null,
+                                                  items: commissionInformation
+                                                      .map((CommissionInformation
+                                                          commissionInformation) {
+                                                    return DropdownMenuItem<
+                                                        CommissionInformation>(
+                                                      value:
+                                                          commissionInformation,
+                                                      child: Text(
+                                                        commissionInformation
+                                                            .CommissionName!,
+                                                        style: const TextStyle(
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                    );
+                                                  }).toList(),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height /
+                                                      35),
+                                              const Text('Mahkeme'),
+                                              SizedBox(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height /
+                                                      65),
+                                              Container(
+                                                height: 45,
+                                                width: 330,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    color: Colors.white),
+                                                child: DropdownButtonFormField<
+                                                    CourtInformation>(
+                                                  isExpanded: true,
+                                                  //underline: SizedBox.shrink(),
+                                                  icon: const Icon(Icons
+                                                      .keyboard_arrow_down_outlined),
+                                                  dropdownColor: Colors.white,
+                                                  value: selectedCourt,
+                                                  onChanged: (CourtInformation?
+                                                      newValue) {
+                                                    setState(() {
+                                                      selectedCourt = newValue;
+                                                      print(selectedCourt!
+                                                          .CourtID
+                                                          .toString());
+                                                    });
+                                                  },
+
+                                                  items: courtInformation.map(
+                                                      (CourtInformation
+                                                          courtInformation) {
+                                                    return DropdownMenuItem<
+                                                        CourtInformation>(
+                                                      value: courtInformation,
+                                                      child: Text(
+                                                        courtInformation
+                                                            .CourtName!,
+                                                        style: const TextStyle(
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                    );
+                                                  }).toList(),
+                                                ),
+                                              ),
+                                              SizedBox(
                                                 height: MediaQuery.of(context)
                                                         .size
                                                         .height /
-                                                    65),
-                                            Container(
-                                              height: 45,
-                                              width: 330,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  color: Colors.white),
-                                              child: DropdownButtonFormField<
-                                                  CourtInformation>(
-                                                isExpanded: true,
-                                                //underline: SizedBox.shrink(),
-                                                icon: const Icon(Icons
-                                                    .keyboard_arrow_down_outlined),
-                                                dropdownColor: Colors.white,
-                                                value: selectedCourt,
-                                                onChanged: (CourtInformation?
-                                                    newValue) {
-                                                  setState(() {
-                                                    selectedCourt = newValue;
-                                                    print(selectedCourt!.CourtID
-                                                        .toString());
-                                                  });
-                                                },
-
-                                                validator: (value) => value ==
-                                                        null
-                                                    ? "Bu alan boş bırakılamaz"
-                                                    : null,
-                                                items: courtInformation.map(
-                                                    (CourtInformation
-                                                        courtInformation) {
-                                                  return DropdownMenuItem<
-                                                      CourtInformation>(
-                                                    value: courtInformation,
-                                                    child: Text(
-                                                      courtInformation
-                                                          .CourtName!,
-                                                      style: const TextStyle(
-                                                          color: Colors.black),
-                                                    ),
-                                                  );
-                                                }).toList(),
+                                                    80,
                                               ),
-                                            ),
-                                            SizedBox(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  80,
-                                            ),
 
-                                            const Text('Esas Numarası'),
-                                            SizedBox(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  80,
-                                            ),
+                                              const Text('Esas Numarası'),
+                                              SizedBox(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height /
+                                                    80,
+                                              ),
 
-                                            Row(
-                                              children: <Widget>[
-                                                Expanded(
-                                                  child: SizedBox(
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height /
-                                                            17,
-                                                    child: TextFormField(
+                                              Row(
+                                                children: <Widget>[
+                                                  Expanded(
+                                                    child: SizedBox(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height /
+                                                              17,
+                                                      child: TextFormField(
+                                                          controller:
+                                                              meritsYearController,
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .number,
+                                                          inputFormatters: <
+                                                              TextInputFormatter>[
+                                                            FilteringTextInputFormatter
+                                                                .digitsOnly,
+                                                            LengthLimitingTextInputFormatter(
+                                                                11)
+                                                          ],
+                                                          decoration:
+                                                              const InputDecoration(
+                                                            hintText:
+                                                                'Esas Yılı',
+                                                            focusedBorder: OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            8))),
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      width: 1,
+                                                                      color: Color.fromARGB(
+                                                                          255,
+                                                                          189,
+                                                                          189,
+                                                                          189),
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.all(
+                                                                            Radius.circular(8))),
+                                                          )),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width /
+                                                              20),
+                                                  Expanded(
+                                                    child: SizedBox(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height /
+                                                              17,
+                                                      child: TextFormField(
+                                                          controller:
+                                                              firstMeritsNoController,
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .number,
+                                                          inputFormatters: <
+                                                              TextInputFormatter>[
+                                                            FilteringTextInputFormatter
+                                                                .digitsOnly,
+                                                            LengthLimitingTextInputFormatter(
+                                                                11)
+                                                          ],
+                                                          decoration:
+                                                              const InputDecoration(
+                                                            hintText:
+                                                                'İlk Sıra No',
+                                                            focusedBorder: OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            8))),
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      width: 1,
+                                                                      color: Color.fromARGB(
+                                                                          255,
+                                                                          189,
+                                                                          189,
+                                                                          189),
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.all(
+                                                                            Radius.circular(8))),
+                                                          )),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width /
+                                                              20),
+                                                  Expanded(
+                                                    child: SizedBox(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height /
+                                                              17,
+                                                      child: TextFormField(
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .number,
+                                                          inputFormatters: <
+                                                              TextInputFormatter>[
+                                                            FilteringTextInputFormatter
+                                                                .digitsOnly,
+                                                            LengthLimitingTextInputFormatter(
+                                                                11)
+                                                          ],
+                                                          decoration:
+                                                              const InputDecoration(
+                                                            hintText:
+                                                                'Son Sıra No',
+                                                            focusedBorder: OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            8))),
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      width: 1,
+                                                                      color: Color.fromARGB(
+                                                                          255,
+                                                                          189,
+                                                                          189,
+                                                                          189),
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.all(
+                                                                            Radius.circular(8))),
+                                                          )),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height /
+                                                      80),
+                                              const Text('Karar Numarası'),
+                                              SizedBox(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height /
+                                                      80),
+
+                                              Row(
+                                                children: <Widget>[
+                                                  Expanded(
+                                                    child: SizedBox(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height /
+                                                              17,
+                                                      child: TextFormField(
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .number,
+                                                          inputFormatters: <
+                                                              TextInputFormatter>[
+                                                            FilteringTextInputFormatter
+                                                                .digitsOnly,
+                                                            LengthLimitingTextInputFormatter(
+                                                                11)
+                                                          ],
+                                                          decoration:
+                                                              const InputDecoration(
+                                                            hintText:
+                                                                'Karar Yılı',
+                                                            focusedBorder: OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            8))),
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      width: 1,
+                                                                      color: Color.fromARGB(
+                                                                          255,
+                                                                          189,
+                                                                          189,
+                                                                          189),
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.all(
+                                                                            Radius.circular(8))),
+                                                          )),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 15),
+                                                  Expanded(
+                                                    child: SizedBox(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height /
+                                                              17,
+                                                      child: TextFormField(
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .number,
+                                                          inputFormatters: <
+                                                              TextInputFormatter>[
+                                                            FilteringTextInputFormatter
+                                                                .digitsOnly,
+                                                            LengthLimitingTextInputFormatter(
+                                                                11)
+                                                          ],
+                                                          decoration:
+                                                              const InputDecoration(
+                                                            hintText:
+                                                                'İlk Sıra No',
+                                                            focusedBorder: OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            8))),
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      width: 1,
+                                                                      color: Color.fromARGB(
+                                                                          255,
+                                                                          189,
+                                                                          189,
+                                                                          189),
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.all(
+                                                                            Radius.circular(8))),
+                                                          )),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 15),
+                                                  Expanded(
+                                                    child: SizedBox(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height /
+                                                              17,
+                                                      child: TextFormField(
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .number,
+                                                          inputFormatters: [
+                                                            maskFormatter
+                                                          ],
+                                                          decoration:
+                                                              const InputDecoration(
+                                                            hintText:
+                                                                'Son Sıra No',
+                                                            focusedBorder: OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            8))),
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      width: 1,
+                                                                      color: Color.fromARGB(
+                                                                          255,
+                                                                          189,
+                                                                          189,
+                                                                          189),
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.all(
+                                                                            Radius.circular(8))),
+                                                          )),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height /
+                                                    80,
+                                              ),
+                                              const Text('Karar Aralığı'),
+                                              SizedBox(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height /
+                                                    80,
+                                              ),
+
+                                              Row(
+                                                children: <Widget>[
+                                                  Expanded(
+                                                    child: SizedBox(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height /
+                                                              17,
+                                                      child: TextFormField(
+                                                        keyboardType:
+                                                            TextInputType
+                                                                .datetime,
+                                                        inputFormatters: [
+                                                          maskFormatter
+                                                        ],
+
                                                         controller:
-                                                            esasYearController,
+                                                            firstDateController,
+                                                        //editing controller of this TextField
                                                         decoration:
-                                                            const InputDecoration(
-                                                          hintText: 'Esas Yılı',
-                                                          focusedBorder: OutlineInputBorder(
-                                                              borderRadius: BorderRadius
-                                                                  .all(Radius
-                                                                      .circular(
-                                                                          8))),
-                                                          enabledBorder:
-                                                              OutlineInputBorder(
+                                                            InputDecoration(
+                                                                prefixIcon: Icon(
+                                                                    Icons
+                                                                        .calendar_today,
+                                                                    color: _isTap
+                                                                        ? Colors
+                                                                            .grey
+                                                                        : Colors
+                                                                            .black),
+                                                                prefixIconColor:
+                                                                    Colors.grey,
+                                                                filled: true,
+                                                                fillColor:
+                                                                    const Color.fromARGB(
+                                                                        246,
+                                                                        246,
+                                                                        246,
+                                                                        246),
+                                                                focusedBorder:
+                                                                    const OutlineInputBorder(
+                                                                        borderRadius: BorderRadius.all(Radius.circular(
+                                                                            8))),
+                                                                enabledBorder:
+                                                                    OutlineInputBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                  // ignore: prefer_const_constructors
                                                                   borderSide:
                                                                       BorderSide(
                                                                     width: 1,
-                                                                    color: Color
-                                                                        .fromARGB(
-                                                                            255,
-                                                                            189,
-                                                                            189,
-                                                                            189),
+                                                                    color: const Color
+                                                                            .fromARGB(
+                                                                        255,
+                                                                        189,
+                                                                        189,
+                                                                        189),
                                                                   ),
+                                                                ),
+                                                                hintText:
+                                                                    'Başlangıç Tarihi',
+                                                                hintStyle: const TextStyle(
+                                                                    color: Colors.grey) //icon of text field
+                                                                //labelText: "" //label text of field
+                                                                ),
+
+                                                        //set it true, so that user will not able to edit text
+                                                        onTap: () async {
+                                                          DateTime? pickedDate =
+                                                              await showDatePicker(
+                                                                  locale:
+                                                                      const Locale(
+                                                                          "tr",
+                                                                          "TR"),
+                                                                  builder: (BuildContext
+                                                                          context,
+                                                                      child) {
+                                                                    return Theme(
+                                                                      data: Theme.of(
+                                                                              context)
+                                                                          .copyWith(
+                                                                        colorScheme:
+                                                                            ColorScheme.light(
+                                                                          primary:
+                                                                              HexColor('#5DB075'), // header background color
+                                                                          onPrimary:
+                                                                              Colors.white, // header text color
+                                                                          onSurface: const Color.fromARGB(
+                                                                              255,
+                                                                              20,
+                                                                              20,
+                                                                              20), // body text color
+                                                                        ),
+                                                                        textButtonTheme:
+                                                                            TextButtonThemeData(
+                                                                          style:
+                                                                              TextButton.styleFrom(
+                                                                            foregroundColor: const Color.fromARGB(
+                                                                                255,
+                                                                                23,
+                                                                                48,
+                                                                                112), // button text color
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      child:
+                                                                          child!,
+                                                                    );
+                                                                  },
+                                                                  context:
+                                                                      context,
+                                                                  initialDate:
+                                                                      DateTime
+                                                                          .now(),
+                                                                  firstDate:
+                                                                      DateTime(
+                                                                          1881),
+                                                                  //DateTime.now() - not to allow to choose before today.
+                                                                  lastDate:
+                                                                      DateTime(
+                                                                          2100));
+
+                                                          if (pickedDate !=
+                                                                  null &&
+                                                              pickedDate !=
+                                                                  selectedFirstDate) {
+                                                            setState(() {
+                                                              selectedFirstDate =
+                                                                  pickedDate;
+                                                              firstDateController
+                                                                  .text = DateFormat(
+                                                                      "dd-MM-yyyy")
+                                                                  .format(
+                                                                      pickedDate);
+                                                            });
+                                                          }
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height /
+                                                              50),
+                                                  Expanded(
+                                                    child: SizedBox(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height /
+                                                              17,
+                                                      child: TextFormField(
+                                                        controller:
+                                                            lastDateController,
+                                                        keyboardType:
+                                                            TextInputType
+                                                                .datetime,
+                                                        inputFormatters: [
+                                                          maskFormatter
+                                                        ],
+                                                        //editing controller of this TextField
+                                                        decoration:
+                                                            InputDecoration(
+                                                                prefixIcon: Icon(
+                                                                    Icons
+                                                                        .calendar_today,
+                                                                    color: _isTap
+                                                                        ? Colors
+                                                                            .grey
+                                                                        : Colors
+                                                                            .black),
+                                                                prefixIconColor:
+                                                                    Colors.grey,
+                                                                filled: true,
+                                                                fillColor:
+                                                                    const Color.fromARGB(
+                                                                        246,
+                                                                        246,
+                                                                        246,
+                                                                        246),
+                                                                focusedBorder:
+                                                                    const OutlineInputBorder(
+                                                                        borderRadius: BorderRadius.all(Radius.circular(
+                                                                            8))),
+                                                                enabledBorder:
+                                                                    OutlineInputBorder(
                                                                   borderRadius:
-                                                                      BorderRadius.all(
-                                                                          Radius.circular(
-                                                                              8))),
-                                                        )),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width /
-                                                            20),
-                                                Expanded(
-                                                  child: SizedBox(
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height /
-                                                            17,
-                                                    child: TextFormField(
-                                                        decoration:
-                                                            const InputDecoration(
-                                                      hintText: 'İlk Sıra No',
-                                                      focusedBorder: OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          8))),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                width: 1,
-                                                                color: Color
-                                                                    .fromARGB(
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                  // ignore: prefer_const_constructors
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                    width: 1,
+                                                                    color: const Color
+                                                                            .fromARGB(
                                                                         255,
                                                                         189,
                                                                         189,
                                                                         189),
-                                                              ),
-                                                              borderRadius: BorderRadius
-                                                                  .all(Radius
-                                                                      .circular(
-                                                                          8))),
-                                                    )),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width /
-                                                            20),
-                                                Expanded(
-                                                  child: SizedBox(
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height /
-                                                            17,
-                                                    child: TextFormField(
-                                                        decoration:
-                                                            const InputDecoration(
-                                                      hintText: 'Son Sıra No',
-                                                      focusedBorder: OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          8))),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                width: 1,
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        189,
-                                                                        189,
-                                                                        189),
-                                                              ),
-                                                              borderRadius: BorderRadius
-                                                                  .all(Radius
-                                                                      .circular(
-                                                                          8))),
-                                                    )),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height /
-                                                    80),
-                                            const Text('Karar Numarası'),
-                                            SizedBox(
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height /
-                                                    80),
+                                                                  ),
+                                                                ),
+                                                                hintText:
+                                                                    'Bitiş Tarihi',
+                                                                hintStyle: const TextStyle(
+                                                                    color: Colors.grey) //icon of text field
+                                                                //labelText: "" //label text of field
+                                                                ),
 
-                                            Row(
-                                              children: <Widget>[
-                                                Expanded(
-                                                  child: SizedBox(
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height /
-                                                            17,
-                                                    child: TextFormField(
-                                                        decoration:
-                                                            const InputDecoration(
-                                                      hintText: 'Karar Yılı',
-                                                      focusedBorder: OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          8))),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                width: 1,
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        189,
-                                                                        189,
-                                                                        189),
-                                                              ),
-                                                              borderRadius: BorderRadius
-                                                                  .all(Radius
-                                                                      .circular(
-                                                                          8))),
-                                                    )),
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 15),
-                                                Expanded(
-                                                  child: SizedBox(
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height /
-                                                            17,
-                                                    child: TextFormField(
-                                                        decoration:
-                                                            const InputDecoration(
-                                                      hintText: 'İlk Sıra No',
-                                                      focusedBorder: OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          8))),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                width: 1,
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        189,
-                                                                        189,
-                                                                        189),
-                                                              ),
-                                                              borderRadius: BorderRadius
-                                                                  .all(Radius
-                                                                      .circular(
-                                                                          8))),
-                                                    )),
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 15),
-                                                Expanded(
-                                                  child: SizedBox(
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height /
-                                                            17,
-                                                    child: TextFormField(
-                                                        decoration:
-                                                            const InputDecoration(
-                                                      hintText: 'Son Sıra No',
-                                                      focusedBorder: OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          8))),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                width: 1,
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        189,
-                                                                        189,
-                                                                        189),
-                                                              ),
-                                                              borderRadius: BorderRadius
-                                                                  .all(Radius
-                                                                      .circular(
-                                                                          8))),
-                                                    )),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  80,
-                                            ),
-                                            const Text('Karar Aralığı'),
-                                            SizedBox(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  80,
-                                            ),
+                                                        //set it true, so that user will not able to edit text
+                                                        onTap: () async {
+                                                          DateTime? pickedDate =
+                                                              await showDatePicker(
+                                                                  locale:
+                                                                      const Locale(
+                                                                          "tr",
+                                                                          "TR"),
+                                                                  builder: (BuildContext
+                                                                          context,
+                                                                      child) {
+                                                                    return Theme(
+                                                                      data: Theme.of(
+                                                                              context)
+                                                                          .copyWith(
+                                                                        colorScheme:
+                                                                            ColorScheme.light(
+                                                                          primary:
+                                                                              HexColor('#5DB075'), // header background color
+                                                                          onPrimary:
+                                                                              Colors.white, // header text color
+                                                                          onSurface: const Color.fromARGB(
+                                                                              255,
+                                                                              20,
+                                                                              20,
+                                                                              20), // body text color
+                                                                        ),
+                                                                        textButtonTheme:
+                                                                            TextButtonThemeData(
+                                                                          style:
+                                                                              TextButton.styleFrom(
+                                                                            foregroundColor: const Color.fromARGB(
+                                                                                255,
+                                                                                23,
+                                                                                48,
+                                                                                112), // button text color
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      child:
+                                                                          child!,
+                                                                    );
+                                                                  },
+                                                                  context:
+                                                                      context,
+                                                                  initialDate:
+                                                                      DateTime
+                                                                          .now(),
+                                                                  firstDate:
+                                                                      DateTime(
+                                                                          1881),
+                                                                  //DateTime.now() - not to allow to choose before today.
+                                                                  lastDate:
+                                                                      DateTime(
+                                                                          2100));
 
-                                            Row(
-                                              children: <Widget>[
-                                                Expanded(
-                                                  child: SizedBox(
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height /
-                                                            17,
-                                                    child: TextFormField(
-                                                        decoration:
-                                                            const InputDecoration(
-                                                      hintText:
-                                                          'Başlangıç Tarihi',
-                                                      focusedBorder: OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          8))),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                width: 1,
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        189,
-                                                                        189,
-                                                                        189),
-                                                              ),
-                                                              borderRadius: BorderRadius
-                                                                  .all(Radius
-                                                                      .circular(
-                                                                          8))),
-                                                    )),
+                                                          if (pickedDate !=
+                                                                  null &&
+                                                              pickedDate !=
+                                                                  selectedLastDate) {
+                                                            setState(() {
+                                                              selectedLastDate =
+                                                                  pickedDate;
+                                                              lastDateController
+                                                                  .text = DateFormat(
+                                                                      "dd-MM-yyyy")
+                                                                  .format(
+                                                                      pickedDate);
+                                                            });
+                                                          }
+                                                        },
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
-                                                SizedBox(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height /
-                                                            50),
-                                                Expanded(
-                                                  child: SizedBox(
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height /
-                                                            17,
-                                                    child: TextFormField(
-                                                        decoration:
-                                                            const InputDecoration(
-                                                      hintText: 'Bitiş Tarihi',
-                                                      focusedBorder: OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height /
+                                                      20),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceAround,
+                                                children: [
+                                                  ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
                                                                       .circular(
-                                                                          8))),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                width: 1,
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        189,
-                                                                        189,
-                                                                        189),
-                                                              ),
-                                                              borderRadius: BorderRadius
-                                                                  .all(Radius
+                                                                          20),
+                                                            ),
+                                                            minimumSize:
+                                                                const Size(
+                                                                    150, 45),
+                                                            backgroundColor:
+                                                                const Color
+                                                                        .fromARGB(
+                                                                    255,
+                                                                    194,
+                                                                    27,
+                                                                    5)),
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: const Text(
+                                                      'Vazgeç',
+                                                      style: TextStyle(
+                                                          fontSize: 17),
+                                                    ),
+                                                  ),
+                                                  ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
                                                                       .circular(
-                                                                          8))),
-                                                    )),
+                                                                          20),
+                                                            ),
+                                                            minimumSize:
+                                                                const Size(
+                                                                    150, 45),
+                                                            backgroundColor:
+                                                                const Color
+                                                                        .fromARGB(
+                                                                    255,
+                                                                    1,
+                                                                    28,
+                                                                    63)),
+                                                    onPressed: () {
+                                                      JudgmentDetailSearchDto judgmentDetailSearchDto = JudgmentDetailSearchDto(
+                                                          keyword: searchController
+                                                              .text,
+                                                          searchTypeID: selectedOption!
+                                                              .TypeID,
+                                                          courtId: selectedCourt?.CourtID == null
+                                                              ? 0
+                                                              : selectedCourt!
+                                                                  .CourtID,
+                                                          commissionId: selectedCommission
+                                                                      ?.CommissionID ==
+                                                                  null
+                                                              ? 0
+                                                              : selectedCommission!
+                                                                  .CommissionID,
+                                                          meritsYear:
+                                                              meritsYearController
+                                                                  .text,
+                                                          meritsFirstOrder:
+                                                              firstMeritsNoController
+                                                                  .text,
+                                                          meritsLastOrder:
+                                                              lastMeritsNoController
+                                                                  .text,
+                                                          decreeYear:
+                                                              decreeYearController
+                                                                  .text,
+                                                          decreeFirstOrder:
+                                                              firstDecreeNoController
+                                                                  .text,
+                                                          decreeLastOrder:
+                                                              lastDecreeNoController
+                                                                  .text,
+                                                          firstDate:
+                                                              selectedFirstDate,
+                                                          lastDate:
+                                                              selectedLastDate,
+                                                          judgmentTypeID:
+                                                              decisionValue);
+                                                      if (selectedOption!
+                                                              .TypeID ==
+                                                          1) {
+                                                        getLawyerJudgmentsbyDetailSearch(
+                                                            judgmentDetailSearchDto);
+                                                      } else {
+                                                        getJudgmentsbyDetailSearch(
+                                                            judgmentDetailSearchDto);
+                                                      }
+                                                    },
+                                                    child: const Text(
+                                                      'Arama Yap',
+                                                      style: TextStyle(
+                                                          fontSize: 17),
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height /
-                                                    20),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: [
-                                                ElevatedButton(
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        20),
-                                                          ),
-                                                          minimumSize:
-                                                              const Size(
-                                                                  150, 45),
-                                                          backgroundColor:
-                                                              const Color
-                                                                      .fromARGB(
-                                                                  255,
-                                                                  194,
-                                                                  27,
-                                                                  5)),
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: const Text(
-                                                    'Vazgeç',
-                                                    style:
-                                                        TextStyle(fontSize: 17),
-                                                  ),
-                                                ),
-                                                ElevatedButton(
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        20),
-                                                          ),
-                                                          minimumSize:
-                                                              const Size(
-                                                                  150, 45),
-                                                          backgroundColor:
-                                                              const Color
-                                                                      .fromARGB(
-                                                                  255,
-                                                                  1,
-                                                                  28,
-                                                                  63)),
-                                                  onPressed: () {},
-                                                  child: const Text(
-                                                    'Arama Yap',
-                                                    style:
-                                                        TextStyle(fontSize: 17),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height /
+                                                      30),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    )),
-                              ],
+                                      )),
+                                ],
+                              ),
                             );
                           }));
                         }),
@@ -937,6 +1285,7 @@ class _KararAramaState extends State<KararArama> {
         await searchTypeDropdownService.getSearchTypes();
     if (response.hasError == false) {
       searchTypeInformation.addAll(response.searchTypeInformation);
+
       setState(() {});
       print(response.searchTypeInformation.length);
     } else {
@@ -992,15 +1341,91 @@ class _KararAramaState extends State<KararArama> {
         judgments.clear();
         judgments.addAll(response.data!);
 
-        for (var item in judgments) {
-          int i = 0;
-          if (item.id == userLikes[i].judgmentId &&
-              userLikes[i].judgmentId == 1) {
-            item.isLike = userLikes[i].isLike;
-          }
+        // for (var item in judgments) {
+        //   int i = 0;
+        //   if (item.id == userLikes[i].judgmentId &&
+        //       userLikes[i].judgmentId == 1) {
+        //     item.isLike = userLikes[i].isLike;
+        //   }
 
-          i++;
-        }
+        //   i++;
+        // }
+        print(response.success);
+        setState(() {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AramaSonuclari(
+                        searchTypeId: selectedOption!.TypeID,
+                        judgments: judgments,
+                      )));
+        });
+
+        print(response);
+      } else {
+        print(response.message);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  getLawyerJudgmentsbyDetailSearch(
+      JudgmentDetailSearchDto judgmentDetailSearchDto) async {
+    try {
+      SearchDataLawyerResponse response = await lawyerJudgmentService
+          .getLawyerJudgmentsbyDetailSearch(judgmentDetailSearchDto);
+      if (response.success == true) {
+        judgments.clear();
+        judgments.addAll(response.data!);
+
+        // for (var item in judgments) {
+        //   int i = 0;
+        //   if (item.id == userLikes[i].judgmentId &&
+        //       userLikes[i].judgmentId == 1) {
+        //     item.isLike = userLikes[i].isLike;
+        //   }
+
+        //   i++;
+        // }
+        print(response.success);
+        setState(() {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AramaSonuclari(
+                        searchTypeId: selectedOption!.TypeID,
+                        judgments: judgments,
+                      )));
+        });
+
+        print(response);
+      } else {
+        print(response.message);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  getJudgmentsbyDetailSearch(
+      JudgmentDetailSearchDto judgmentDetailSearchDto) async {
+    try {
+      SearchDataLawyerResponse response = await judgmentService
+          .getJudgmentsbyDetailSearch(judgmentDetailSearchDto);
+      if (response.success == true) {
+        judgments.clear();
+        judgments.addAll(response.data!);
+
+        // for (var item in judgments) {
+        //   int i = 0;
+        //   if (item.id == userLikes[i].judgmentId &&
+        //       userLikes[i].judgmentId == 1) {
+        //     item.isLike = userLikes[i].isLike;
+        //   }
+
+        //   i++;
+        // }
         print(response.success);
         setState(() {
           Navigator.push(
@@ -1057,6 +1482,21 @@ class _KararAramaState extends State<KararArama> {
   getCourts(int? id) async {
     CourtInformationResponse response =
         await courtDropdownService.getCourts(id!);
+    if (response.success == true) {
+      courtInformation.clear();
+      courtInformation.addAll(response.courtInformation);
+
+      setState(() {
+        print(response.courtInformation.length);
+      });
+    } else {
+      print(response.message);
+    }
+  }
+
+  getAllCourts() async {
+    CourtInformationResponse response =
+        await courtDropdownService.getAllCourts();
     if (response.success == true) {
       courtInformation.clear();
       courtInformation.addAll(response.courtInformation);

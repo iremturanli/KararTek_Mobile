@@ -12,7 +12,7 @@ class ApiClient {
 
   //final _baseUrl = "https://192.168.1.14:45456/api/"; //baseurl; 10.0.2.2
 
-  final _baseUrl = "https://192.168.10.83:45456/api/"; //baseurl; 10.0.2.2
+  final _baseUrl = "https://192.168.10.134:45456/api/"; //baseurl; 10.0.2.2
   //final _baseUrl = "http://localhost:5207/api/";
   var onResponseCallback;
   var onErrorCallback;

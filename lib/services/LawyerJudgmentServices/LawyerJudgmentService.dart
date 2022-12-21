@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_application_1/ApiResponse/BaseApiResponse.dart';
 import 'package:flutter_application_1/ApiResponse/SearchDataLawyerResponse.dart';
 import 'package:flutter_application_1/ApiResponse/UserStatisticApiResponse.dart';
+import 'package:flutter_application_1/models/JudgmentInformation/judgmentDetailSearchDtoInformation.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/filterDetailDtoKK.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/filterDetailDtoOB.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/judgmentApprovalDto.dart';
@@ -167,5 +168,18 @@ class LawyerJudgmentService implements ILawyerJudgmentService {
     }
     print(response);
     return UserStatisticFilterApiResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<SearchDataLawyerResponse> getLawyerJudgmentsbyDetailSearch(
+      JudgmentDetailSearchDto judgmentDetailSearchDto) async {
+    Response response = await _apiClient!.postRequest(
+        "LawyerJudgment/GetLawyerJudgmentsByDetailSearch",
+        judgmentDetailSearchDto);
+    if (response.statusCode == 401) {
+      print("UnAuthorized");
+    }
+    print(response);
+    return SearchDataLawyerResponse.fromJson(response.data);
   }
 }

@@ -9,6 +9,7 @@ import 'package:flutter_application_1/services/DropDownServices/CommissionDropdo
 import 'package:flutter_application_1/services/DropDownServices/CourtDropdownService.dart';
 import 'package:flutter_application_1/services/LawyerJudgmentServices/LawyerJudgmentService.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
@@ -61,6 +62,11 @@ class _kararKayitState extends State<kararKayit> {
     super.initState();
     getCommissions();
   }
+
+  var maskFormatter = MaskTextInputFormatter(
+      mask: '##-##-####',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
 
   final bool _isTap = false;
 
@@ -333,6 +339,8 @@ class _kararKayitState extends State<kararKayit> {
             SizedBox(height: MediaQuery.of(context).size.height / 65),
             TextFormField(
               controller: dateInputController,
+              keyboardType: TextInputType.datetime,
+              inputFormatters: [maskFormatter],
               //editing controller of this TextField
               decoration: InputDecoration(
                   prefixIcon: Icon(Icons.calendar_today,
@@ -350,7 +358,7 @@ class _kararKayitState extends State<kararKayit> {
                       color: const Color.fromARGB(255, 189, 189, 189),
                     ),
                   ),
-                  hintText: '__/__/____',
+                  hintText: '__-__-____',
                   hintStyle:
                       const TextStyle(color: Colors.grey) //icon of text field
                   //labelText: "" //label text of field

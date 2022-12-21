@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class JudgmentListInformation {
   JudgmentListInformation({
     this.judgmentTypeId,

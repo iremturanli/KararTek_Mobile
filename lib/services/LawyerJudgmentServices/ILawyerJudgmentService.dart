@@ -5,6 +5,7 @@ import 'package:flutter_application_1/ApiResponse/BaseApiResponse.dart';
 import 'package:flutter_application_1/ApiResponse/SearchDataLawyerResponse.dart';
 import 'package:flutter_application_1/ApiResponse/UserStatisticFilterApiResponse.dart';
 import 'package:flutter_application_1/ApiResponse/mobileApiResponse.dart';
+import 'package:flutter_application_1/models/JudgmentInformation/judgmentDetailSearchDtoInformation.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/filterDetailDtoKK.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/filterDetailDtoOB.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentAddDto.dart';
@@ -33,4 +34,6 @@ abstract class ILawyerJudgmentService implements IBaseService {
       FilterDetailDtoOb filterDetailDtoOb);
   Future<UserStatisticFilterApiResponse> getJudgmentCountbyKeyword(
       String keyword);
+  Future<SearchDataLawyerResponse> getLawyerJudgmentsbyDetailSearch(
+      JudgmentDetailSearchDto judgmentDetailSearchDto);
 }
