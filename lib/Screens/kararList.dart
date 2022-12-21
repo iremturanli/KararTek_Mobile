@@ -1,13 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/AvukatKararToplam.dart';
 import 'package:flutter_application_1/Screens/KararHavuzum.dart';
 import 'package:flutter_application_1/Screens/KaydettigimKararlar.dart';
 import 'package:flutter_application_1/Screens/OnayBekleyenKararlar.dart';
-import 'package:flutter_application_1/Screens/iletisimBilgileri.dart';
+import 'package:flutter_application_1/Screens/homePage.dart';
 import 'package:flutter_application_1/Screens/kararKayit.dart';
-import 'package:flutter_application_1/Screens/s_Sorular.dart';
 
 import '../ApiResponse/UserInformationResponse.dart';
 import '../AppConfigurations/appConfigurations.dart';
@@ -78,6 +75,12 @@ class _kararListState extends State<kararList> {
           backgroundColor: Colors.transparent,
           bottomOpacity: 0.0,
           elevation: 0.0,
+          leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Dashboard()));
+              }),
           iconTheme: const IconThemeData(color: Colors.black),
         ),
         body: Padding(
@@ -96,7 +99,7 @@ class _kararListState extends State<kararList> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => kararKayit(),
+                            builder: (context) => const kararKayit(),
                           ),
                         );
                         break;
@@ -104,7 +107,7 @@ class _kararListState extends State<kararList> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => KararHavuzum(),
+                            builder: (context) => const KararHavuzum(),
                           ),
                         );
                         break;
@@ -112,7 +115,7 @@ class _kararListState extends State<kararList> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => KaydettigimKararlar(),
+                            builder: (context) => const KaydettigimKararlar(),
                           ),
                         );
                         break;
@@ -120,7 +123,7 @@ class _kararListState extends State<kararList> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => OnayBekleyenKararlar(),
+                            builder: (context) => const OnayBekleyenKararlar(),
                           ),
                         );
                         break;
@@ -128,7 +131,7 @@ class _kararListState extends State<kararList> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => AvukatKararToplam(),
+                            builder: (context) => const AvukatKararToplam(),
                           ),
                         );
                         break;

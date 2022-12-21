@@ -35,13 +35,10 @@ class UserLikeService implements IUserLikeService {
   }
 
   @override
-  Future<UserLikeResponse> userLike(int id, int searchTypeId) async {
-    Map<String, dynamic> filterObject = {
-      "id": id.toString(),
-      "searchTypeId": searchTypeId
-    };
-    Response response =
-        await _apiClient!.postRequest("UserLike/GetAll", filterObject);
+  Future<UserLikeResponse> userLike(int searchTypeId) async {
+    Map<String, dynamic> filterObject = {"searchTypeId": searchTypeId};
+    Response response = await _apiClient!
+        .postRequestQueryString("UserLike/GetAll", filterObject);
     if (response.statusCode == 401) {
       print("UnAuthorized");
     }

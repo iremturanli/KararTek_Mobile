@@ -66,7 +66,7 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
         children: [
           SizedBox(
               //sizedBox
-              height: height,
+              height: height / 2,
               width: width,
               child: widget.judgments.isNotEmpty
                   ? ListView.builder(
@@ -95,6 +95,7 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                                 overflow: TextOverflow.ellipsis,
                               ),
                               onTap: (() {
+                                //TODOdto ysp
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -102,8 +103,8 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                                             AramaSonuclariDetayDeneme(
                                                 searchTypeId:
                                                     widget.searchTypeId,
-                                                judgments: widget.judgments,
-                                                ListIndex: index)));
+                                                judgments:
+                                                    widget.judgments[index])));
                               }),
                             ),
                           )))
@@ -124,40 +125,3 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
     );
   }
 }
-
-
-// Container(
-//         child: widget._foundUsers.isNotEmpty
-//             ? Padding(
-//                 padding: const EdgeInsets.only(top: 70.0),
-//                 child: ListView.builder(
-//                   itemCount: widget._foundUsers.length,
-//                   itemBuilder: (context, index) => Card(
-//                     key: ValueKey(widget._foundUsers[index]["id"]),
-//                     color: Color.fromARGB(255, 223, 228, 236),
-//                     elevation: 4,
-//                     margin: const EdgeInsets.symmetric(vertical: 7),
-//                     child: ListTile(
-//                       leading: Text(
-//                         widget._foundUsers[index]["id"].toString(),
-//                         style: const TextStyle(
-//                             color: Color.fromARGB(255, 1, 28, 63),
-//                             fontSize: 25,
-//                             fontWeight: FontWeight.w500),
-//                       ),
-//                       title: Text(widget._foundUsers[index]['name']),
-//                       subtitle: Text(
-//                           '${widget._foundUsers[index]["age"].toString()} years old'),
-//                       onTap: (() {
-//                         Navigator.of(context).pop(KararArama());
-//                       }),
-//                     ),
-//                   ),
-//                 ),
-//               )
-//             : const Text(
-//                 'Sonuç bulunamadı',
-//                 //  style: TextStyle(fontSize: 24),
-//               ),
-//         // child: Text(widget._foundUsers.toString()),
-//       )

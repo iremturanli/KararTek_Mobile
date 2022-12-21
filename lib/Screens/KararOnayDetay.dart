@@ -13,13 +13,13 @@ import '../services/LawyerJudgmentServices/LawyerJudgmentService.dart';
 
 // ignore: must_be_immutable
 class KararDetay extends StatefulWidget {
-  List<LawyerJudgmentListInformation> pendingApprovalJudgments = [];
+  LawyerJudgmentListInformation pendingApprovalJudgments;
   // ignore: non_constant_identifier_names
-  final int ListIndex;
+
   KararDetay(
       {Key? key,
       // ignore: non_constant_identifier_names
-      required this.ListIndex,
+
       required this.pendingApprovalJudgments})
       : super(key: key);
 
@@ -61,7 +61,7 @@ class _KararDetayState extends State<KararDetay> {
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
             Text(
-              '${widget.pendingApprovalJudgments[widget.ListIndex].meritsNo}/${widget.pendingApprovalJudgments[widget.ListIndex].meritsYear}',
+              '${widget.pendingApprovalJudgments.meritsNo}/${widget.pendingApprovalJudgments.meritsYear}',
             ),
             const CustomDivider(),
             const Text('Kurul Adı',
@@ -69,63 +69,57 @@ class _KararDetayState extends State<KararDetay> {
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
             Text(
-              '${widget.pendingApprovalJudgments[widget.ListIndex].commissionName}',
+              '${widget.pendingApprovalJudgments.commissionName}',
             ),
             const CustomDivider(),
             const Text('Mahkeme',
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
-            Text(
-                '${widget.pendingApprovalJudgments[widget.ListIndex].courtName}'),
+            Text('${widget.pendingApprovalJudgments.courtName}'),
             const CustomDivider(),
             const Text('Hüküm',
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
-            Text('${widget.pendingApprovalJudgments[widget.ListIndex].decree}'),
+            Text('${widget.pendingApprovalJudgments.decree}'),
             const CustomDivider(),
             const Text('Avukat Açıklaması',
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
-            Text(
-                '${widget.pendingApprovalJudgments[widget.ListIndex].lawyerAssesment}'),
+            Text('${widget.pendingApprovalJudgments.lawyerAssesment}'),
             const CustomDivider(),
             const Text('Karar',
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
-            Text(
-                '${widget.pendingApprovalJudgments[widget.ListIndex].decision}'),
+            Text('${widget.pendingApprovalJudgments.decision}'),
             const CustomDivider(),
             const Text('Karar Tarihi',
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
-            Text(
-                '${widget.pendingApprovalJudgments[widget.ListIndex].judgmentDate}'),
+            Text('${widget.pendingApprovalJudgments.judgmentDate}'),
             const CustomDivider(),
             const Text('Kayıt Tarihi',
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
-            Text(
-                '${widget.pendingApprovalJudgments[widget.ListIndex].createDate}'),
+            Text('${widget.pendingApprovalJudgments.createDate}'),
             const CustomDivider(),
             const Text("TBB'ye Gönderilme Tarihi",
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
-            Text(
-                '${widget.pendingApprovalJudgments[widget.ListIndex].createDate}'),
+            Text('${widget.pendingApprovalJudgments.createDate}'),
             const CustomDivider(),
             const Text('Kararı Ekleyen Kişi',
                 style: TextStyle(
                     color: Color.fromARGB(255, 117, 117, 117), fontSize: 17)),
             SizedBox(height: MediaQuery.of(context).size.height / 100),
             Text(
-                '${widget.pendingApprovalJudgments[widget.ListIndex].userName} ${widget.pendingApprovalJudgments[widget.ListIndex].lastName}'),
+                '${widget.pendingApprovalJudgments.userName} ${widget.pendingApprovalJudgments.lastName}'),
             const CustomDivider(),
             SizedBox(height: MediaQuery.of(context).size.height / 10),
             Padding(
@@ -237,9 +231,7 @@ class _KararDetayState extends State<KararDetay> {
                                                             onPressed: () {
                                                               ApproveJudgment(ApproveJudgmentDto(
                                                                   id: widget
-                                                                      .pendingApprovalJudgments[
-                                                                          widget
-                                                                              .ListIndex]
+                                                                      .pendingApprovalJudgments
                                                                       .id,
                                                                   stateId:
                                                                       EJudgmentState
@@ -278,9 +270,7 @@ class _KararDetayState extends State<KararDetay> {
                                         ApproveJudgment(
                                           ApproveJudgmentDto(
                                               id: widget
-                                                  .pendingApprovalJudgments[
-                                                      widget.ListIndex]
-                                                  .id,
+                                                  .pendingApprovalJudgments.id,
                                               stateId:
                                                   EJudgmentState.Onaylandi),
                                         );

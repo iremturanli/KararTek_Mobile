@@ -810,8 +810,7 @@ class _KaydettigimKararlarState extends State<KaydettigimKararlar> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => KaydettigimKararDetay(
-                                      ListIndex: index,
-                                      savedJudgments: savedJudgments,
+                                      savedJudgments: savedJudgments[index],
                                     )));
                       }),
                       child: Row(
