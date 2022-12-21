@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Screens/kararAramaDeneme.dart';
 import 'package:flutter_application_1/Screens/kararArama.dart';
 import 'package:flutter_application_1/Screens/profilim.dart';
 import 'package:flutter_application_1/widgets/menu.dart';

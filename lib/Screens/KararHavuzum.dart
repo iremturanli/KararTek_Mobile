@@ -10,7 +10,7 @@ import 'package:flutter_application_1/services/FavouriteJudgmentService/favourit
 import '../ApiResponse/JudgmentPoolResponse.dart';
 import '../AppConfigurations/appConfigurations.dart';
 
-import 'kararHavuzumDetayDeneme.dart';
+import 'kararHavuzumDetaylar.dart';
 import 'kararList.dart';
 
 class KararHavuzum extends StatefulWidget {
@@ -108,8 +108,7 @@ class _KararHavuzumState extends State<KararHavuzum>
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            KararHavuzumDetayDeneme(
+                                        builder: (context) => KararHavuzumDetay(
                                               judgments: judgments[index],
                                             )));
                               }),
@@ -142,7 +141,7 @@ class _KararHavuzumState extends State<KararHavuzum>
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => KararHavuzumDetayDeneme(
+                                  builder: (context) => KararHavuzumDetay(
                                         lawyerJudgments: lawyerJudgments[index],
                                       )));
                         }),
