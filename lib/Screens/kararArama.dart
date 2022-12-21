@@ -409,9 +409,21 @@ class _KararAramaState extends State<KararArama> {
                                               ),
 
                                               const Text('Daire/Kurul Adı*'),
+                                              SizedBox(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height /
+                                                    65,
+                                              ),
                                               Container(
-                                                height: 45,
-                                                width: 330,
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height /
+                                                    15.4,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .height /
+                                                    2.1,
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -425,6 +437,32 @@ class _KararAramaState extends State<KararArama> {
                                                       .keyboard_arrow_down_outlined),
                                                   dropdownColor: Colors.white,
                                                   value: selectedCommission,
+                                                  decoration: InputDecoration(
+                                                      contentPadding:
+                                                          EdgeInsets.all(
+                                                              MediaQuery.of(context)
+                                                                      .size
+                                                                      .height /
+                                                                  60),
+                                                      enabledBorder: OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                                  width: 1,
+                                                                  color: Colors
+                                                                      .grey),
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  10)),
+
+                                                      // ignore: prefer_const_constructors
+                                                      focusedBorder: OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                                  width: 1,
+                                                                  color: Colors
+                                                                      .grey),
+                                                          borderRadius:
+                                                              BorderRadius.circular(40))),
                                                   onChanged:
                                                       (CommissionInformation?
                                                           newValue) {
@@ -481,8 +519,14 @@ class _KararAramaState extends State<KararArama> {
                                                           .height /
                                                       65),
                                               Container(
-                                                height: 45,
-                                                width: 330,
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height /
+                                                    15.4,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .height /
+                                                    2.1,
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -496,6 +540,24 @@ class _KararAramaState extends State<KararArama> {
                                                       .keyboard_arrow_down_outlined),
                                                   dropdownColor: Colors.white,
                                                   value: selectedCourt,
+                                                  decoration: InputDecoration(
+                                                      contentPadding: EdgeInsets
+                                                          .all(MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .height /
+                                                              60),
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                              borderSide:
+                                                                  const BorderSide(
+                                                                      width: 1,
+                                                                      color: Colors
+                                                                          .grey),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10))),
                                                   onChanged: (CourtInformation?
                                                       newValue) {
                                                     setState(() {
