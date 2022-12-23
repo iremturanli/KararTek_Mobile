@@ -26,6 +26,7 @@ final List<String> _siralama = [
 class AramaSonuclari extends StatefulWidget {
   // List<JudgmentListInformation> judgments = [];
   List<LawyerJudgmentListInformation> judgments = [];
+
   final int? searchTypeId;
   AramaSonuclari(
       {Key? key, required this.judgments, required this.searchTypeId})
@@ -55,10 +56,12 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
   DateTime? selectedLastDate;
   List<CourtInformation> courtInformation = [];
   int? selectedItem = 0;
+  TextEditingController searchController = TextEditingController();
 
   final UserLikeService userLikeService = getIt.get<UserLikeService>();
 
   List<LawyerJudgmentListInformation> judgmentsNewList = [];
+  List<LawyerJudgmentListInformation> judgmentsSaveResultList = [];
   List<ForLikeList> userLikes = [];
   SearchTypeInformation? selectedOption;
   int? decisionValue;
@@ -69,6 +72,8 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
     getCommissions();
     super.initState();
     judgmentsNewList = widget.judgments;
+    judgmentsSaveResultList = widget.judgments;
+
     //print(widget._bulunanKararlar);
   }
 
@@ -91,7 +96,7 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                 fontWeight: FontWeight.bold,
                 color: Colors.black)),
         actions: <Widget>[
-          judgmentsNewList.isNotEmpty
+          widget.judgments.isNotEmpty
               ? IconButton(
                   onPressed: () => showModalBottomSheet<void>(
                       isScrollControlled: true,
@@ -100,286 +105,8 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                       context: context,
                       builder: (context) {
                         return StatefulBuilder(builder:
-                            ((BuildContext context, StateSetter setState) {
-                          return SingleChildScrollView(
-                            child: Stack(
-                              children: <Widget>[
-                                Padding(
-                                    padding: EdgeInsets.only(
-                                      top: MediaQuery.of(context).size.height /
-                                          40,
-                                      right: MediaQuery.of(context).size.width /
-                                          25,
-                                      left: MediaQuery.of(context).size.width /
-                                          25,
-                                    ),
-                                    child: Form(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          const Center(
-                                            child: Text(
-                                              'Filtrele',
-                                              style: TextStyle(
-                                                  fontSize: 25,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                          ),
-                                          const Text(
-                                            'Kelime',
-                                          ),
-                                          SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                80,
-                                          ),
-                                          TextFormField(
-                                            // ignore: prefer_const_constructors
-                                            decoration: InputDecoration(
-                                              filled: true,
-                                              fillColor: const Color.fromARGB(
-                                                  255, 255, 255, 255),
-                                              focusedBorder:
-                                                  const OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  8))),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                // ignore: prefer_const_constructors
-                                                borderSide: BorderSide(
-                                                  width: 1,
-                                                  color: const Color.fromARGB(
-                                                      255, 189, 189, 189),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  80),
-                                          const Text('Daire/Kurul Adı*'),
-                                          SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                80,
-                                          ),
-                                          Container(
-                                            height: 45,
-                                            width: 330,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                color: Colors.white),
-                                            child: DropdownButtonFormField<
-                                                CommissionInformation>(
-                                              isExpanded: true,
-                                              //underline: SizedBox.shrink(),
-                                              icon: const Icon(Icons
-                                                  .keyboard_arrow_down_outlined),
-                                              dropdownColor: Colors.white,
-                                              value: selectedCommission,
-                                              onChanged: (CommissionInformation?
-                                                  newValue) {
-                                                setState(() {
-                                                  selectedCommission = newValue;
-                                                  lookCourt =
-                                                      selectedCommission!
-                                                          .CommissionID;
-                                                  print("Daire");
-                                                  print(selectedCommission!
-                                                      .CommissionID
-                                                      .toString());
-                                                  // selectedCourt = null;
-                                                  // getCourts(lookCourt);
-
-                                                  //selectedCourt = null;
-                                                });
-
-                                                //selectedCommission = null;
-                                              },
-
-                                              // validator: (value) => value ==
-                                              //         null
-                                              //     ? "Bu alan boş bırakılamaz"
-                                              //     : null,
-                                              items: commissionInformation.map(
-                                                  (CommissionInformation
-                                                      commissionInformation) {
-                                                return DropdownMenuItem<
-                                                    CommissionInformation>(
-                                                  value: commissionInformation,
-                                                  child: Text(
-                                                    commissionInformation
-                                                        .CommissionName!,
-                                                    style: const TextStyle(
-                                                        color: Colors.black),
-                                                  ),
-                                                );
-                                              }).toList(),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                80,
-                                          ),
-                                          const Text(
-                                            'Mahkeme',
-                                          ),
-                                          SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                80,
-                                          ),
-                                          Container(
-                                            height: 45,
-                                            width: 330,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                color: Colors.white),
-                                            child: DropdownButtonFormField<
-                                                CourtInformation>(
-                                              isExpanded: true,
-                                              //underline: SizedBox.shrink(),
-                                              icon: const Icon(Icons
-                                                  .keyboard_arrow_down_outlined),
-                                              dropdownColor: Colors.white,
-                                              value: selectedCourt,
-                                              onChanged:
-                                                  (CourtInformation? newValue) {
-                                                setState(() {
-                                                  selectedCourt = newValue;
-                                                  print(selectedCourt!.CourtID
-                                                      .toString());
-                                                });
-                                              },
-
-                                              items: courtInformation.map(
-                                                  (CourtInformation
-                                                      courtInformation) {
-                                                return DropdownMenuItem<
-                                                    CourtInformation>(
-                                                  value: courtInformation,
-                                                  child: Text(
-                                                    courtInformation.CourtName!,
-                                                    style: const TextStyle(
-                                                        color: Colors.black),
-                                                  ),
-                                                );
-                                              }).toList(),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                80,
-                                          ),
-                                          const Text(
-                                            'Sıralama',
-                                          ),
-                                          SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                80,
-                                          ),
-                                          Container(
-                                            height: 45,
-                                            width: 330,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                color: Colors.white),
-                                            child: DropdownButton<String>(
-                                              isExpanded: true,
-                                              icon: const Icon(Icons
-                                                  .keyboard_arrow_down_outlined),
-                                              style: const TextStyle(
-                                                  color: Colors.black),
-                                              underline: Container(
-                                                height: 1,
-                                                color: Colors.grey,
-                                              ),
-                                              onChanged: (String? value) {
-                                                // This is called when the user selects an item.
-                                                setState(() {
-                                                  dropdownValue = value!;
-                                                });
-                                              },
-                                              items: _siralama.map<
-                                                      DropdownMenuItem<String>>(
-                                                  (String? value) {
-                                                if (value ==
-                                                    'Karar Tarihine Göre') {
-                                                  selectedItem = 1;
-                                                } else if (value ==
-                                                    'Beğeni Sayısına Göre') {
-                                                  selectedItem = 2;
-                                                }
-                                                return DropdownMenuItem<String>(
-                                                  value: value,
-                                                  child: Text(value!),
-                                                );
-                                              }).toList(),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  85),
-                                          Center(
-                                            child: ElevatedButton.icon(
-                                                onPressed: () {
-                                                  judgmentsNewList =
-                                                      widget.judgments;
-                                                  Navigator.of(context).pop();
-                                                },
-                                                icon: const Icon(Icons.search),
-                                                label: const Text(
-                                                  "Sorgula",
-                                                  style:
-                                                      TextStyle(fontSize: 17.5),
-                                                ),
-                                                style: ElevatedButton.styleFrom(
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                    ),
-                                                    minimumSize:
-                                                        const Size(100, 40),
-                                                    backgroundColor:
-                                                        const Color.fromARGB(
-                                                            255, 1, 28, 63))),
-                                          ),
-                                          SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                70,
-                                          ),
-                                        ],
-                                      ),
-                                    )),
-                              ],
-                            ),
-                          );
+                            ((BuildContext context, StateSetter setTheState) {
+                          return getModalBottom(judgmentsNewList);
                         }));
                       }),
                   icon: Icon(Icons.filter_alt_outlined))
@@ -393,7 +120,10 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
               //sizedBox
               height: height / 2,
               width: width,
-              child: judgmentsNewList.isNotEmpty
+              child: judgmentsNewList //(judgmentsNewList.isNotEmpty
+                      //             ? judgmentsNewList
+                      //             : judgmentsNewList = widget.judgments)
+                      .isNotEmpty
                   ? ListView.builder(
                       itemCount: judgmentsNewList.length,
                       itemBuilder: ((context, index) => Card(
@@ -429,7 +159,7 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                                                 searchTypeId:
                                                     widget.searchTypeId,
                                                 judgments:
-                                                    widget.judgments[index])));
+                                                    judgmentsNewList[index])));
                               }),
                             ),
                           )))
@@ -447,6 +177,287 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                     )),
         ],
       )),
+    );
+  }
+
+  Widget getModalBottom(List<LawyerJudgmentListInformation> judgments) {
+    return SingleChildScrollView(
+      child: Stack(
+        children: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height / 40,
+                right: MediaQuery.of(context).size.width / 25,
+                left: MediaQuery.of(context).size.width / 25,
+              ),
+              child: Form(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const Center(
+                      child: Text(
+                        'Filtrele',
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    const Text(
+                      'Kelime',
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 80,
+                    ),
+                    TextFormField(
+                      controller: searchController,
+                      // ignore: prefer_const_constructors
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 255, 255, 255),
+                        focusedBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(8))),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          // ignore: prefer_const_constructors
+                          borderSide: BorderSide(
+                            width: 1,
+                            color: const Color.fromARGB(255, 189, 189, 189),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height / 80),
+                    const Text('Daire/Kurul Adı*'),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 80,
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height / 15.4,
+                      width: MediaQuery.of(context).size.height / 2.1,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.white),
+                      child: DropdownButtonFormField<CommissionInformation>(
+                        isExpanded: true,
+                        //underline: SizedBox.shrink(),
+                        icon: const Icon(Icons.keyboard_arrow_down_outlined),
+                        dropdownColor: Colors.white,
+                        value: selectedCommission,
+                        decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(
+                                MediaQuery.of(context).size.height / 60),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    width: 1, color: Colors.grey),
+                                borderRadius: BorderRadius.circular(10)),
+
+                            // ignore: prefer_const_constructors
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    width: 1, color: Colors.grey),
+                                borderRadius: BorderRadius.circular(40))),
+                        onChanged: (CommissionInformation? newValue) {
+                          setState(() {
+                            selectedCommission = newValue;
+                            lookCourt = selectedCommission!.CommissionID;
+                            print("Daire");
+                            print(selectedCommission!.CommissionID.toString());
+                            // selectedCourt = null;
+                            // getCourts(lookCourt);
+
+                            //selectedCourt = null;
+                          });
+
+                          //selectedCommission = null;
+                        },
+
+                        // validator: (value) => value ==
+                        //         null
+                        //     ? "Bu alan boş bırakılamaz"
+                        //     : null,
+                        items: commissionInformation
+                            .map((CommissionInformation commissionInformation) {
+                          return DropdownMenuItem<CommissionInformation>(
+                            value: commissionInformation,
+                            child: Text(
+                              commissionInformation.CommissionName!,
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 80,
+                    ),
+                    const Text(
+                      'Mahkeme',
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 80,
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height / 15.4,
+                      width: MediaQuery.of(context).size.height / 2.1,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.white),
+                      child: DropdownButtonFormField<CourtInformation>(
+                        isExpanded: true,
+                        //underline: SizedBox.shrink(),
+                        icon: const Icon(Icons.keyboard_arrow_down_outlined),
+                        dropdownColor: Colors.white,
+                        value: selectedCourt,
+                        decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(
+                                MediaQuery.of(context).size.height / 60),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    width: 1, color: Colors.grey),
+                                borderRadius: BorderRadius.circular(10)),
+
+                            // ignore: prefer_const_constructors
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    width: 1, color: Colors.grey),
+                                borderRadius: BorderRadius.circular(40))),
+                        onChanged: (CourtInformation? newValue) {
+                          setState(() {
+                            selectedCourt = newValue;
+                            print(selectedCourt!.CourtID.toString());
+                          });
+                        },
+
+                        items: courtInformation
+                            .map((CourtInformation courtInformation) {
+                          return DropdownMenuItem<CourtInformation>(
+                            value: courtInformation,
+                            child: Text(
+                              courtInformation.CourtName!,
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 80,
+                    ),
+                    const Text(
+                      'Sıralama',
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 80,
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height / 15.4,
+                      width: MediaQuery.of(context).size.height / 2.1,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.white),
+                      child: DropdownButtonFormField<String>(
+                        isExpanded: true,
+                        icon: const Icon(Icons.keyboard_arrow_down_outlined),
+                        style: const TextStyle(color: Colors.black),
+                        decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(
+                                MediaQuery.of(context).size.height / 60),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    width: 1, color: Colors.grey),
+                                borderRadius: BorderRadius.circular(10)),
+
+                            // ignore: prefer_const_constructors
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    width: 1, color: Colors.grey),
+                                borderRadius: BorderRadius.circular(40))),
+                        onChanged: (String? value) {
+                          setState(() {
+                            dropdownValue = value!;
+                          });
+                        },
+                        value: dropdownValue,
+                        items: _siralama
+                            .map<DropdownMenuItem<String>>((String value) {
+                          if (value == 'Karar Tarihine Göre') {
+                            selectedItem = 1;
+                          } else if (value == 'Beğeni Sayısına Göre') {
+                            selectedItem = 2;
+                          }
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height / 85),
+                    Center(
+                      child: ElevatedButton.icon(
+                          onPressed: () {
+                            //   judgmentsNewList.clear();
+                            judgmentsNewList = judgments;
+                            if (searchController.text != "") {
+                              judgmentsNewList = judgmentsNewList
+                                  .where((judgment) => judgment.decree!
+                                      .toLowerCase()
+                                      .contains(searchController.text))
+                                  .toList();
+                            }
+                            if (selectedCommission != null) {
+                              judgmentsNewList = judgmentsNewList
+                                  .where((judgment) =>
+                                      judgment.commissionId! ==
+                                      selectedCommission!.CommissionID)
+                                  .toList();
+                            }
+                            if (selectedCourt != null) {
+                              judgmentsNewList = judgmentsNewList
+                                  .where((judgment) =>
+                                      judgment.courtId! ==
+                                      selectedCourt!.CourtID)
+                                  .toList();
+                            }
+                            if (selectedItem == 1) {
+                              judgmentsNewList.sort((a, b) =>
+                                  b.judgmentDate!.compareTo(a.judgmentDate!));
+                            } else if (selectedItem == 2) {
+                              judgmentsNewList
+                                  .sort((a, b) => b.likes!.compareTo(a.likes!));
+                            }
+                            print(
+                                'Age descending order: ${judgmentsNewList[0].id}');
+
+                            Navigator.pop(context);
+                            setState(() {
+                              judgmentsNewList = judgmentsNewList;
+                            });
+                          },
+                          icon: const Icon(Icons.search),
+                          label: const Text(
+                            "Sorgula",
+                            style: TextStyle(fontSize: 17.5),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              minimumSize: const Size(100, 40),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 1, 28, 63))),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 70,
+                    ),
+                  ],
+                ),
+              )),
+        ],
+      ),
     );
   }
 
