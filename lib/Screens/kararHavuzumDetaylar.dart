@@ -12,22 +12,21 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../AppConfigurations/appConfigurations.dart';
 import '../models/UserTypeInformation/ESearchTypes.dart';
 
-class KararHavuzumDetayDeneme extends StatefulWidget {
+class KararHavuzumDetay extends StatefulWidget {
   JudgmentListInformation? judgments;
   LawyerJudgmentListInformation? lawyerJudgments;
 
-  KararHavuzumDetayDeneme({Key? key, this.judgments, this.lawyerJudgments})
+  KararHavuzumDetay({Key? key, this.judgments, this.lawyerJudgments})
       : super(key: key);
 
   @override
-  State<KararHavuzumDetayDeneme> createState() =>
-      _KararHavuzumDetayDenemeState();
+  State<KararHavuzumDetay> createState() => _KararHavuzumDetayState();
 }
 
 final FavouriteJudgmentService favouriteJudgmentService =
     getIt.get<FavouriteJudgmentService>();
 
-class _KararHavuzumDetayDenemeState extends State<KararHavuzumDetayDeneme> {
+class _KararHavuzumDetayState extends State<KararHavuzumDetay> {
   bool isSelected = false;
   int likeCounter = 0;
   @override
