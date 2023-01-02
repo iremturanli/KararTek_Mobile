@@ -106,7 +106,8 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                       builder: (context) {
                         return StatefulBuilder(builder:
                             ((BuildContext context, StateSetter setTheState) {
-                          return getModalBottom(judgmentsNewList);
+                          return getModalBottom(
+                              judgmentsNewList, widget.judgments);
                         }));
                       }),
                   icon: Icon(Icons.filter_alt_outlined))
@@ -180,7 +181,8 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
     );
   }
 
-  Widget getModalBottom(List<LawyerJudgmentListInformation> judgments) {
+  Widget getModalBottom(List<LawyerJudgmentListInformation> judgments,
+      List<LawyerJudgmentListInformation> initialList) {
     return SingleChildScrollView(
       child: Stack(
         children: <Widget>[

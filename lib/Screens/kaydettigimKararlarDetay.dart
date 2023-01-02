@@ -22,7 +22,7 @@ class KaydettigimKararDetay extends StatelessWidget {
         bottomOpacity: 0.0,
         elevation: 0.0,
         iconTheme: const IconThemeData(color: Colors.black),
-        title: const Text('Kaydettiğim Kararlar ',
+        title: const Text('Karar Detayı',
             style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,

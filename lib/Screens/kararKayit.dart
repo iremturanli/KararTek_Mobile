@@ -92,7 +92,7 @@ class _kararKayitState extends State<kararKayit> {
         child: ListView(
           children: <Widget>[
             const SizedBox(height: 30),
-            const Text('Daire/Kurul Adı*'),
+            const Text('Daire/Kurul Adı'),
             Container(
               height: 45,
               width: 330,
@@ -165,7 +165,7 @@ class _kararKayitState extends State<kararKayit> {
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height / 35),
-            const Text('Hüküm*'),
+            const Text('Hüküm'),
             SizedBox(height: MediaQuery.of(context).size.height / 65),
             TextFormField(
               controller: hukumController,
@@ -188,7 +188,7 @@ class _kararKayitState extends State<kararKayit> {
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height / 35),
-            const Text('Avukat Değerlendirmesi*'),
+            const Text('Avukat Değerlendirmesi'),
             SizedBox(height: MediaQuery.of(context).size.height / 65),
             TextFormField(
               controller: assessmentController,
@@ -276,7 +276,7 @@ class _kararKayitState extends State<kararKayit> {
                             color: const Color.fromARGB(255, 189, 189, 189),
                           ),
                         ),
-                        hintText: 'Esas No*',
+                        hintText: 'Esas No',
                         hintStyle: const TextStyle(color: Colors.black)),
                   ),
                 ),
@@ -426,23 +426,23 @@ class _kararKayitState extends State<kararKayit> {
                 ),
               ),
             ),
-            SizedBox(height: MediaQuery.of(context).size.height / 35),
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  minimumSize: const Size(150, 45),
-                  backgroundColor: const Color.fromARGB(255, 1, 28, 63)),
-              onPressed: () {
-                pickFiles();
-              },
-              icon: const Icon(Icons.file_copy),
-              label: const Text(
-                'Yeni Dosya Yükle',
-                style: TextStyle(fontSize: 17),
-              ),
-            ),
+            // SizedBox(height: MediaQuery.of(context).size.height / 35),
+            // ElevatedButton.icon(
+            //   style: ElevatedButton.styleFrom(
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(20),
+            //       ),
+            //       minimumSize: const Size(150, 45),
+            //       backgroundColor: const Color.fromARGB(255, 1, 28, 63)),
+            //   onPressed: () {
+            //     pickFiles();
+            //   },
+            //   icon: const Icon(Icons.file_copy),
+            //   label: const Text(
+            //     'Yeni Dosya Yükle',
+            //     style: TextStyle(fontSize: 17),
+            //   ),
+            // ),
             SizedBox(height: MediaQuery.of(context).size.height / 35),
             ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
@@ -500,7 +500,7 @@ class _kararKayitState extends State<kararKayit> {
           await lawyerJudgmentService.addLawyerJudgment(lawyerJudgmentAddDto);
       if (response.hasError == false) {
         setState(() {
-          Navigator.push(
+          Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                   builder: (context) => const KaydettigimKararlar()));

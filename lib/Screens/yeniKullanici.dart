@@ -177,6 +177,7 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                                 labelStyle: TextStyle(color: Colors.black)),
                           ),
                         ),
+
                         // SizedBox(
                         //   height: MediaQuery.of(context).size.height / 80),
                         const Text('Kullanıcı Tipi'),
@@ -184,8 +185,8 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                             height: MediaQuery.of(context).size.height / 80),
 
                         Container(
-                          height: 45,
-                          width: 330,
+                          width: MediaQuery.of(context).size.width / 1.2,
+                          height: MediaQuery.of(context).size.height / 15.5,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               color: Colors.white),
@@ -230,13 +231,15 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                             }).toList(),
                           ),
                         ),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height / 80),
                         const Text('Şehir'),
                         SizedBox(
                             height: MediaQuery.of(context).size.height / 80),
 
                         Container(
-                          height: 45,
-                          width: 330,
+                          width: MediaQuery.of(context).size.width / 1.2,
+                          height: MediaQuery.of(context).size.height / 15.5,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               color: Colors.white),
@@ -273,13 +276,15 @@ class _yeniKullaniciState extends State<yeniKullanici> {
                             }).toList(),
                           ),
                         ),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height / 80),
                         const Text('İlçe'),
                         SizedBox(
                             height: MediaQuery.of(context).size.height / 80),
 
                         Container(
-                          height: 45,
-                          width: 330,
+                          width: MediaQuery.of(context).size.width / 1.2,
+                          height: MediaQuery.of(context).size.height / 15.5,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               color: Colors.white),

@@ -94,7 +94,7 @@ class _sifremiUnuttumState extends State<sifremiUnuttum> {
                         ),
                       ),
                       SizedBox(height: MediaQuery.of(context).size.height / 80),
-                      const Text('Email',
+                      const Text('Eposta',
                           style: TextStyle(fontWeight: FontWeight.w500)),
                       SizedBox(height: MediaQuery.of(context).size.height / 80),
                       SizedBox(
@@ -114,7 +114,7 @@ class _sifremiUnuttumState extends State<sifremiUnuttum> {
                                   borderSide: BorderSide(
                                       color:
                                           Color.fromARGB(255, 255, 255, 255))),
-                              hintText: 'Email adresinizi giriniz',
+                              hintText: 'Eposta adresinizi giriniz',
                               labelStyle: TextStyle(color: Colors.black)),
                         ),
                       ),

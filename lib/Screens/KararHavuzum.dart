@@ -65,6 +65,7 @@ class _KararHavuzumState extends State<KararHavuzum>
           // bottomOpacity: 0.0,
           elevation: 0.0,
           leading: IconButton(
+              color: Colors.white,
               icon: Icon(Icons.arrow_back_ios),
               onPressed: () {
                 Navigator.push(context,

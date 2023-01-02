@@ -38,7 +38,7 @@ class _KararHavuzumDetayState extends State<KararHavuzumDetay> {
         bottomOpacity: 0.0,
         elevation: 0.0,
         iconTheme: const IconThemeData(color: Colors.black),
-        title: const Text('Karar Havuzum ',
+        title: const Text('Karar Detayı ',
             style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
@@ -216,7 +216,7 @@ class _KararHavuzumDetayState extends State<KararHavuzumDetay> {
                                 '${widget.lawyerJudgments?.userName} ${widget.lawyerJudgments?.lastName}'),
                             SizedBox(
                                 height:
-                                    MediaQuery.of(context).size.height / 2.5),
+                                    MediaQuery.of(context).size.height / 85),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
@@ -229,7 +229,7 @@ class _KararHavuzumDetayState extends State<KararHavuzumDetay> {
                                     },
                                     icon: const Icon(Icons.delete),
                                     label: const Text(
-                                      "Sil",
+                                      "Kaldır",
                                       style: TextStyle(fontSize: 17.5),
                                     ),
                                     style: ElevatedButton.styleFrom(
@@ -242,6 +242,9 @@ class _KararHavuzumDetayState extends State<KararHavuzumDetay> {
                                             Color.fromARGB(255, 194, 27, 5))),
                               ],
                             ),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height / 190),
                           ]))
             ])),
       ),
