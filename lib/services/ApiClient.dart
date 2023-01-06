@@ -11,7 +11,7 @@ class ApiClient {
   Dio? _dio;
 
   //final _baseUrl = "https://192.168.1.14:45456/api/"; //baseurl; 10.0.2.2
-  final _baseUrl = "https://192.168.10.79:45456/api/";
+  final _baseUrl = "https://192.168.69.255:45456/api/";
   //final _baseUrl = "https://192.168.10.129:45456/api/"; //baseurl; 10.0.2.2
   //final _baseUrl = "http://localhost:5207/api/";
   var onResponseCallback;

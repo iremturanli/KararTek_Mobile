@@ -1,6 +1,7 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ApiResponse/mobileApiResponse.dart';
+import 'package:flutter_application_1/Screens/OnayBekleyenKararlar.dart';
 import 'package:flutter_application_1/models/EJudgmentState.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/judgmentApprovalDto.dart';
 import 'package:flutter_application_1/models/LawyerJudgmentInformation/lawyerJudgmentListInformation.dart';
@@ -310,7 +311,9 @@ class _KararDetayState extends State<KararDetay> {
           textColor: Colors.white,
           fontSize: 16.0);
       setState(() {
-        Navigator.pop(context);
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => OnayBekleyenKararlar()));
+        ;
       });
     } else {
       print(response.errorMessage);

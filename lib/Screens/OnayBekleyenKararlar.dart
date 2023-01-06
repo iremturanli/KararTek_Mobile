@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ApiResponse/SearchDataLawyerResponse.dart';
+import 'package:flutter_application_1/Screens/kararList.dart';
 import 'package:flutter_application_1/main.dart';
 import 'package:flutter_application_1/widgets/CustomDivider.dart';
 import 'package:flutter_application_1/widgets/ModalBottomOnay.dart';
@@ -68,6 +69,12 @@ class _OnayBekleyenKararlarState extends State<OnayBekleyenKararlar> {
           backgroundColor: Colors.transparent,
           bottomOpacity: 0.0,
           elevation: 0.0,
+          leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => kararList()));
+              }),
           iconTheme: const IconThemeData(color: Colors.black),
         ),
         body: SingleChildScrollView(

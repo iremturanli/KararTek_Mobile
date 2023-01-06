@@ -109,9 +109,7 @@ class _ProfilimState extends State<Profilim> {
                   children: [
                     CircleAvatar(
                       backgroundColor: Colors.transparent,
-                      backgroundImage: _imageFileSelected == null
-                          ? null
-                          : FileImage(File(_imageFileSelected!.path)),
+                      backgroundImage: AssetImage("assets/images/pngwing.png"),
                       radius: 50,
                     ),
                     Padding(

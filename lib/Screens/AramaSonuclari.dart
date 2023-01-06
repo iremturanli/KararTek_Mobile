@@ -146,7 +146,7 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                                 "${judgmentsNewList[index].commissionName}-${judgmentsNewList[index].decreeNo}/${judgmentsNewList[index].decreeYear}",
                               ),
                               subtitle: Text(
-                                '${judgmentsNewList[index].decision}',
+                                '${judgmentsNewList[index].decree}',
                                 maxLines: 4,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -257,7 +257,7 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                             focusedBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(
                                     width: 1, color: Colors.grey),
-                                borderRadius: BorderRadius.circular(40))),
+                                borderRadius: BorderRadius.circular(10))),
                         onChanged: (CommissionInformation? newValue) {
                           setState(() {
                             selectedCommission = newValue;
@@ -322,7 +322,7 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                             focusedBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(
                                     width: 1, color: Colors.grey),
-                                borderRadius: BorderRadius.circular(40))),
+                                borderRadius: BorderRadius.circular(10))),
                         onChanged: (CourtInformation? newValue) {
                           setState(() {
                             selectedCourt = newValue;
@@ -373,7 +373,7 @@ class _AramaSonuclariState extends State<AramaSonuclari> {
                             focusedBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(
                                     width: 1, color: Colors.grey),
-                                borderRadius: BorderRadius.circular(40))),
+                                borderRadius: BorderRadius.circular(10))),
                         onChanged: (String? value) {
                           setState(() {
                             dropdownValue = value!;

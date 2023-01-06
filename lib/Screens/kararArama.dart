@@ -259,8 +259,8 @@ class _KararAramaState extends State<KararArama> {
                             offset: const Offset(-20, 0),
                             child: const Text(
                               maxLines: 2,
-                              style: TextStyle(fontSize: 10.2),
-                              'Anayasa Mahkemesi',
+                              style: TextStyle(fontSize: 10),
+                              'Anayasa Mahkeme',
                               // overflow: TextOverflow.fade,
                             )),
                         value: YuksekYargi.anayasaMahkemesi,
@@ -288,15 +288,20 @@ class _KararAramaState extends State<KararArama> {
                         minimumSize: const Size(350, 55),
                         backgroundColor: const Color.fromARGB(255, 1, 28, 63)),
                     onPressed: () {
-                      judgmentDtoInformation = JudgmentDtoInformation(
-                          keyword: searchController.text,
-                          searchTypeID:
-                              selectedOption!.TypeID, //boş olunca hata veriyo
-                          judgmentTypeID: decisionValue);
-                      if (selectedOption!.TypeID == 1) {
-                        userLike(selectedOption!.TypeID!);
+                      if (searchController.text.isNotEmpty) {
+                        judgmentDtoInformation = JudgmentDtoInformation(
+                            keyword: searchController.text,
+                            searchTypeID:
+                                selectedOption!.TypeID, //boş olunca hata veriyo
+                            judgmentTypeID: decisionValue);
+                        if (selectedOption!.TypeID == 1) {
+                          userLike(selectedOption!.TypeID!);
+                        } else {
+                          userLike(selectedOption!.TypeID!);
+                        }
                       } else {
-                        userLike(selectedOption!.TypeID!);
+                        Fluttertoast.showToast(
+                            msg: "Lütfen Aramak İstediğiniz Kelimeyi Giriniz");
                       }
                     },
                     child: const Text(
@@ -511,7 +516,7 @@ class _KararAramaState extends State<KararArama> {
                                                   height: MediaQuery.of(context)
                                                           .size
                                                           .height /
-                                                      35),
+                                                      80),
                                               const Text('Mahkeme'),
                                               SizedBox(
                                                   height: MediaQuery.of(context)
@@ -624,6 +629,9 @@ class _KararAramaState extends State<KararArama> {
                                                           ],
                                                           decoration:
                                                               const InputDecoration(
+                                                            filled: true,
+                                                            fillColor:
+                                                                Colors.white,
                                                             hintText:
                                                                 'Esas Yılı',
                                                             focusedBorder: OutlineInputBorder(
@@ -676,6 +684,9 @@ class _KararAramaState extends State<KararArama> {
                                                           ],
                                                           decoration:
                                                               const InputDecoration(
+                                                            filled: true,
+                                                            fillColor:
+                                                                Colors.white,
                                                             hintText:
                                                                 'İlk Sıra No',
                                                             focusedBorder: OutlineInputBorder(
@@ -726,6 +737,9 @@ class _KararAramaState extends State<KararArama> {
                                                           ],
                                                           decoration:
                                                               const InputDecoration(
+                                                            filled: true,
+                                                            fillColor:
+                                                                Colors.white,
                                                             hintText:
                                                                 'Son Sıra No',
                                                             focusedBorder: OutlineInputBorder(
@@ -786,6 +800,9 @@ class _KararAramaState extends State<KararArama> {
                                                           ],
                                                           decoration:
                                                               const InputDecoration(
+                                                            filled: true,
+                                                            fillColor:
+                                                                Colors.white,
                                                             hintText:
                                                                 'Karar Yılı',
                                                             focusedBorder: OutlineInputBorder(
@@ -831,6 +848,9 @@ class _KararAramaState extends State<KararArama> {
                                                           ],
                                                           decoration:
                                                               const InputDecoration(
+                                                            filled: true,
+                                                            fillColor:
+                                                                Colors.white,
                                                             hintText:
                                                                 'İlk Sıra No',
                                                             focusedBorder: OutlineInputBorder(
@@ -872,6 +892,9 @@ class _KararAramaState extends State<KararArama> {
                                                           ],
                                                           decoration:
                                                               const InputDecoration(
+                                                            filled: true,
+                                                            fillColor:
+                                                                Colors.white,
                                                             hintText:
                                                                 'Son Sıra No',
                                                             focusedBorder: OutlineInputBorder(
@@ -946,15 +969,13 @@ class _KararAramaState extends State<KararArama> {
                                                                     Colors.grey,
                                                                 filled: true,
                                                                 fillColor:
-                                                                    const Color.fromARGB(
-                                                                        246,
-                                                                        246,
-                                                                        246,
-                                                                        246),
-                                                                focusedBorder:
-                                                                    const OutlineInputBorder(
-                                                                        borderRadius: BorderRadius.all(Radius.circular(
-                                                                            8))),
+                                                                    Colors
+                                                                        .white,
+                                                                focusedBorder: const OutlineInputBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.all(
+                                                                            Radius.circular(
+                                                                                8))),
                                                                 enabledBorder:
                                                                     OutlineInputBorder(
                                                                   borderRadius:
@@ -976,7 +997,8 @@ class _KararAramaState extends State<KararArama> {
                                                                 hintText:
                                                                     'Başlangıç Tarihi',
                                                                 hintStyle: const TextStyle(
-                                                                    color: Colors.grey) //icon of text field
+                                                                    color: Colors
+                                                                        .grey) //icon of text field
                                                                 //labelText: "" //label text of field
                                                                 ),
 
@@ -1091,15 +1113,13 @@ class _KararAramaState extends State<KararArama> {
                                                                     Colors.grey,
                                                                 filled: true,
                                                                 fillColor:
-                                                                    const Color.fromARGB(
-                                                                        246,
-                                                                        246,
-                                                                        246,
-                                                                        246),
-                                                                focusedBorder:
-                                                                    const OutlineInputBorder(
-                                                                        borderRadius: BorderRadius.all(Radius.circular(
-                                                                            8))),
+                                                                    Colors
+                                                                        .white,
+                                                                focusedBorder: const OutlineInputBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.all(
+                                                                            Radius.circular(
+                                                                                8))),
                                                                 enabledBorder:
                                                                     OutlineInputBorder(
                                                                   borderRadius:
@@ -1121,7 +1141,8 @@ class _KararAramaState extends State<KararArama> {
                                                                 hintText:
                                                                     'Bitiş Tarihi',
                                                                 hintStyle: const TextStyle(
-                                                                    color: Colors.grey) //icon of text field
+                                                                    color: Colors
+                                                                        .grey) //icon of text field
                                                                 //labelText: "" //label text of field
                                                                 ),
 
@@ -1261,53 +1282,62 @@ class _KararAramaState extends State<KararArama> {
                                                                     28,
                                                                     63)),
                                                     onPressed: () {
-                                                      JudgmentDetailSearchDto judgmentDetailSearchDto = JudgmentDetailSearchDto(
-                                                          keyword: searchController
-                                                              .text,
-                                                          searchTypeID: selectedOption!
-                                                              .TypeID,
-                                                          courtId: selectedCourt?.CourtID == null
-                                                              ? 0
-                                                              : selectedCourt!
-                                                                  .CourtID,
-                                                          commissionId: selectedCommission
-                                                                      ?.CommissionID ==
-                                                                  null
-                                                              ? 0
-                                                              : selectedCommission!
-                                                                  .CommissionID,
-                                                          meritsYear:
-                                                              meritsYearController
-                                                                  .text,
-                                                          meritsFirstOrder:
-                                                              firstMeritsNoController
-                                                                  .text,
-                                                          meritsLastOrder:
-                                                              lastMeritsNoController
-                                                                  .text,
-                                                          decreeYear:
-                                                              decreeYearController
-                                                                  .text,
-                                                          decreeFirstOrder:
-                                                              firstDecreeNoController
-                                                                  .text,
-                                                          decreeLastOrder:
-                                                              lastDecreeNoController
-                                                                  .text,
-                                                          firstDate:
-                                                              selectedFirstDate,
-                                                          lastDate:
-                                                              selectedLastDate,
-                                                          judgmentTypeID:
-                                                              decisionValue);
-                                                      if (selectedOption!
-                                                              .TypeID ==
-                                                          1) {
-                                                        getLawyerJudgmentsbyDetailSearch(
-                                                            judgmentDetailSearchDto);
+                                                      if (searchController
+                                                          .text.isNotEmpty) {
+                                                        JudgmentDetailSearchDto judgmentDetailSearchDto = JudgmentDetailSearchDto(
+                                                            keyword: searchController
+                                                                .text,
+                                                            searchTypeID: selectedOption!
+                                                                .TypeID,
+                                                            courtId: selectedCourt
+                                                                        ?.CourtID ==
+                                                                    null
+                                                                ? 0
+                                                                : selectedCourt!
+                                                                    .CourtID,
+                                                            commissionId: selectedCommission
+                                                                        ?.CommissionID ==
+                                                                    null
+                                                                ? 0
+                                                                : selectedCommission!
+                                                                    .CommissionID,
+                                                            meritsYear:
+                                                                meritsYearController
+                                                                    .text,
+                                                            meritsFirstOrder:
+                                                                firstMeritsNoController
+                                                                    .text,
+                                                            meritsLastOrder:
+                                                                lastMeritsNoController
+                                                                    .text,
+                                                            decreeYear:
+                                                                decreeYearController
+                                                                    .text,
+                                                            decreeFirstOrder:
+                                                                firstDecreeNoController
+                                                                    .text,
+                                                            decreeLastOrder:
+                                                                lastDecreeNoController
+                                                                    .text,
+                                                            firstDate:
+                                                                selectedFirstDate,
+                                                            lastDate:
+                                                                selectedLastDate,
+                                                            judgmentTypeID:
+                                                                decisionValue);
+                                                        if (selectedOption!
+                                                                .TypeID ==
+                                                            1) {
+                                                          getLawyerJudgmentsbyDetailSearch(
+                                                              judgmentDetailSearchDto);
+                                                        } else {
+                                                          getJudgmentsbyDetailSearch(
+                                                              judgmentDetailSearchDto);
+                                                        }
                                                       } else {
-                                                        getJudgmentsbyDetailSearch(
-                                                            judgmentDetailSearchDto);
+                                                        Fluttertoast.showToast(
+                                                            msg:
+                                                                "Lütfen Aramak İstediğiniz Kelimeyi Giriniz");
                                                       }
                                                     },
                                                     child: const Text(
